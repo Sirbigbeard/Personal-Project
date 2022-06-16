@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     public int damage = 10;
     private float missileSpeed = 5f;
     public GameObject building;
+    private Vector3 targetPosition;
     public Building buildingScript;
     void Start()
     {
@@ -24,7 +25,11 @@ public class Projectile : MonoBehaviour
     {
         if(target != null)
         {
-            transform.Translate((target.transform.position - transform.position).normalized * Time.deltaTime * missileSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, missileSpeed * Time.deltaTime);
+            targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            transform.LookAt(targetPosition);
+            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, target.transform.position - transform.position, Time.deltaTime * missileSpeed, 0.0f);
+            //transform.rotation = Quaternion.LookRotation(newDirection);
         }
         if(target == null && targetChecked)
         {

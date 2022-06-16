@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    //this class controls building functionality, and is also parent class to all ally and enemy classes to reuse targeting code.
     public GameObject projectile;
     public GameObject target;
     public GameObject rangeFinder;
+    private Projectile projectileScript;
+    protected RangeFinder rangeFinderScript;
     private bool attackReady = true;
     public float attackCooldown = 3f;
-    private List<GameObject> targets;
-    public Projectile projectileScript;
+    protected List<GameObject> targets;
+    protected float range = 8;
+    private Vector3 targetPosition;
+    public bool hitsFlying = false;
+    //variable declarations specifically for child classes
+    protected float speed;
+    protected int health;
+    protected float distanceToTarget;
+
     void Start()
     {
-        targets = new List<GameObject>();
+        
     }
     void Update()
     {
@@ -21,6 +31,29 @@ public class Building : MonoBehaviour
         {
             FireProjectile();
         }
+        if (health < 1)
+        {
+            transform.Translate(100000, 100000, 100000);
+        }
+    }
+    void Awake()
+    {
+        Begin();
+        health = 25;
+        StartCoroutine(TaggingDelay());
+    }
+    protected void Begin()
+    {
+        targets = new List<GameObject>();
+        rangeFinderScript = rangeFinder.GetComponent<RangeFinder>();
+        /*if (!hitsFlying)
+        {
+            rangeFinder.transform.scale = new Vector3(range, .25f, range);
+        }
+        else
+        {
+            rangeFinder.transform.scale = new Vector3(range, 2, range);
+        }*/
     }
     void FireProjectile()
     {
@@ -35,6 +68,11 @@ public class Building : MonoBehaviour
     {
         yield return new WaitForSeconds(attackCooldown);
         attackReady = true;
+    }
+    IEnumerator TaggingDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        rangeFinderScript.validTargetTags.Add("Enemy");
     }
     public void AddTarget(GameObject newTarget)
     {
@@ -90,8 +128,32 @@ public class Building : MonoBehaviour
             target = closestEnemy;
         }
     }
-    public void CountTargets()
+    public void ChangeRange(int change)
     {
-        Debug.Log(targets.Count);
+        range += change;
+    }
+    public void SetRange(int newRange)
+    {
+        range = newRange;
+    }
+
+    //methods specifically for children classes
+    protected void Move()
+    {
+        
+        if(target != null)
+        {
+            distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
+            if(distanceToTarget > 4.5)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+                targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                transform.LookAt(targetPosition);
+            }
+        }
+        if(target == null)
+        {
+            transform.Translate(new Vector3(0, 0, -1) * Time.deltaTime * speed);
+        }
     }
 }

@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class RangeFinder : MonoBehaviour
 {
+    //This class is used by the range finder object to add or remove targets on the list of its associated "building" game object
     public GameObject building;
-    public Building buildingScript;
+    private Building buildingScript;
+    public List<string> validTargetTags;
     void Start()
     {
+        
+
+    }
+    void Awake()
+    {
+        validTargetTags = new List<string>();
         buildingScript = building.GetComponent<Building>();
     }
     void Update()
@@ -16,21 +24,32 @@ public class RangeFinder : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if(other == null)
+        if (validTargetTags.Count != 0)
         {
-            Debug.Log("bad collision");
-        }
-        Debug.Log(other.gameObject.tag);
-        if(other.gameObject.tag == "Enemy")
-        {
-            buildingScript.AddTarget(other.gameObject);
+            foreach (string validTarget in validTargetTags)
+            {
+                if (other.gameObject.tag == validTarget)
+                {
+                    buildingScript.AddTarget(other.gameObject);
+                }
+            }
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (validTargetTags.Count != 0)
         {
-            buildingScript.RemoveTarget(other.gameObject);
+            foreach (string validTarget in validTargetTags)
+            {
+                if (other.gameObject.tag == validTarget)
+                {
+                    buildingScript.RemoveTarget(other.gameObject);
+                }
+            }
         }
+    }
+    public void AddValidTarget(string validTarget)
+    {
+        validTargetTags.Add(validTarget);
     }
 }

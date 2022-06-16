@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 4681869331273843635}
-  buildingScript: {fileID: 0}
+  validTargetTags: []
 --- !u!1 &4681869331273843635
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 4681869331273843632}
   m_Layer: 0
   m_Name: Building Prefab
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -228,4 +228,4 @@ MonoBehaviour:
   target: {fileID: 0}
   rangeFinder: {fileID: 4681869330389500681}
   attackCooldown: 3
-  projectileScript: {fileID: 0}
+  hitsFlying: 0

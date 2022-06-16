@@ -1,27 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Building
 {
-    public GameObject building;
-    public int health = 25;
-    public int speed = 2;
     private Vector3 spawnPoint = new Vector3(15f, 2.4f, 15f);
     void Start()
     {
-
+        
+    }
+    void Awake()
+    {
+        range = 15;
+        Begin();
+        speed = 3;
+        health = 25;
+        StartCoroutine(TaggingDelay());
     }
     void Update()
     {
-        if(health < 1)
+        if (health < 1)
         {
             transform.Translate(100000, 100000, 100000);
         }
-        if(building != null)
-        {
-            Move();
-        }
+        Move();
     }
     public void ModifyHealth(int change)
     {
@@ -31,8 +34,9 @@ public class Enemy : MonoBehaviour
     {
         return health;
     }
-    void Move()
+    IEnumerator TaggingDelay()
     {
-        transform.Translate((building.transform.position - transform.position).normalized * Time.deltaTime * speed);
+        yield return new WaitForSeconds(.1f);
+        rangeFinderScript.validTargetTags.Add("Building");
     }
 }
