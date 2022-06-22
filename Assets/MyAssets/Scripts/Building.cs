@@ -146,9 +146,10 @@ public class Building : MonoBehaviour
             distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
             if(distanceToTarget > 4.5)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
                 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                 transform.LookAt(targetPosition);
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+                
             }
         }
         if(target == null)
