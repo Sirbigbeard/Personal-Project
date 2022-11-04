@@ -607,6 +607,7 @@ MonoBehaviour:
   rangeFinder: {fileID: 8998077018886388997}
   attackCooldown: 3
   hitsFlying: 0
+  health: 0
 --- !u!54 &-414946042164849230
 Rigidbody:
   m_ObjectHideFlags: 0

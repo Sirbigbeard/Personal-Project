@@ -10,30 +10,39 @@ public class Building : MonoBehaviour
     public GameObject rangeFinder;
     private Projectile projectileScript;
     protected RangeFinder rangeFinderScript;
-    private bool attackReady = true;
-    public float attackCooldown = 3f;
+    private bool attackReadyRanged = true;
+    public float attackCooldownRanged = 3f;
     protected List<GameObject> targets;
     protected float range = 8;
     private Vector3 targetPosition;
     public bool hitsFlying = false;
+    private bool attackCooldownActive = false;
+    public bool attackDurationActive = false;
+    private float attackCooldownFloat = 3.1f;
+    private float attackDurationFloat = 1.5f;
+    public GameObject weapon;
+    private Weapon weaponScript;
     //variable declarations specifically for child classes
     protected float speed;
-    protected int health;
+    public int health;
     protected float distanceToTarget;
-
+    //public GameObject GameManager;
+    //private GameManager gameManagerScript;
     void Start()
     {
-        
+        //gameManagerScript = GameManager.GetComponent<GameManager>();
     }
     void Update()
     {
-        if (attackReady && targets.Count != 0 && target != null)
+        if (attackReadyRanged && target != null)
         {
+            Debug.Log("attacking, targets.count = " + targets.Count + " and target = " + target);
             FireProjectile();
         }
         if (health < 1)
         {
             transform.Translate(100000, 100000, 100000);
+            StartCoroutine(DestroyDelay());
         }
     }
     void Awake()
@@ -46,14 +55,14 @@ public class Building : MonoBehaviour
     {
         targets = new List<GameObject>();
         rangeFinderScript = rangeFinder.GetComponent<RangeFinder>();
-        /*if (!hitsFlying)
+        if (!hitsFlying)
         {
-            rangeFinder.transform.scale = new Vector3(range, .25f, range);
+            rangeFinder.transform.localScale = new Vector3(range, .25f, range);
         }
         else
         {
-            rangeFinder.transform.scale = new Vector3(range, 2, range);
-        }*/
+            rangeFinder.transform.localScale = new Vector3(range, 2, range);
+        }
     }
     void FireProjectile()
     {
@@ -61,13 +70,13 @@ public class Building : MonoBehaviour
         GameObject projectileFired = Instantiate(projectile, spawnPoint, projectile.transform.rotation) as GameObject;
         projectileScript = projectileFired.GetComponent<Projectile>();
         projectileScript.target = target;
-        attackReady = false;
-        StartCoroutine(AttackCooldown());
+        attackReadyRanged = false;
+        StartCoroutine(RangedAttackCooldown());
     }
-    IEnumerator AttackCooldown()
+    IEnumerator RangedAttackCooldown()
     {
-        yield return new WaitForSeconds(attackCooldown);
-        attackReady = true;
+        yield return new WaitForSeconds(attackCooldownRanged);
+        attackReadyRanged = true;
     }
     IEnumerator TaggingDelay()
     {
@@ -81,6 +90,24 @@ public class Building : MonoBehaviour
         {
             target = targets[0];
         }
+    }
+    protected void Attack()
+    {
+        //weaponScript.damageDealt = false;
+        attackCooldownActive = true;
+        attackDurationActive = true;
+        StartCoroutine(MelleAttackCooldown());
+        StartCoroutine(MelleAttackDuration());
+    }
+    IEnumerator MelleAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldownFloat);
+        attackCooldownActive = false;
+    }
+    IEnumerator MelleAttackDuration()
+    {
+        yield return new WaitForSeconds(attackDurationFloat);
+        attackDurationActive = false;
     }
     //both removes the current target and finds the next closest available target if there is one.
     public void RemoveTarget(GameObject targetToRemove)
@@ -106,28 +133,6 @@ public class Building : MonoBehaviour
             target = closestEnemy;
         }
     }
-    public void RemoveTarget()
-    {
-        float closestDistance = 9999f;
-        GameObject closestEnemy = null;
-        if (targets.Count == 0)
-        {
-            target = null;
-        }
-        foreach (GameObject enemy in targets)
-            {
-                float distanceVector = Vector3.Distance(transform.position, enemy.transform.position);
-                if (distanceVector < closestDistance)
-                {
-                    closestDistance = distanceVector;
-                    closestEnemy = enemy;
-                }
-            }
-        if (closestEnemy != null)
-        {
-            target = closestEnemy;
-        }
-    }
     public void ChangeRange(int change)
     {
         range += change;
@@ -136,7 +141,11 @@ public class Building : MonoBehaviour
     {
         range = newRange;
     }
-
+    protected IEnumerator DestroyDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        Destroy(gameObject);
+    }
     //methods specifically for children classes
     protected void Move()
     {
@@ -151,9 +160,14 @@ public class Building : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
                 
             }
+            else if(!attackCooldownActive)
+            {
+                Attack();
+            }
         }
         if(target == null)
         {
+            transform.rotation = Quaternion.Euler(0, 0, 0); //default target should be home base when the z value is below whatever value the lanes begin converging
             transform.Translate(new Vector3(0, 0, -1) * Time.deltaTime * speed);
         }
     }

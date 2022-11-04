@@ -3,7 +3,17 @@ guid: 7d882a66b0fbb8d4c9eaf5c51a3757c2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - player: {instanceID: 0}
+  - enemy: {fileID: 8704135530824042615, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
+  - building: {instanceID: 0}
+  - mainCamera: {instanceID: 0}
+  - offenseMapButtonObject: {instanceID: 0}
+  - defenseMapButtonObject: {instanceID: 0}
+  - beginRoundButtonObject: {instanceID: 0}
+  - spellBookButtonObject: {instanceID: 0}
+  - fireBallButtonObject: {instanceID: 0}
+  - slamButtonObject: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

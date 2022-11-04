@@ -28,20 +28,23 @@ public class Projectile : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, missileSpeed * Time.deltaTime);
             targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
             transform.LookAt(targetPosition);
-            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, target.transform.position - transform.position, Time.deltaTime * missileSpeed, 0.0f);
-            //transform.rotation = Quaternion.LookRotation(newDirection);
         }
-        if(target == null && targetChecked)
+        
+        if (targetChecked)
         {
-            Destroy(gameObject);
+            if (target == null)
+            {
+                Destroy(gameObject);
+            }
         }
+
     }
     void OnTriggerEnter(Collider other)
     { 
         if (other.gameObject.GetInstanceID() == target.GetInstanceID())//== target
         {
-            targetScript.ModifyHealth(-damage);
-            if (targetScript.GetHealth() <= 0)
+            targetScript.health -= 10;
+            if (targetScript.health <= 0)
             {
                 buildingScript.RemoveTarget(other.gameObject);
             }
