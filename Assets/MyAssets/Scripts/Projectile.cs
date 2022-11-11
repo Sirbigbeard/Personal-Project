@@ -43,8 +43,8 @@ public class Projectile : MonoBehaviour
     { 
         if (other.gameObject.GetInstanceID() == target.GetInstanceID())//== target
         {
-            targetScript.health -= 10;
-            if (targetScript.health <= 0)
+            targetScript.currentHP -= 10;
+            if (targetScript.currentHP <= 0)
             {
                 buildingScript.RemoveTarget(other.gameObject);
             }

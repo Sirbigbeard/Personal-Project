@@ -6,17 +6,24 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    //finish floor buttons
-    //change player movement to force rather than transform.translate to prevent moving through barriers, try to keep the movement crispy
+    //on round end active spells still show
+    //add spell effect to bulwark, make other 7 spells functional and visible. 
     //make health and mana bars for player.
+    //give each spell a mana cost, make mana regen begin to tick after spell cast and stop ticking if at full mana. 
     //create currency with which to buy buildings/gear
     //give allies/enemies attacks
+    //gamedesign of the abilities etc, expand upon all the systems in place.
+    //begin flushing out offense/adventuring
+    //figure out how rounds will work and program the necessary systems to spawn enemies randomly around the battlefield etc.
 
+    //first few rounds are pretty easy with the inital gold you get, but if you choose to adventure your early buildings take significant damage which takes gold to repair. 
+    //figure out how allies are going to be implemented (maybe they teleport over from adventuring side to active button spots randomly, maybe you place them like buildings, maybe you can place them on top of buildings if the building is already there
+    //maybe you can place them in the areas between the buildings, maybe they only help for adventuring (i like this)
+    //figure out what other stat systems I want to have in place, armor, attributes, etc.
     //replace all references to game manager within prefabs to gameManager = GameObject.Find("GameManager"); as currently they lose reference when instantiated.
     //models and animations
     //UI/overlay look good
     //pause functionality
-    //gamedesign of the abilities etc, expand upon all the systems in place.
     //have a forward area with smaller areas that allies can be placed upon, or upon buildings if they have capacity. 
     //comment every line of code 
     ///Design offense map/maps (im thinking large labyrith of smallish rooms, when you enter one you cannot enter another new one till next round, when you start round if you are in hitbox of an uncleared room you fight it.
@@ -33,8 +40,8 @@ public class GameManager : MonoBehaviour
     private bool defenseMap = true;
     private bool spellBookOpen = false;
     private bool buildingListOpen = false;
-    private bool constructing = false;
-    private GameObject currentBuilding;
+    public bool constructing = false;
+    public GameObject currentBuilding;
     public GameObject player;
     public GameObject mainCamera;
     public Camera creationCamera;
@@ -57,8 +64,6 @@ public class GameManager : MonoBehaviour
     public GameObject hutButtonObject;
     public GameObject crenelationsButtonObject;
     public GameObject watchtowerButtonObject;
-    public GameObject position1ButtonObject;
-    public GameObject position2ButtonObject;
     private Button offenseMapButton;
     private Button defenseMapButton;
     private Button beginRoundButton;
@@ -67,8 +72,6 @@ public class GameManager : MonoBehaviour
     private Button hutButton;
     private Button crenelationsButton;
     private Button watchtowerButton;
-    private Button position1Button;
-    private Button position2Button;
     private float mapZoomInput;
     private float mouseXInput;
     private float mouseYInput;
@@ -105,17 +108,13 @@ public class GameManager : MonoBehaviour
         hutButton = hutButtonObject.GetComponent<Button>();
         crenelationsButton = crenelationsButtonObject.GetComponent<Button>();
         watchtowerButton = watchtowerButtonObject.GetComponent<Button>();
-        position1Button = position1ButtonObject.GetComponent<Button>();
-        position2Button = position2ButtonObject.GetComponent<Button>();
         offenseMapButton.onClick.AddListener(SetOffenseMap);
         defenseMapButton.onClick.AddListener(SetDefenseMap);
         beginRoundButton.onClick.AddListener(BeginRound);
         spellBookButton.onClick.AddListener(ToggleSpellBook);
-        hutButton.onClick.AddListener(BuildHut);
-        crenelationsButton.onClick.AddListener(BuildCrenelations);
+        hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true); });
+        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
-        position1Button.onClick.AddListener(BuildPosition1);
-        position2Button.onClick.AddListener(BuildPosition2);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
         buildingsAvailable = new List<GameObject>();
@@ -164,6 +163,10 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown("escape"))
             {
                 Pause();
+            }
+            if (Input.GetKeyDown("h"))
+            {
+                EndRound();
             }
         }
     }
@@ -304,6 +307,10 @@ public class GameManager : MonoBehaviour
         {
             ToggleSpellBook();
         }
+        if (buildingListOpen)
+        {
+            ToggleBuildingList();
+        }
         roundBegun = true;
         offenseMapButtonObject.SetActive(false);
         defenseMapButtonObject.SetActive(false);
@@ -349,6 +356,7 @@ public class GameManager : MonoBehaviour
         mainCamera.transform.parent = null;
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
+        playerScript.Reset();
         if(gatheredSpells.Count != 0)
         {
             spellBookButtonObject.SetActive(true);
@@ -440,47 +448,15 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    //Build Position Methods
-    //Make a dummy child at index 0 of any object that doesnt have a range finder, and objects that do need range finder as child index 0
-    void BuildPosition1()
-    {
-        if (constructing)
-        {
-            currentBuilding.transform.position = new Vector3(5f, currentBuilding.transform.position.y, -5f);
-            position1ButtonObject.SetActive(false);
-            BuildPosition();
-        }
-    }
-    void BuildPosition2()
-    {
-        if (constructing)
-        {
-            currentBuilding.transform.position = new Vector3(15f, currentBuilding.transform.position.y, -5f);
-            position2ButtonObject.SetActive(false);
-            BuildPosition();
-        }
-    }
-
     //Building Creation Methods
-    void BuildHut()
+    void Build(GameObject building, float height, bool rangeFinder)
     {
         if (currentBuilding != null)
         {
             Destroy(currentBuilding);
         }
-        currentBuilding = Instantiate(hut, new Vector3(0f, 1.0f, 447.0f), hut.transform.rotation);
-        currentBuildingRangeFinder = true;
-        InitialBuild();
-    }
-    void BuildCrenelations()
-    {
-        if (currentBuilding != null)
-        {
-            Destroy(currentBuilding);
-        }
-        currentBuilding = Instantiate(crenelations, new Vector3(0f, 2.0f, 447.0f), crenelations.transform.rotation);
-        currentBuildingRangeFinder = false;
+        currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
+        currentBuildingRangeFinder = rangeFinder;
         InitialBuild();
     }
     //Misc Methods
@@ -504,15 +480,4 @@ public class GameManager : MonoBehaviour
         constructing = true;
         creationCamera.enabled = true;
     }
-    void BuildPosition()
-    {
-        if (currentBuildingRangeFinder)
-        {
-            currentBuildingScript.rangeFinder.GetComponent<MeshRenderer>().enabled = false;
-        }
-        creationCamera.enabled = false;
-        constructing = false;
-        currentBuilding = null;
-    }
-    
 }

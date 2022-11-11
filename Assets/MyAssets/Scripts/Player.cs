@@ -7,9 +7,14 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     private Rigidbody playerRb;
+    private Vector3 moveInput;
+    private float rotationRate = 15f;
     private float horizontalInput;
     private float verticalInput;
-    private float speed = 15;
+    private float speed = 15f;
+    public int currentHP;
+    public int maxHP;
+    public int touchingBuilding = 0;
     private bool attackCooldownActive = false;
     public bool attackDurationActive = false;
     private float attackCooldownFloat = 3.1f;
@@ -18,26 +23,54 @@ public class Player : MonoBehaviour
     private GameManager gameManagerScript;
     public GameObject mainCamera;
     public GameObject weapon;
+    public GameObject head;
+    public GameObject leftArm;
+    public GameObject rightArm;
+    public GameObject leftLeg;
+    public GameObject rightLeg;
+    public GameObject torso;
     public TextMeshProUGUI spell1Name;
     public TextMeshProUGUI spell2Name;
     public TextMeshProUGUI spell3Name;
     public TextMeshProUGUI spell4Name;
     public List<GameObject> spellList;
+    private Renderer leftLegRenderer;
+    private Renderer leftArmRenderer;
+    private Renderer rightLegRenderer;
+    private Renderer rightArmRenderer;
+    private Renderer headRenderer;
+    private Renderer torsoRenderer;
+    private Color playerColor;
+    private Color bulwarkColor;
     private Weapon weaponScript;
+    private Vector3 startingPosition = new Vector3(0, 3.5f, 0);
 
     void Start()
     {
         spellList = new List<GameObject>();
         playerRb = gameObject.GetComponent<Rigidbody>();
         gameManagerScript = GameManager.GetComponent<GameManager>();
+        bulwarkColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
+        playerColor = new Color(.82f, .79f, .19f, 1f);
+        leftLegRenderer = leftLeg.GetComponent<Renderer>();
+        rightLegRenderer = rightLeg.GetComponent<Renderer>();
+        leftArmRenderer = leftArm.GetComponent<Renderer>();
+        rightArmRenderer = rightArm.GetComponent<Renderer>();
+        headRenderer = head.GetComponent<Renderer>();
+        torsoRenderer = torso.GetComponent<Renderer>();
+        leftLegRenderer.material.SetColor("_Color", playerColor);
+        rightLegRenderer.material.SetColor("_Color", playerColor);
+        leftArmRenderer.material.SetColor("_Color", playerColor);
+        rightArmRenderer.material.SetColor("_Color", playerColor);
+        headRenderer.material.SetColor("_Color", playerColor);
+        torsoRenderer.material.SetColor("_Color", playerColor);
+        currentHP = 10;
+        maxHP = 10;
+        transform.position = startingPosition;
     }
 
     void Update()
     {
-        if (!Input.GetKey("tab"))
-        {
-            RegisterMovement();
-        }
         if (gameManagerScript.roundBegun)
         {
             if (!attackCooldownActive)
@@ -93,58 +126,40 @@ public class Player : MonoBehaviour
             }
         }
     }
+    void FixedUpdate()
+    {
+        if (!Input.GetKey("tab"))
+        {
+            RegisterMovement();
+        }
+    }
     //registers wasd and moves character correspondingly
     private void RegisterMovement()
     {
-        verticalInput = Input.GetAxis("Vertical");
-        horizontalInput = Input.GetAxis("Horizontal");
         if (!gameManagerScript.roundBegun)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * verticalInput * speed, Space.World);
-            transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed, Space.World);
-            SetDirection();
+            moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            playerRb.position += moveInput * speed / 100;
+            if (moveInput.sqrMagnitude > 0)
+            {
+                Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
+                playerRb.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
+            }
         }
         if(gameManagerScript.roundBegun)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * verticalInput * speed);
-            transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
-        }
-        //playerRb.velocity = new Vector3(0, 0, 0);
-    }
-    //Faces the player model towards the moving direction and sets the direction variable to the corresponding number
-    private void SetDirection()
-    {
-        if (verticalInput > 0 && horizontalInput == 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        if (verticalInput > 0 && horizontalInput > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 45, 0);
-        }
-        if (verticalInput == 0 && horizontalInput > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        if (verticalInput < 0 && horizontalInput > 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 135, 0);
-        }
-        if (verticalInput < 0 && horizontalInput == 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        if (verticalInput < 0 && horizontalInput < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, -135, 0);
-        }
-        if (verticalInput == 0 && horizontalInput < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, -90, 0);
-        }
-        if (verticalInput > 0 && horizontalInput < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, -45, 0);
+            verticalInput = Input.GetAxis("Vertical");
+            horizontalInput = Input.GetAxis("Horizontal");
+            if (touchingBuilding == 0)
+            {
+                playerRb.velocity = new Vector3(0, 0, 0);
+                transform.Translate(Vector3.forward * Time.deltaTime * verticalInput * speed);
+                transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * speed);
+            }
+            if (touchingBuilding > 0)
+            {
+                playerRb.AddForce(transform.forward * speed * 10 * verticalInput);
+            }
         }
     }
     private void Attack()
@@ -210,11 +225,46 @@ public class Player : MonoBehaviour
     }
     public void CastBulwark()
     {
-        Debug.Log("Bulwark Casted");
+        leftLegRenderer.material.SetColor("_Color", bulwarkColor);
+        rightLegRenderer.material.SetColor("_Color", bulwarkColor);
+        leftArmRenderer.material.SetColor("_Color", bulwarkColor);
+        rightArmRenderer.material.SetColor("_Color", bulwarkColor);
+        headRenderer.material.SetColor("_Color", bulwarkColor);
+        torsoRenderer.material.SetColor("_Color", bulwarkColor);
+        StartCoroutine(BulwarkTimer());
     }
     public void CastBlink()
     {
         Debug.Log("Blink Casted");
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Building" || other.tag == "Wall")
+        {
+            touchingBuilding += 1;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Building" || other.tag == "Wall")
+        {
+            touchingBuilding -= 1;
+            playerRb.velocity = new Vector3(0, 0, 0); 
+        }
+    }
+    IEnumerator BulwarkTimer()
+    {
+        yield return new WaitForSeconds(5);
+        leftLegRenderer.material.SetColor("_Color", playerColor);
+        rightLegRenderer.material.SetColor("_Color", playerColor);
+        leftArmRenderer.material.SetColor("_Color", playerColor);
+        rightArmRenderer.material.SetColor("_Color", playerColor);
+        headRenderer.material.SetColor("_Color", playerColor);
+        torsoRenderer.material.SetColor("_Color", playerColor);
+    }
+    public void Reset()
+    {
+        transform.position = startingPosition;
+        currentHP = maxHP;
+    }
 }

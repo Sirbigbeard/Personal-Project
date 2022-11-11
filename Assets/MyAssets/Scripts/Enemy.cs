@@ -13,13 +13,14 @@ public class Enemy : Building
     {
         range = 15;      
         speed = 3;
-        health = 25;
+        currentHP = 25;
+        maxHP = 25;
         Begin();
         StartCoroutine(TaggingDelay());
     }
     void Update()
     {
-        if (health < 1)
+        if (currentHP < 1)
         {
             transform.Translate(100000, 100000, 100000);
             StartCoroutine(DestroyDelay());

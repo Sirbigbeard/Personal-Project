@@ -24,7 +24,8 @@ public class Building : MonoBehaviour
     private Weapon weaponScript;
     //variable declarations specifically for child classes
     protected float speed;
-    public int health;
+    public int maxHP;
+    public int currentHP;
     protected float distanceToTarget;
     //public GameObject GameManager;
     //private GameManager gameManagerScript;
@@ -39,7 +40,7 @@ public class Building : MonoBehaviour
             Debug.Log("attacking, targets.count = " + targets.Count + " and target = " + target);
             FireProjectile();
         }
-        if (health < 1)
+        if (currentHP < 1)
         {
             transform.Translate(100000, 100000, 100000);
             StartCoroutine(DestroyDelay());
@@ -48,7 +49,8 @@ public class Building : MonoBehaviour
     void Awake()
     {
         Begin();
-        health = 25;
+        maxHP = 25;
+        currentHP = 25;
         StartCoroutine(TaggingDelay());
     }
     protected void Begin()
