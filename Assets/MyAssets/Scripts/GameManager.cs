@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //on round end active spells still show
     //add spell effect to bulwark, make other 7 spells functional and visible. 
-    //make health and mana bars for player.
-    //give each spell a mana cost, make mana regen begin to tick after spell cast and stop ticking if at full mana. 
-    //create currency with which to buy buildings/gear
     //give allies/enemies attacks
     //gamedesign of the abilities etc, expand upon all the systems in place.
     //begin flushing out offense/adventuring
     //figure out how rounds will work and program the necessary systems to spawn enemies randomly around the battlefield etc.
+    
+    //make blacksmith button that can make gear for you for $$ or can get gear adventuring
 
     //first few rounds are pretty easy with the inital gold you get, but if you choose to adventure your early buildings take significant damage which takes gold to repair. 
     //figure out how allies are going to be implemented (maybe they teleport over from adventuring side to active button spots randomly, maybe you place them like buildings, maybe you can place them on top of buildings if the building is already there
@@ -72,6 +71,7 @@ public class GameManager : MonoBehaviour
     private Button hutButton;
     private Button crenelationsButton;
     private Button watchtowerButton;
+    public TextMeshProUGUI goldDisplay;
     private float mapZoomInput;
     private float mouseXInput;
     private float mouseYInput;
@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
     private int spellXLocation = -250;
     private int spellYLocation = 200;
     private int spellUINumber = 0;
+    public int gold;
+    public int currentBuildingCost;
+    public int maxActiveSpells = 8;
     private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -23.3f);
     private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -23.3f);
     private Vector3 offensePlayerPosition = new Vector3(500f, 3.54f, 0f);
@@ -112,8 +115,8 @@ public class GameManager : MonoBehaviour
         defenseMapButton.onClick.AddListener(SetDefenseMap);
         beginRoundButton.onClick.AddListener(BeginRound);
         spellBookButton.onClick.AddListener(ToggleSpellBook);
-        hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true); });
-        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false); });
+        hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true, 15); });
+        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
@@ -125,6 +128,8 @@ public class GameManager : MonoBehaviour
         Instantiate(enemy, new Vector3(0, 3.6f, 15), hut.transform.rotation);
         Instantiate(enemy, new Vector3(-15, 3.6f, 15), hut.transform.rotation);
         creationCamera.enabled = false;
+        gold = 100;
+        goldDisplay.text = "Gold: " + gold;
     }
     void Update()
     {
@@ -323,29 +328,31 @@ public class GameManager : MonoBehaviour
         spellUINumber = 0;
         foreach(GameObject spell in activeSpells)
         {
-            if (!playerScript.spellList.Contains(spell))
+            if (!playerScript.spellList.Contains(spell) && playerScript.spellList.Count < maxActiveSpells)
             {
                 playerScript.spellList.Add(spell);
-                Debug.Log(spell.name);
-                if (spellUINumber == 0)
-                {
-                    playerScript.spell1Name.text = spell.name;
-                }
-                if (spellUINumber == 1)
-                {
-                    playerScript.spell2Name.text = spell.name;
-                }
-                if (spellUINumber == 2)
-                {
-                    playerScript.spell3Name.text = spell.name;
-                }
-                if (spellUINumber == 3)
-                {
-                    playerScript.spell4Name.text = spell.name;
-                }
-                spellUINumber++;
             }
+            if (spellUINumber == 0 && playerScript.castableSpells > 0)
+            {
+                Debug.Log(spell.name);
+                playerScript.spell1Name.text = spell.name;
+            }
+            if (spellUINumber == 1 && playerScript.castableSpells > 1)
+            {
+                playerScript.spell2Name.text = spell.name;
+            }
+            if (spellUINumber == 2 && playerScript.castableSpells > 2)
+            {
+                playerScript.spell3Name.text = spell.name;
+            }
+            if (spellUINumber == 3 && playerScript.castableSpells > 3)
+            {
+                playerScript.spell4Name.text = spell.name;
+            }
+            spellUINumber++;
         }
+        playerScript.manaDisplay.text = "Mana: " + playerScript.currentMana + "/" + playerScript.maxMana;
+        playerScript.healthDisplay.text = "Health: " + playerScript.currentHP + "/" + playerScript.maxHP;
     }
 
     void EndRound()
@@ -353,6 +360,7 @@ public class GameManager : MonoBehaviour
         roundBegun = false;
         offenseMapButtonObject.SetActive(true);
         beginRoundButtonObject.SetActive(true);
+        buildingListButtonObject.SetActive(true);
         mainCamera.transform.parent = null;
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
@@ -361,56 +369,64 @@ public class GameManager : MonoBehaviour
         {
             spellBookButtonObject.SetActive(true);
         }
+        playerScript.spell1Name.text = "";
+        playerScript.spell2Name.text = "";
+        playerScript.spell3Name.text = "";
+        playerScript.spell4Name.text = "";
+        playerScript.manaDisplay.text = "";
+        playerScript.healthDisplay.text = "";
     }
 
 
     //Spell and Building UI
     void ToggleSpellBook()
     {
-        if (!buildingListOpen)
+        if (buildingListOpen)
         {
-            if (!spellBookOpen)
+            ToggleBuildingList();
+        }
+        if (!spellBookOpen)
+        {
+            spellBookOpen = true;
+            foreach (GameObject spell in gatheredSpells)
             {
-                spellBookOpen = true;
-                foreach (GameObject spell in gatheredSpells)
-                {
-                    ListSpells(spell);
-                }
-                spellXLocation = -250;
-                spellYLocation = 200;
+                ListSpells(spell);
             }
-            else
+            spellXLocation = -250;
+            spellYLocation = 200;
+        }
+        else
+        {
+            spellBookOpen = false;
+            foreach (GameObject spell in gatheredSpells)
             {
-                spellBookOpen = false;
-                foreach (GameObject spell in gatheredSpells)
-                {
-                    spell.SetActive(false);
-                }
+                spell.SetActive(false);
             }
         }
     }
     void ToggleBuildingList()
     {
-        if (!spellBookOpen)
+        if (spellBookOpen)
         {
-            if (!buildingListOpen)
+            ToggleSpellBook();
+        }
+        if (!buildingListOpen)
+        {
+            buildingListOpen = true;
+            foreach (GameObject building in buildingsAvailable)
             {
-                buildingListOpen = true;
-                foreach (GameObject building in buildingsAvailable)
-                {
-                    ListBuildings(building);
-                }
-                spellXLocation = -250;
-                spellYLocation = 200;
-                spellBookButtonObject.SetActive(false);
+                ListBuildings(building);
             }
-            else
+            spellXLocation = -250;
+            spellYLocation = 200;
+            spellBookButtonObject.SetActive(false);
+        }
+        else
+        {
+            buildingListOpen = false;
+            foreach (GameObject building in buildingsAvailable)
             {
-                buildingListOpen = false;
-                foreach (GameObject building in buildingsAvailable)
-                {
-                    building.SetActive(false);
-                }
+                building.SetActive(false);
             }
         }
     }
@@ -449,15 +465,23 @@ public class GameManager : MonoBehaviour
         }
     }
     //Building Creation Methods
-    void Build(GameObject building, float height, bool rangeFinder)
+    void Build(GameObject building, float height, bool rangeFinder, int cost)
     {
-        if (currentBuilding != null)
+        if(gold >= cost)
         {
-            Destroy(currentBuilding);
+            if (currentBuilding != null)
+            {
+                Destroy(currentBuilding);
+            }
+            currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
+            currentBuildingRangeFinder = rangeFinder;
+            currentBuildingCost = cost;
+            InitialBuild();
         }
-        currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
-        currentBuildingRangeFinder = rangeFinder;
-        InitialBuild();
+        else
+        {
+            Debug.Log("You too poor noob");
+        }
     }
     //Misc Methods
     void Pause()

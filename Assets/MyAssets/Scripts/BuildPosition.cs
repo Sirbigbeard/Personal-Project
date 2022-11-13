@@ -1662,6 +1662,8 @@ public class BuildPosition : MonoBehaviour
         {
             gameManagerScript.currentBuildingScript.rangeFinder.GetComponent<MeshRenderer>().enabled = false;
         }
+        gameManagerScript.gold -= gameManagerScript.currentBuildingCost;
+        gameManagerScript.goldDisplay.text = "Gold: " + gameManagerScript.gold;
         gameManagerScript.creationCamera.enabled = false;
         gameManagerScript.constructing = false;
         gameManagerScript.currentBuilding = null;

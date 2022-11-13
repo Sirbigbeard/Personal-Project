@@ -31,11 +31,9 @@ public class SpellBookButton : MonoBehaviour
             gameManagerScript.activeSpells.Remove(gameObject);
             //remove glow effect from card
         }
-        else if (gameManagerScript.activeSpells.Count < 8)
+        else if (gameManagerScript.activeSpells.Count < gameManagerScript.maxActiveSpells)
         {
-            Debug.Log(gameManagerScript.activeSpells.Count);
             gameManagerScript.activeSpells.Add(gameObject);
-            Debug.Log(gameManagerScript.activeSpells.Count);
             //add glow effect to card
         }
         else

@@ -33,5 +33,11 @@ public class Enemy : Building
         rangeFinderScript.validTargetTags.Add("Building");
         rangeFinderScript.validTargetTags.Add("Player");
     }
-    
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.name == "IceWaveHitbox")
+        {
+            Destroy(gameObject);
+        }
+    }
 }

@@ -12,11 +12,20 @@ public class Player : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private float speed = 15f;
+    private float manaRegenRate = 1;
+    public int currentMana;
+    public int maxMana;
     public int currentHP;
     public int maxHP;
+    public int level = 1;
+    public int castableSpells = 1;
     public int touchingBuilding = 0;
     private bool attackCooldownActive = false;
+    private bool spellCasted = false;
     public bool attackDurationActive = false;
+    private bool bulwarkRefresh = false;
+    private bool bulwarkActive = false;
+    private bool manaTickActive = false;
     private float attackCooldownFloat = 3.1f;
     private float attackDurationFloat = 1.5f;
     public GameObject GameManager;
@@ -29,10 +38,13 @@ public class Player : MonoBehaviour
     public GameObject leftLeg;
     public GameObject rightLeg;
     public GameObject torso;
+    public GameObject iceWaveHitbox;
     public TextMeshProUGUI spell1Name;
     public TextMeshProUGUI spell2Name;
     public TextMeshProUGUI spell3Name;
     public TextMeshProUGUI spell4Name;
+    public TextMeshProUGUI manaDisplay;
+    public TextMeshProUGUI healthDisplay;
     public List<GameObject> spellList;
     private Renderer leftLegRenderer;
     private Renderer leftArmRenderer;
@@ -66,6 +78,8 @@ public class Player : MonoBehaviour
         torsoRenderer.material.SetColor("_Color", playerColor);
         currentHP = 10;
         maxHP = 10;
+        currentMana = 10;
+        maxMana = 10;
         transform.position = startingPosition;
     }
 
@@ -80,49 +94,58 @@ public class Player : MonoBehaviour
                     Attack();
                 }
             }
-            if (Input.GetKeyDown("1") && spellList.Count > 0)
+            if (Input.GetKeyDown("1") && castableSpells > 0)
             {
                 CastSpell(spellList[0]);
-                if (spellList.Count > 4)
+                if (spellList.Count > castableSpells && spellCasted)
                 {
                     spellList.Add(spellList[0]);
-                    spellList[0] = spellList[4];
-                    spell1Name.text = spellList[4].name;
-                    spellList.RemoveAt(4);
+                    spellList[0] = spellList[castableSpells];
+                    spell1Name.text = spellList[castableSpells].name;
+                    spellList.RemoveAt(castableSpells);
                 }
+                spellCasted = false;
             }
-            if (Input.GetKeyDown("2") && spellList.Count > 1)
+            if (Input.GetKeyDown("2") && castableSpells > 1)
             {
                 CastSpell(spellList[1]);
-                if (spellList.Count > 4)
+                if (spellList.Count > castableSpells && spellCasted)
                 {
                     spellList.Add(spellList[1]);
-                    spellList[1] = spellList[4];
-                    spell2Name.text = spellList[4].name;
-                    spellList.RemoveAt(4);
+                    spellList[1] = spellList[castableSpells];
+                    spell2Name.text = spellList[castableSpells].name;
+                    spellList.RemoveAt(castableSpells);
                 }
+                spellCasted = false;
             }
-            if (Input.GetKeyDown("3") && spellList.Count > 2)
+            if (Input.GetKeyDown("3") && castableSpells > 2)
             {
                 CastSpell(spellList[2]);
-                if (spellList.Count > 4)
+                if (spellList.Count > castableSpells && spellCasted)
                 {
                     spellList.Add(spellList[2]);
-                    spellList[2] = spellList[4];
-                    spell3Name.text = spellList[4].name;
-                    spellList.RemoveAt(4);
+                    spellList[2] = spellList[castableSpells];
+                    spell3Name.text = spellList[castableSpells].name;
+                    spellList.RemoveAt(castableSpells);
                 }
+                spellCasted = false;
             }
-            if (Input.GetKeyDown("4") && spellList.Count > 3)
+            if (Input.GetKeyDown("4") && castableSpells > 3)
             {
                 CastSpell(spellList[3]);
-                if (spellList.Count > 4)
+                if (spellList.Count > castableSpells && spellCasted)
                 {
                     spellList.Add(spellList[3]);
-                    spellList[3] = spellList[4];
-                    spell4Name.text = spellList[4].name;
-                    spellList.RemoveAt(4);
+                    spellList[3] = spellList[castableSpells];
+                    spell4Name.text = spellList[castableSpells].name;
+                    spellList.RemoveAt(castableSpells);
                 }
+                spellCasted = false;
+            }
+            if(currentMana < maxMana && !manaTickActive)
+            {
+                StartCoroutine(ManaTick());
+                manaTickActive = true;
             }
         }
     }
@@ -146,7 +169,7 @@ public class Player : MonoBehaviour
                 playerRb.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
             }
         }
-        if(gameManagerScript.roundBegun)
+        if (gameManagerScript.roundBegun)
         {
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
@@ -182,29 +205,35 @@ public class Player : MonoBehaviour
     }
     public void CastSpell(GameObject spell)
     {
-        if(spell.name == "Fire Ball")
+        if (spell.name == "Fire Ball")
         {
             CastFireball();
+            spellCasted = true;
         }
         if (spell.name == "Slam")
         {
             CastSlam();
+            spellCasted = true;
         }
-        if (spell.name == "Ice Wave")
+        if (spell.name == "Ice Wave" && currentMana >= 5)
         {
             CastIceWave();
+            spellCasted = true;
         }
         if (spell.name == "Summon Imp")
         {
             CastSummonImp();
+            spellCasted = true;
         }
-        if (spell.name == "Bulwark")
+        if (spell.name == "Bulwark" && currentMana >= 4)
         {
             CastBulwark();
+            spellCasted = true;
         }
         if (spell.name == "Blink")
         {
             CastBlink();
+            spellCasted = true;
         }
     }
     public void CastFireball()
@@ -217,6 +246,8 @@ public class Player : MonoBehaviour
     }
     public void CastIceWave()
     {
+        currentMana -= 5;
+        iceWaveHitbox.SetActive(true);
         Debug.Log("Ice Wave Casted");
     }
     public void CastSummonImp()
@@ -225,6 +256,12 @@ public class Player : MonoBehaviour
     }
     public void CastBulwark()
     {
+        currentMana -= 4;
+        if (bulwarkActive == true)
+        {
+            bulwarkRefresh = true;
+        }
+        bulwarkActive = true;
         leftLegRenderer.material.SetColor("_Color", bulwarkColor);
         rightLegRenderer.material.SetColor("_Color", bulwarkColor);
         leftArmRenderer.material.SetColor("_Color", bulwarkColor);
@@ -239,7 +276,7 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Building" || other.tag == "Wall")
+        if (other.tag == "Building" || other.tag == "Wall")
         {
             touchingBuilding += 1;
         }
@@ -249,22 +286,62 @@ public class Player : MonoBehaviour
         if (other.tag == "Building" || other.tag == "Wall")
         {
             touchingBuilding -= 1;
-            playerRb.velocity = new Vector3(0, 0, 0); 
+            playerRb.velocity = new Vector3(0, 0, 0);
         }
     }
     IEnumerator BulwarkTimer()
     {
         yield return new WaitForSeconds(5);
-        leftLegRenderer.material.SetColor("_Color", playerColor);
-        rightLegRenderer.material.SetColor("_Color", playerColor);
-        leftArmRenderer.material.SetColor("_Color", playerColor);
-        rightArmRenderer.material.SetColor("_Color", playerColor);
-        headRenderer.material.SetColor("_Color", playerColor);
-        torsoRenderer.material.SetColor("_Color", playerColor);
+        if (!bulwarkRefresh)
+        {
+            Debug.Log("Bulwark was refreshed");
+            leftLegRenderer.material.SetColor("_Color", playerColor);
+            rightLegRenderer.material.SetColor("_Color", playerColor);
+            leftArmRenderer.material.SetColor("_Color", playerColor);
+            rightArmRenderer.material.SetColor("_Color", playerColor);
+            headRenderer.material.SetColor("_Color", playerColor);
+            torsoRenderer.material.SetColor("_Color", playerColor);
+            bulwarkActive = false;
+        }
+        Debug.Log("Bulwark not refreshed");
+        bulwarkRefresh = false;
     }
     public void Reset()
     {
         transform.position = startingPosition;
         currentHP = maxHP;
+        if (gameManagerScript.gatheredSpells.Count != 0)
+        {
+            if (level < 3)
+            {
+                castableSpells = 1;
+            }
+            else if (level < 6) 
+            {
+                castableSpells = 2;
+            }
+            else if (level < 10)
+            {
+                castableSpells = 3;
+            }
+            else
+            {
+                castableSpells = 4;
+            }
+        }
+    }
+    IEnumerator ManaTick()
+    {
+        yield return new WaitForSeconds(manaRegenRate);
+        currentMana++;
+        manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
+        if(currentMana < maxMana)
+        {
+            StartCoroutine(ManaTick());
+        }
+        else
+        {
+            manaTickActive = false;
+        }
     }
 }
