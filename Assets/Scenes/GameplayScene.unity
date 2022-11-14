@@ -33339,6 +33339,7 @@ MonoBehaviour:
   rightLeg: {fileID: 5134809134937519314}
   torso: {fileID: 5591359310324764009}
   iceWaveHitbox: {fileID: 2108644394}
+  fireball: {fileID: 3705217913140364497, guid: 1c4581746cd6c784daeecf27dd7f6482, type: 3}
   spell1Name: {fileID: 605870484}
   spell2Name: {fileID: 801414049}
   spell3Name: {fileID: 1259105914}

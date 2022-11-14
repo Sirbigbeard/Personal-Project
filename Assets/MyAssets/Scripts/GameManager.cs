@@ -8,11 +8,12 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     //add spell effect to bulwark, make other 7 spells functional and visible. 
+    //camera does not recenter over characters head
     //give allies/enemies attacks
     //gamedesign of the abilities etc, expand upon all the systems in place.
     //begin flushing out offense/adventuring
     //figure out how rounds will work and program the necessary systems to spawn enemies randomly around the battlefield etc.
-    
+    //16 total skills at least, spell ranks maybe +25% effectiveness per, 
     //make blacksmith button that can make gear for you for $$ or can get gear adventuring
 
     //first few rounds are pretty easy with the inital gold you get, but if you choose to adventure your early buildings take significant damage which takes gold to repair. 

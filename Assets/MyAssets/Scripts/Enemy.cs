@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class Enemy : Building
 {
+    private bool iceWaveInternalBool = false;
     void Start()
     {
         
@@ -35,9 +36,25 @@ public class Enemy : Building
     }
     void OnTriggerEnter(Collider other)
     {
-        if(other.name == "IceWaveHitbox")
+        if(other.name == "IceWaveHitbox" && iceWaveInternalBool == false)
         {
-            Destroy(gameObject);
+            Debug.Log("icewave hit");
+            currentHP -= 5;
+            speed /= 2;
+            iceWaveInternalBool = true;
+            StartCoroutine(IceWaveInternal());
+            StartCoroutine(IceWaveDebuff());
         }
+    }
+    IEnumerator IceWaveInternal()
+    {
+        yield return new WaitForSeconds(.02f);
+        iceWaveInternalBool = false;
+    }
+    IEnumerator IceWaveDebuff()
+    {
+        yield return new WaitForSeconds(5);
+        speed *= 2;
+        //add visual effect to model here
     }
 }

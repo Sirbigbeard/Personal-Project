@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public GameObject rightLeg;
     public GameObject torso;
     public GameObject iceWaveHitbox;
+    public GameObject fireball;
     public TextMeshProUGUI spell1Name;
     public TextMeshProUGUI spell2Name;
     public TextMeshProUGUI spell3Name;
@@ -230,7 +231,7 @@ public class Player : MonoBehaviour
             CastBulwark();
             spellCasted = true;
         }
-        if (spell.name == "Blink")
+        if (spell.name == "Blink" && currentMana >= 2)
         {
             CastBlink();
             spellCasted = true;
@@ -239,6 +240,8 @@ public class Player : MonoBehaviour
     public void CastFireball()
     {
         Debug.Log("Fireball Casted");
+        GameObject currentFireball = Instantiate(fireball, new Vector3(transform.position.x, 2f, transform.position.z), transform.rotation);
+        currentFireball.transform.Translate(Vector3.forward * 1);
     }
     public void CastSlam()
     {
@@ -247,7 +250,9 @@ public class Player : MonoBehaviour
     public void CastIceWave()
     {
         currentMana -= 5;
+        manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
         iceWaveHitbox.SetActive(true);
+        StartCoroutine(IceWaveHitDuration());
         Debug.Log("Ice Wave Casted");
     }
     public void CastSummonImp()
@@ -257,6 +262,7 @@ public class Player : MonoBehaviour
     public void CastBulwark()
     {
         currentMana -= 4;
+        manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
         if (bulwarkActive == true)
         {
             bulwarkRefresh = true;
@@ -272,6 +278,9 @@ public class Player : MonoBehaviour
     }
     public void CastBlink()
     {
+        currentMana -= 2;
+        manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
+        transform.Translate(Vector3.forward * 15);
         Debug.Log("Blink Casted");
     }
     void OnTriggerEnter(Collider other)
@@ -343,5 +352,10 @@ public class Player : MonoBehaviour
         {
             manaTickActive = false;
         }
+    }
+    IEnumerator IceWaveHitDuration()
+    {
+        yield return new WaitForSeconds(.01f);
+        iceWaveHitbox.SetActive(false);
     }
 }
