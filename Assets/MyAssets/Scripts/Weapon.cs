@@ -6,8 +6,8 @@ public class Weapon : MonoBehaviour
 {
     //public GameObject holder;
     public Player holderScript;
-    private int damage = 9;
-    public bool damageDealt = false;
+    //private int damage = 9;
+    //public bool damageDealt = false;
     public Enemy enemyScript;
 
     void Start()

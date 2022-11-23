@@ -7,25 +7,40 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //add spell effect to bulwark, make other 7 spells functional and visible. 
-    //camera does not recenter over characters head
-    //give allies/enemies attacks
-    //gamedesign of the abilities etc, expand upon all the systems in place.
-    //begin flushing out offense/adventuring
+    //braindead -----
+    //make recruit button work (copy build button)
+    //thinkers and testers ------
+    //make damageUI fade reset like icewave debuff. or stack damage up to a certain point and cut it off
+    //fill weaponizedBuilding.cs with all the relevant ranged attack stuff from the base building. Have ally, enemy, and hut inherit from weaponizedBuilding once working.
+    //check if start/update functions are inherited when empty, if so just fill out stats of hut and try plugging in and playing
+    //rince repeat for remaining buildings that dont have extra functions
+    //make a home base that when destroyed ends the game
+    //pass a reference to the created ui to the building in finalizeBuild ideally. (so that it can communicate damage to the ui), that finishes buildings, allies and enemies (i think)
+    //change player movement to obey physics but remain crispy, (register movement of player) leave systems commented out till new system works well.
+    //creative ------
+    //16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target
     //figure out how rounds will work and program the necessary systems to spawn enemies randomly around the battlefield etc.
-    //16 total skills at least, spell ranks maybe +25% effectiveness per, 
-    //make blacksmith button that can make gear for you for $$ or can get gear adventuring
+    //make at least 3 diff buildings, allies, and enemies
 
+    //add tutorial that shows off all systems (maybe)
+    //use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
+
+
+    //change rangefinder bool to hasrangedfinder
+    //begin flushing out offense/adventuring
+    //make blacksmith button that can make gear for you for $$ or can get gear adventuring
+    //retargeting rangefinder with range/2 or something that checks to override target
     //first few rounds are pretty easy with the inital gold you get, but if you choose to adventure your early buildings take significant damage which takes gold to repair. 
     //figure out how allies are going to be implemented (maybe they teleport over from adventuring side to active button spots randomly, maybe you place them like buildings, maybe you can place them on top of buildings if the building is already there
     //maybe you can place them in the areas between the buildings, maybe they only help for adventuring (i like this)
     //figure out what other stat systems I want to have in place, armor, attributes, etc.
     //replace all references to game manager within prefabs to gameManager = GameObject.Find("GameManager"); as currently they lose reference when instantiated.
     //models and animations
+    //spell effectss
     //UI/overlay look good
     //pause functionality
     //have a forward area with smaller areas that allies can be placed upon, or upon buildings if they have capacity. 
-    //comment every line of code 
+    //comment every variable with what it does and under what  
     ///Design offense map/maps (im thinking large labyrith of smallish rooms, when you enter one you cannot enter another new one till next round, when you start round if you are in hitbox of an uncleared room you fight it.
     ///NOT offense, adventuring. when you are adventuring you have to just trust in your men to hold, you will take more damage to your defenses, but you can find dank skeet. 
     ///maybe give option to watch the defense first
@@ -41,6 +56,8 @@ public class GameManager : MonoBehaviour
     private bool spellBookOpen = false;
     private bool buildingListOpen = false;
     public bool constructing = false;
+    public GameObject healthAndDamageCanvas;
+    public GameObject currentHealthAndDamageCanvas;
     public GameObject currentBuilding;
     public GameObject player;
     public GameObject mainCamera;
@@ -88,8 +105,8 @@ public class GameManager : MonoBehaviour
     public int gold;
     public int currentBuildingCost;
     public int maxActiveSpells = 8;
-    private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -23.3f);
-    private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -23.3f);
+    private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -14f);
+    private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -14f);
     private Vector3 offensePlayerPosition = new Vector3(500f, 3.54f, 0f);
     private Vector3 defensePlayerPosition;
     private Vector3 cameraPosition;
@@ -101,6 +118,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> buildingsAvailable;
     public Player playerScript;
     public Building currentBuildingScript;
+    public HealthAndDamageCanvas healthAndDamageCanvasScript;
     void Start()
     {
         playerScript = player.GetComponent<Player>();
@@ -116,8 +134,8 @@ public class GameManager : MonoBehaviour
         defenseMapButton.onClick.AddListener(SetDefenseMap);
         beginRoundButton.onClick.AddListener(BeginRound);
         spellBookButton.onClick.AddListener(ToggleSpellBook);
-        hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true, 15); });
-        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5); });
+        hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true, 15, new Vector3(0, 2.5f, 0)); });
+        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5, new Vector3(0, 5, 0)); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
@@ -466,7 +484,7 @@ public class GameManager : MonoBehaviour
         }
     }
     //Building Creation Methods
-    void Build(GameObject building, float height, bool rangeFinder, int cost)
+    void Build(GameObject building, float height, bool rangeFinder, int cost, Vector3 offset)
     {
         if(gold >= cost)
         {
@@ -474,9 +492,18 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(currentBuilding);
             }
+            if (currentHealthAndDamageCanvas != null)
+            {
+                Destroy(currentHealthAndDamageCanvas);
+            }
             currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
             currentBuildingRangeFinder = rangeFinder;
             currentBuildingCost = cost;
+            currentHealthAndDamageCanvas = Instantiate(healthAndDamageCanvas, new Vector3(healthAndDamageCanvas.transform.position.x, healthAndDamageCanvas.transform.position.y, healthAndDamageCanvas.transform.position.z), Quaternion.identity);
+            healthAndDamageCanvasScript = currentHealthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
+            healthAndDamageCanvasScript.host = currentBuilding;
+            healthAndDamageCanvasScript.offset = offset;
+            //currentHealthAndDamageCanvas.transform.parent = healthAndDamageCanvas.gameObject.transform;
             InitialBuild();
         }
         else

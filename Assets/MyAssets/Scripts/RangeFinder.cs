@@ -10,8 +10,7 @@ public class RangeFinder : MonoBehaviour
     public List<string> validTargetTags;
     void Start()
     {
-        
-
+      
     }
     void Awake()
     {
@@ -24,6 +23,7 @@ public class RangeFinder : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        //not sure i need this conditional
         if (validTargetTags.Count != 0)
         {
             foreach (string validTarget in validTargetTags)
@@ -47,9 +47,5 @@ public class RangeFinder : MonoBehaviour
                 }
             }
         }
-    }
-    public void AddValidTarget(string validTarget)
-    {
-        validTargetTags.Add(validTarget);
     }
 }

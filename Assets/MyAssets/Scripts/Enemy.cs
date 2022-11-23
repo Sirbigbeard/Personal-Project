@@ -12,12 +12,14 @@ public class Enemy : Building
     }
     void Awake()
     {
-        range = 15;      
+        range = 30;
+        attackRange = 3;
         speed = 3;
         currentHP = 25;
         maxHP = 25;
         Begin();
         StartCoroutine(TaggingDelay());
+
     }
     void Update()
     {
@@ -33,6 +35,10 @@ public class Enemy : Building
         yield return new WaitForSeconds(.1f);
         rangeFinderScript.validTargetTags.Add("Building");
         rangeFinderScript.validTargetTags.Add("Player");
+        rangeFinderScript.validTargetTags.Add("Ally");
+        //attackHitboxScript.validTargetTags.Add("Building");
+        //attackHitboxScript.validTargetTags.Add("Player");
+        //attackHitboxScript.validTargetTags.Add("Ally");
     }
     void OnTriggerEnter(Collider other)
     {

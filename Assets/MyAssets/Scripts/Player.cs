@@ -13,13 +13,14 @@ public class Player : MonoBehaviour
     private float verticalInput;
     private float speed = 15f;
     private float manaRegenRate = 1;
-    public int currentMana;
-    public int maxMana;
-    public int currentHP;
-    public int maxHP;
+    public float currentMana;
+    public float maxMana;
+    public float currentHP;
+    public float maxHP;
     public int level = 1;
     public int castableSpells = 1;
     public int touchingBuilding = 0;
+    public float basicAttackDamage = 25;
     private bool attackCooldownActive = false;
     private bool spellCasted = false;
     public bool attackDurationActive = false;
@@ -27,9 +28,11 @@ public class Player : MonoBehaviour
     private bool bulwarkActive = false;
     private bool manaTickActive = false;
     private float attackCooldownFloat = 3.1f;
-    private float attackDurationFloat = 1.5f;
     public GameObject GameManager;
     private GameManager gameManagerScript;
+    public GameObject attackHitbox;
+    private AttackHitbox attackHitboxScript;
+    public Enemy closestTargetScript;
     public GameObject mainCamera;
     public GameObject weapon;
     public GameObject head;
@@ -40,6 +43,8 @@ public class Player : MonoBehaviour
     public GameObject torso;
     public GameObject iceWaveHitbox;
     public GameObject fireball;
+    public GameObject imp;
+    private GameObject closestTarget;
     public TextMeshProUGUI spell1Name;
     public TextMeshProUGUI spell2Name;
     public TextMeshProUGUI spell3Name;
@@ -55,7 +60,7 @@ public class Player : MonoBehaviour
     private Renderer torsoRenderer;
     private Color playerColor;
     private Color bulwarkColor;
-    private Weapon weaponScript;
+    //private Weapon weaponScript;
     private Vector3 startingPosition = new Vector3(0, 3.5f, 0);
 
     void Start()
@@ -63,6 +68,7 @@ public class Player : MonoBehaviour
         spellList = new List<GameObject>();
         playerRb = gameObject.GetComponent<Rigidbody>();
         gameManagerScript = GameManager.GetComponent<GameManager>();
+        attackHitboxScript = attackHitbox.GetComponent<AttackHitbox>();
         bulwarkColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
         playerColor = new Color(.82f, .79f, .19f, 1f);
         leftLegRenderer = leftLeg.GetComponent<Renderer>();
@@ -77,6 +83,9 @@ public class Player : MonoBehaviour
         rightArmRenderer.material.SetColor("_Color", playerColor);
         headRenderer.material.SetColor("_Color", playerColor);
         torsoRenderer.material.SetColor("_Color", playerColor);
+        //attackHitbox.SetActive(true);
+        attackHitboxScript.validTargetTags.Add("Enemy");
+        //attackHitbox.SetActive(false);
         currentHP = 10;
         maxHP = 10;
         currentMana = 10;
@@ -188,7 +197,6 @@ public class Player : MonoBehaviour
     }
     private void Attack()
     {
-        //weaponScript.damageDealt = false;
         attackCooldownActive = true;
         attackDurationActive = true;
         StartCoroutine(AttackCooldown());
@@ -201,8 +209,32 @@ public class Player : MonoBehaviour
     }
     IEnumerator AttackDuration()
     {
-        yield return new WaitForSeconds(attackDurationFloat);
-        attackDurationActive = false;
+        yield return new WaitForSeconds(.01f);
+        closestTarget = null;
+        if (attackHitboxScript.targets != null)
+        {
+            float closestDistance = 9999f;
+            foreach (GameObject target in attackHitboxScript.targets)
+            {
+                float distanceVector = Vector3.Distance(transform.position, target.transform.position);
+                if (distanceVector < closestDistance)
+                {
+                    closestDistance = distanceVector;
+                    closestTarget = target;
+                }
+            }
+            if (closestTarget != null)
+            {
+                BasicAttack();
+            }
+            attackDurationActive = false;
+        }
+    } 
+    void BasicAttack()
+    {
+        closestTargetScript = closestTarget.GetComponent<Enemy>();
+        //closestTarget.gameObject.transform.position = new Vector3(100000, 10000, 10000);
+        closestTargetScript.currentHP -= basicAttackDamage;
     }
     public void CastSpell(GameObject spell)
     {
@@ -245,7 +277,11 @@ public class Player : MonoBehaviour
     }
     public void CastSlam()
     {
-        Debug.Log("Slam Casted");
+        basicAttackDamage *= 1.5f;
+        float reduction = basicAttackDamage / 3;
+        Attack();
+        basicAttackDamage -= reduction;
+        //have this do BasicAttack but with 50% more damage and a knockback, see how enemies move toward buildings for knockback code. 
     }
     public void CastIceWave()
     {
@@ -253,11 +289,11 @@ public class Player : MonoBehaviour
         manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
         iceWaveHitbox.SetActive(true);
         StartCoroutine(IceWaveHitDuration());
-        Debug.Log("Ice Wave Casted");
     }
     public void CastSummonImp()
     {
         Debug.Log("Summon Imp Casted");
+        Instantiate(imp, gameObject.transform.position, gameObject.transform.rotation);
     }
     public void CastBulwark()
     {
@@ -281,7 +317,6 @@ public class Player : MonoBehaviour
         currentMana -= 2;
         manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
         transform.Translate(Vector3.forward * 15);
-        Debug.Log("Blink Casted");
     }
     void OnTriggerEnter(Collider other)
     {
