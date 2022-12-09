@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Building : DamageableObject
 {
     //this class controls building functionality, and is also parent class to all ally and enemy classes to reuse targeting code.
     public GameObject projectile;
     public GameObject target;
     public GameObject rangeFinder;
+    public GameObject castle;
+    public float attackRange;
     public GameObject buildPositionObject;
     public BuildPosition buildPositionScript;
-    public float attackRange;
-    //public GameObject attackHitbox;
-    //protected AttackHitbox attackHitboxScript;
     protected Projectile projectileScript;
     protected RangeFinder rangeFinderScript;
     protected bool attackReadyRanged = true;
@@ -23,14 +22,208 @@ public class Building : MonoBehaviour
     public bool hitsFlying = false;
     protected bool attackCooldownActive = false;
     protected bool attackDurationActive = false;
-    protected float attackCooldownFloat = 3.1f;
     protected float attackDurationFloat = 1.5f;
-    public GameObject weapon;
-    //private Weapon weaponScript;
-    public float maxHP;
-    public float currentHP;
     protected float distanceToTarget;
-    protected float speed;
+    protected float attackDamage = 5;
+    public DamageableObject targetScript;
+    protected bool cleavingAttackBool = false;
+    protected bool cleavingAttackCooldownActive = true;
+    protected bool cleavingAttackDurationActive = true;
+   
+
+    void Start()
+    {
+        
+    }
+    void Update()
+    {
+        BuildingUpdate();
+    }
+    protected void BuildingUpdate()
+    {
+        if (attackReadyRanged && target != null)
+        {
+            Debug.Log("attacking, targets.count = " + targets.Count + " and target = " + target);
+            FireProjectile();
+        }
+        if (currentHP < 1)
+        {
+            StartCoroutine(DestroyDelay());
+        }
+        if(target != null)
+        {
+            if (targetScript.currentHP <= 0)
+            {
+                RemoveTarget(target);
+            }
+        }
+    }
+    void Awake()
+    {
+        Begin();
+    }
+    protected void Begin()
+    {
+        StartCoroutine(TaggingDelay());
+        buildPositionObject = GameObject.Find("BuildPosition");
+        buildPositionScript = buildPositionObject.GetComponent<BuildPosition>();
+        targets = new List<GameObject>();
+        rangeFinderScript = rangeFinder.GetComponent<RangeFinder>();
+        if (!hitsFlying)
+        {
+            rangeFinder.transform.localScale = new Vector3(range, .25f, range);
+        }
+        else
+        {
+            rangeFinder.transform.localScale = new Vector3(range, 2, range);
+        }
+    }
+    protected void FireProjectile()
+    {
+        Vector3 spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+        GameObject projectileFired = Instantiate(projectile, spawnPoint, projectile.transform.rotation) as GameObject;
+        projectileScript = projectileFired.GetScript() as Projectile;
+        projectileScript.target = target;
+        projectileScript.targetScript = targetScript;
+        attackReadyRanged = false;
+        StartCoroutine(RangedAttackCooldown());
+    }
+    protected IEnumerator RangedAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldownRanged);
+        attackReadyRanged = true;
+    }
+    protected IEnumerator TaggingDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        rangeFinderScript.validTargetTags.Add("Enemy");
+    }
+    protected void Attack()
+    {
+        attackCooldownActive = true;
+        attackDurationActive = true;
+        StartCoroutine(MelleAttackCooldown());
+        targetScript.TakeDamage(attackDamage);
+    }
+    IEnumerator MelleAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldownFloat);
+        attackCooldownActive = false;
+    }
+    protected void CleavingAttack()
+    {
+        cleavingAttackCooldownActive = true;
+        cleavingAttackDurationActive = true;
+        StartCoroutine(cleavingAttackCooldown());
+        StartCoroutine(cleavingAttackDuration());
+    }
+    protected IEnumerator cleavingAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldownFloat);
+        cleavingAttackCooldownActive = false;
+    }
+    protected IEnumerator cleavingAttackDuration()
+    {
+        yield return new WaitForSeconds(.01f);
+        foreach (GameObject target in attackHitboxScript.targets)
+        {
+            DamageableObject currentTargetScript = target.GetScript() as DamageableObject;
+            currentTargetScript.TakeDamage(attackDamage);
+        }
+        cleavingAttackDurationActive = false;
+    }
+    public void AddTarget(GameObject newTarget)
+    {
+        targets.Add(newTarget);
+        if (targets.Count == 1)
+        {
+            target = targets[0];
+            targetScript = target.GetScript() as DamageableObject;
+        }
+    }
+    /*public void RemoveTarget(GameObject targetToRemove)
+    {
+        targets.Remove(targetToRemove);
+        if (targets.Count == 0)
+        {
+            target = null;
+            targetScript = null;
+        }
+        else
+        {
+            target = gameObject.GetClosest(targets);
+            targetScript = target.GetScript() as DamageableObject;
+        }
+    }*/
+    public void RemoveTarget(GameObject targetToRemove)
+    {
+        float closestDistance = 9999f;
+        targets.Remove(targetToRemove);
+        GameObject closestEnemy = null;
+        if (targets.Count == 0)
+        {
+            target = null;
+            targetScript = null;
+        }
+        else foreach (GameObject enemy in targets)
+        {
+                float distanceVector = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distanceVector < closestDistance)
+                {
+                    closestDistance = distanceVector;
+                    closestEnemy = enemy;
+                }
+            }
+        if (closestEnemy != null)
+        {
+            target = closestEnemy;
+            targetScript = target.GetScript() as DamageableObject;
+        }
+    }
+    public void ChangeRange(int change)
+    {
+        range += change;
+    }
+    public void SetRange(int newRange)
+    {
+        range = newRange;
+    }
+    protected IEnumerator DestroyDelay()
+    {
+        transform.Translate(100000, 100000, 100000);
+        yield return new WaitForSeconds(.1f);
+        ResetPositionScript();
+        Destroy(gameObject);
+    }
+    //methods specifically for children classes
+    protected void Move()
+    {
+        if(target != null)
+        {
+            distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
+            if(distanceToTarget > attackRange)
+            {
+                targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            }
+            else if(!attackCooldownActive && !cleavingAttackBool)
+            {
+                Attack();
+            }
+            else if(!attackCooldownActive && cleavingAttackBool)
+            {
+                //CleavingAttack();
+            }
+            transform.LookAt(targetPosition);
+        }
+        if(target == null)
+        {
+            target = castle;
+            targetScript = target.GetScript() as DamageableObject;
+        }
+    }
+
+
     public bool position1 = false;
     public bool position2 = false;
     public bool position3 = false;
@@ -157,154 +350,6 @@ public class Building : MonoBehaviour
     public bool position124 = false;
     public bool position125 = false;
     public bool position126 = false;
-
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-        if (attackReadyRanged && target != null)
-        {
-            Debug.Log("attacking, targets.count = " + targets.Count + " and target = " + target);
-            FireProjectile();
-        }
-        if (currentHP < 1)
-        {
-            transform.Translate(100000, 100000, 100000);
-            ResetPositionScript();
-            StartCoroutine(DestroyDelay());
-        }
-    }
-    void Awake()
-    {
-        Begin();
-        maxHP = 25;
-        currentHP = 25;
-        StartCoroutine(TaggingDelay());
-    }
-    protected void Begin()
-    {
-        buildPositionObject = GameObject.Find("BuildPosition");
-        buildPositionScript = buildPositionObject.GetComponent<BuildPosition>();
-        targets = new List<GameObject>();
-        rangeFinderScript = rangeFinder.GetComponent<RangeFinder>();
-        //attackHitboxScript = attackHitbox.GetComponent<AttackHitbox>();
-        if (!hitsFlying)
-        {
-            rangeFinder.transform.localScale = new Vector3(range, .25f, range);
-        }
-        else
-        {
-            rangeFinder.transform.localScale = new Vector3(range, 2, range);
-        }
-    }
-    void FireProjectile()
-    {
-        Vector3 spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
-        GameObject projectileFired = Instantiate(projectile, spawnPoint, projectile.transform.rotation) as GameObject;
-        projectileScript = projectileFired.GetComponent<Projectile>();
-        projectileScript.target = target;
-        attackReadyRanged = false;
-        StartCoroutine(RangedAttackCooldown());
-    }
-    IEnumerator RangedAttackCooldown()
-    {
-        yield return new WaitForSeconds(attackCooldownRanged);
-        attackReadyRanged = true;
-    }
-    IEnumerator TaggingDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        rangeFinderScript.validTargetTags.Add("Enemy");
-    }
-    public void AddTarget(GameObject newTarget)
-    {
-        targets.Add(newTarget);
-        if (targets.Count == 1)
-        {
-            target = targets[0];
-        }
-    }
-    protected void Attack()
-    {
-        attackCooldownActive = true;
-        attackDurationActive = true;
-        StartCoroutine(MelleAttackCooldown());
-        Debug.Log("bonk");
-        //StartCoroutine(MelleAttackDuration());
-    }
-    IEnumerator MelleAttackCooldown()
-    {
-        yield return new WaitForSeconds(attackCooldownFloat);
-        attackCooldownActive = false;
-    }
-    //IEnumerator MelleAttackDuration()
-    //{
-    //    yield return new WaitForSeconds(attackDurationFloat);
-    //    attackDurationActive = false;
-    //}
-    //both removes the current target and finds the next closest available target if there is one.
-    public void RemoveTarget(GameObject targetToRemove)
-    {
-        float closestDistance = 9999f;
-        targets.Remove(targetToRemove);
-        GameObject closestEnemy = null;
-        if (targets.Count == 0)
-        {
-            target = null;
-        }
-        else foreach (GameObject enemy in targets)
-        {
-                float distanceVector = Vector3.Distance(transform.position, enemy.transform.position);
-                if (distanceVector < closestDistance)
-                {
-                    closestDistance = distanceVector;
-                    closestEnemy = enemy;
-                }
-            }
-        if (closestEnemy != null)
-        {
-            target = closestEnemy;
-        }
-    }
-    public void ChangeRange(int change)
-    {
-        range += change;
-    }
-    public void SetRange(int newRange)
-    {
-        range = newRange;
-    }
-    protected IEnumerator DestroyDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        Destroy(gameObject);
-    }
-    //methods specifically for children classes
-    protected void Move()
-    {
-        
-        if(target != null)
-        {
-            distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
-            if(distanceToTarget > attackRange)
-            {
-                targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-            }
-            else if(!attackCooldownActive)
-            {
-                Attack();
-            }
-            transform.LookAt(targetPosition);
-        }
-        if(target == null)
-        {
-            transform.rotation = Quaternion.Euler(0, 180f, 0); //default target should be home base when the z value is below whatever value the lanes begin converging
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
-        }
-    }
     protected void ResetPositionScript()
     {
         if (position1)

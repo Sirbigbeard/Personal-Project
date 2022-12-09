@@ -399,7 +399,6 @@ GameObject:
   - component: {fileID: 3468124908336494220}
   - component: {fileID: 6584315284455300991}
   - component: {fileID: 1060858880501589317}
-  - component: {fileID: 192527476326238719}
   - component: {fileID: 2241348122979991333}
   m_Layer: 0
   m_Name: Crenulations
@@ -457,155 +456,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.10471, y: 5.602936, z: 1.0147052}
   m_Center: {x: 0.05058098, y: 2.9084487, z: -0.0041577816}
---- !u!114 &192527476326238719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3468124908336494219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142c21e4953540549bf806cf8677ebde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  target: {fileID: 0}
-  rangeFinder: {fileID: 0}
-  buildPositionObject: {fileID: 0}
-  buildPositionScript: {fileID: 0}
-  attackRange: 0
-  attackCooldownRanged: 3
-  hitsFlying: 0
-  weapon: {fileID: 0}
-  maxHP: 0
-  currentHP: 0
-  position1: 0
-  position2: 0
-  position3: 0
-  position4: 0
-  position5: 0
-  position6: 0
-  position7: 0
-  position8: 0
-  position9: 0
-  position10: 0
-  position11: 0
-  position12: 0
-  position13: 0
-  position14: 0
-  position15: 0
-  position16: 0
-  position17: 0
-  position18: 0
-  position19: 0
-  position20: 0
-  position21: 0
-  position22: 0
-  position23: 0
-  position24: 0
-  position25: 0
-  position26: 0
-  position27: 0
-  position28: 0
-  position29: 0
-  position30: 0
-  position31: 0
-  position32: 0
-  position33: 0
-  position34: 0
-  position35: 0
-  position36: 0
-  position37: 0
-  position38: 0
-  position39: 0
-  position40: 0
-  position41: 0
-  position42: 0
-  position43: 0
-  position44: 0
-  position45: 0
-  position46: 0
-  position47: 0
-  position48: 0
-  position49: 0
-  position50: 0
-  position51: 0
-  position52: 0
-  position53: 0
-  position54: 0
-  position55: 0
-  position56: 0
-  position57: 0
-  position58: 0
-  position59: 0
-  position60: 0
-  position61: 0
-  position62: 0
-  position63: 0
-  position64: 0
-  position65: 0
-  position66: 0
-  position67: 0
-  position68: 0
-  position69: 0
-  position70: 0
-  position71: 0
-  position72: 0
-  position73: 0
-  position74: 0
-  position75: 0
-  position76: 0
-  position77: 0
-  position78: 0
-  position79: 0
-  position80: 0
-  position81: 0
-  position82: 0
-  position83: 0
-  position84: 0
-  position85: 0
-  position86: 0
-  position87: 0
-  position88: 0
-  position89: 0
-  position90: 0
-  position91: 0
-  position92: 0
-  position93: 0
-  position94: 0
-  position95: 0
-  position96: 0
-  position97: 0
-  position98: 0
-  position99: 0
-  position100: 0
-  position101: 0
-  position102: 0
-  position103: 0
-  position104: 0
-  position105: 0
-  position106: 0
-  position107: 0
-  position108: 0
-  position109: 0
-  position110: 0
-  position111: 0
-  position112: 0
-  position113: 0
-  position114: 0
-  position115: 0
-  position116: 0
-  position117: 0
-  position118: 0
-  position119: 0
-  position120: 0
-  position121: 0
-  position122: 0
-  position123: 0
-  position124: 0
-  position125: 0
-  position126: 0
 --- !u!114 &2241348122979991333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,12 +471,12 @@ MonoBehaviour:
   projectile: {fileID: 0}
   target: {fileID: 0}
   rangeFinder: {fileID: 0}
-  buildPositionObject: {fileID: 0}
-  buildPositionScript: {fileID: 0}
   attackRange: 0
+  buildPositionObject: {fileID: 0}
+  healthAndDamageCanvasScript: {fileID: 0}
+  buildPositionScript: {fileID: 0}
   attackCooldownRanged: 3
   hitsFlying: 0
-  weapon: {fileID: 0}
   maxHP: 0
   currentHP: 0
   position1: 0

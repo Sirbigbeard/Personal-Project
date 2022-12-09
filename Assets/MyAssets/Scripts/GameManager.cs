@@ -6,26 +6,41 @@ using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
-{
-    //braindead -----
-    //make recruit button work (copy build button)
-    //thinkers and testers ------
-    //make damageUI fade reset like icewave debuff. or stack damage up to a certain point and cut it off
-    //fill weaponizedBuilding.cs with all the relevant ranged attack stuff from the base building. Have ally, enemy, and hut inherit from weaponizedBuilding once working.
-    //check if start/update functions are inherited when empty, if so just fill out stats of hut and try plugging in and playing
-    //rince repeat for remaining buildings that dont have extra functions
-    //make a home base that when destroyed ends the game
-    //pass a reference to the created ui to the building in finalizeBuild ideally. (so that it can communicate damage to the ui), that finishes buildings, allies and enemies (i think)
-    //change player movement to obey physics but remain crispy, (register movement of player) leave systems commented out till new system works well.
-    //creative ------
-    //16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target
-    //figure out how rounds will work and program the necessary systems to spawn enemies randomly around the battlefield etc.
-    //make at least 3 diff buildings, allies, and enemies
-
-    //add tutorial that shows off all systems (maybe)
-    //use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
-
-
+{ 
+    //troubleshoot building 106/55
+    //make an enemybody script that pulls its enemy parent item to it's position if their distanceto is too great.
+    //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
+    //solve player attack
+    //make tab not disable player controls
+    //why does new removeTarget not work for building
+    //test enemy spawner (rotations need fixing)
+    //use the physics engine for all movement, fuck it. then you can have knockbacks and stuff, you could even incorporate gravity, things could slide when frozen by ice skeet, etc
+    //make a building that does aoe damage by cycling through all targets on the list and doing damage to each of them. 
+    //reduce a defensive stat during the attack window of attack duration
+    //0: learn about extentions and comb through code for where implementing them could improve things, comment as I go //test spell shuffle on round start
+    //0: try to fuck around with blender basic modeling and animation
+    //1: look into making static dealdamage method, make all things inherit from character, which has a maxHP and currentHP, then try typecasting the script as a character and doing the modifications there directly. 
+    //2: test fire projectile method of building to ensure typecasting the script is working, test both typecasts to see if they work on children
+    //fill out getScript in extensions as more scripts are added
+    //look into interfaces for player class 
+    //3: then do enemy spawn method that attaches UI to them and test that as well.
+    //4: fill out archer and footman gameobjects and figure out how to spawn them in. (maybe they spawn one at a time in front of your main building, then you left click them and right click an enemy to set that enemy as their target, if they get stuck on a building figure out a fix) maybe they also have a random run direction unti orders are given
+    //test recruit button once ally class has been branched. 
+    //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target
+    //5: BUILDING/ALLY/ENEMY VARIETY: make at least 3 diff buildings, allies, and enemies
+    //ENEMY MOVEMENT: fix bug where enemies will get stuck to each other. 
+    //PLAYER MOVEMENT: change player movement to obey physics but remain crispy, (register movement of player) leave systems commented out till new system works well.
+    //EFFECTS: give enemies blue effect, player silver effect when casting bulwark/icewave... figure out how to use effects and create some basic ones
+    //SPAWN METHOD: make a spawn method similar to the build method that passes the healthAndDamageCanvas to 
+    //HOME BASE: make a home base that when destroyed ends the game
+    //ROUNDS: figure out how rounds will work and program the necessary systems
+    //TUTORIAL: add tutorial that shows off all systems (maybe)
+    //TOOLTIPS: use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
+    //this will run child overriden method, base will run parent. (apparently)
+    //spell ideas: Vengeance: rank1: charge for 3 seconds, then attack, dealing bonus damage equal to the damage taken, rank2: 50% damage reduction for dur, rank3: damage immunity for dur. 
+    //look into changing rangefinder objects to just distance methods, nahh i dont think so
+    //fuck you matt, dont make this a pussy shit half assed thing, aim for the stars.
+    //add enemy aggro system where top source of damage is swapped to if its in targetlist
     //change rangefinder bool to hasrangedfinder
     //begin flushing out offense/adventuring
     //make blacksmith button that can make gear for you for $$ or can get gear adventuring
@@ -36,29 +51,33 @@ public class GameManager : MonoBehaviour
     //figure out what other stat systems I want to have in place, armor, attributes, etc.
     //replace all references to game manager within prefabs to gameManager = GameObject.Find("GameManager"); as currently they lose reference when instantiated.
     //models and animations
-    //spell effectss
+    //spell effects
     //UI/overlay look good
     //pause functionality
+    //bug where enemies target each other
     //have a forward area with smaller areas that allies can be placed upon, or upon buildings if they have capacity. 
     //comment every variable with what it does and under what  
-    ///Design offense map/maps (im thinking large labyrith of smallish rooms, when you enter one you cannot enter another new one till next round, when you start round if you are in hitbox of an uncleared room you fight it.
-    ///NOT offense, adventuring. when you are adventuring you have to just trust in your men to hold, you will take more damage to your defenses, but you can find dank skeet. 
-    ///maybe give option to watch the defense first
-    ///you have to decide wether you want sick items and artifacts bases from adventuring or to build up your economy and infrastructure by defending your base better/investing in base/interest on rescources.
-    ///when offense starts the square you are on determines the dungeon you do, which becomes the new offense map until the round finishes. 
+    //Design offense map/maps (im thinking large labyrith of smallish rooms, when you enter one you cannot enter another new one till next round, when you start round if you are in hitbox of an uncleared room you fight it.
+    //NOT offense, adventuring. when you are adventuring you have to just trust in your men to hold, you will take more damage to your defenses, but you can find dank skeet. 
+    //maybe give option to watch the defense first
+    //you have to decide wether you want sick items and artifacts bases from adventuring or to build up your economy and infrastructure by defending your base better/investing in base/interest on rescources.
+    //when offense starts the square you are on determines the dungeon you do, which becomes the new offense map until the round finishes. 
     //have a max number of buildings, which can be increased
     //To add spell ui images just perform a check for the first 4 spells listed in the round begin of game manager and display the corresponding image, then each time a spell is cast do a check with a FindImage()
     //method that takes in the name of the spell as a parameter and displays the corresponding image to the correct position on the UI
+    //something to try: if running a method in a grandparent class of a child, you call the method, and it is overriden in the parent, does the method run the grandparent or parent version
 
     public bool currentBuildingRangeFinder = false;
     public bool roundBegun = false;
     private bool defenseMap = true;
     private bool spellBookOpen = false;
     private bool buildingListOpen = false;
+    private bool recruitmentOpen = false;
     public bool constructing = false;
     public GameObject healthAndDamageCanvas;
     public GameObject currentHealthAndDamageCanvas;
     public GameObject currentBuilding;
+    public GameObject castle;
     public GameObject player;
     public GameObject mainCamera;
     public Camera creationCamera;
@@ -71,16 +90,19 @@ public class GameManager : MonoBehaviour
     public GameObject defenseMapButtonObject;
     public GameObject beginRoundButtonObject;
     public GameObject spellBookButtonObject;
+    public GameObject buildingListButtonObject;
     public GameObject fireBallButtonObject;
     public GameObject slamButtonObject;
     public GameObject summonImpButtonObject;
     public GameObject bulwarkButtonObject;
     public GameObject blinkButtonObject;
     public GameObject iceWaveButtonObject;
-    public GameObject buildingListButtonObject;
     public GameObject hutButtonObject;
     public GameObject crenelationsButtonObject;
     public GameObject watchtowerButtonObject;
+    public GameObject recruitListButtonObject;
+    public GameObject archerButtonObject;
+    public GameObject footmanButtonObject;
     private Button offenseMapButton;
     private Button defenseMapButton;
     private Button beginRoundButton;
@@ -89,6 +111,9 @@ public class GameManager : MonoBehaviour
     private Button hutButton;
     private Button crenelationsButton;
     private Button watchtowerButton;
+    private Button recruitListButton;
+    private Button archerButton;
+    private Button footmanButton;
     public TextMeshProUGUI goldDisplay;
     private float mapZoomInput;
     private float mouseXInput;
@@ -99,9 +124,12 @@ public class GameManager : MonoBehaviour
     private int cameraPanUpperBound = -5;
     private int cameraPanLeftBound = -20;
     private int cameraPanRightBound = 20;
-    private int spellXLocation = -250;
-    private int spellYLocation = 200;
+    private int spellXLocation;
+    private int spellYLocation;
     private int spellUINumber = 0;
+    private int laneBalance1 = 0;
+    private int laneBalance2 = 0;
+    private int laneBalance3 = 0;
     public int gold;
     public int currentBuildingCost;
     public int maxActiveSpells = 8;
@@ -112,10 +140,17 @@ public class GameManager : MonoBehaviour
     private Vector3 cameraPosition;
     private Vector3 cameraOffset = new Vector3(0, 7, -10);
     public Vector3 cameraDistance;
+    private Vector3 lane1Position;
+    private Vector3 lane2Position;
+    private Vector3 lane3Position;
     private Quaternion cameraRotation;
+    private Quaternion lane1Rotation;
+    private Quaternion lane2Rotation;
+    private Quaternion lane3Rotation;
     public List<GameObject> gatheredSpells;
     public List<GameObject> activeSpells;
     public List<GameObject> buildingsAvailable;
+    public List<GameObject> troopsAvailable;
     public Player playerScript;
     public Building currentBuildingScript;
     public HealthAndDamageCanvas healthAndDamageCanvasScript;
@@ -127,28 +162,35 @@ public class GameManager : MonoBehaviour
         beginRoundButton = beginRoundButtonObject.GetComponent<Button>();
         spellBookButton = spellBookButtonObject.GetComponent<Button>();
         buildingListButton = buildingListButtonObject.GetComponent<Button>();
+        recruitListButton = recruitListButtonObject.GetComponent<Button>();
         hutButton = hutButtonObject.GetComponent<Button>();
         crenelationsButton = crenelationsButtonObject.GetComponent<Button>();
         watchtowerButton = watchtowerButtonObject.GetComponent<Button>();
+        footmanButton = footmanButtonObject.GetComponent<Button>();
+        archerButton = archerButtonObject.GetComponent<Button>();
         offenseMapButton.onClick.AddListener(SetOffenseMap);
         defenseMapButton.onClick.AddListener(SetDefenseMap);
         beginRoundButton.onClick.AddListener(BeginRound);
         spellBookButton.onClick.AddListener(ToggleSpellBook);
+        recruitListButton.onClick.AddListener(ToggleRecruitment);
         hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true, 15, new Vector3(0, 2.5f, 0)); });
-        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5, new Vector3(0, 5, 0)); });
+        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5, new Vector3(0, 6, 0)); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
+        troopsAvailable = new List<GameObject>();
         buildingsAvailable = new List<GameObject>();
+        troopsAvailable.Add(footmanButtonObject);
+        troopsAvailable.Add(archerButtonObject);
         buildingsAvailable.Add(hutButtonObject);
         buildingsAvailable.Add(crenelationsButtonObject);
         buildingsAvailable.Add(watchtowerButtonObject);
         spellBookButtonObject.SetActive(false);
-        Instantiate(enemy, new Vector3(0, 3.6f, 15), hut.transform.rotation);
-        Instantiate(enemy, new Vector3(-15, 3.6f, 15), hut.transform.rotation);
+        ResetSpellLocation();
         creationCamera.enabled = false;
         gold = 100;
         goldDisplay.text = "Gold: " + gold;
+        SpawnEnemy(enemy, new Vector3(0,4,0));
     }
     void Update()
     {
@@ -156,22 +198,23 @@ public class GameManager : MonoBehaviour
         if (!roundBegun)
         {
             RegisterCameraMovementOverhead();
-            if (gatheredSpells.Count != 0)
+            if (gatheredSpells.Count != 0 && !spellBookButtonObject.activeSelf)
             {
                 spellBookButtonObject.SetActive(true);
             }
-            buildingListButtonObject.SetActive(true);
             if (Input.GetKeyDown("escape"))
             {
                 if (spellBookOpen)
                 {
                     ToggleSpellBook();
-                    spellBookOpen = false;
                 }
                 if (buildingListOpen)
                 {
                     ToggleBuildingList();
-                    buildingListOpen = false;
+                }
+                if (recruitmentOpen)
+                {
+                    ToggleRecruitment();
                 }
                 if (constructing)
                 {
@@ -194,7 +237,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
     //Camera Movement Functionality
     void RegisterCameraMovementOverhead()
     {
@@ -335,15 +377,20 @@ public class GameManager : MonoBehaviour
         {
             ToggleBuildingList();
         }
+        if (recruitmentOpen)
+        {
+            ToggleBuildingList();
+        }
         roundBegun = true;
         offenseMapButtonObject.SetActive(false);
         defenseMapButtonObject.SetActive(false);
         beginRoundButtonObject.SetActive(false);
         spellBookButtonObject.SetActive(false);
         buildingListButtonObject.SetActive(false);
+        recruitListButtonObject.SetActive(false);
         mainCamera.transform.parent = player.transform;
         ZoomIn();
-        ShuffleList(activeSpells);
+        activeSpells.ShuffleList();
         spellUINumber = 0;
         foreach(GameObject spell in activeSpells)
         {
@@ -380,14 +427,11 @@ public class GameManager : MonoBehaviour
         offenseMapButtonObject.SetActive(true);
         beginRoundButtonObject.SetActive(true);
         buildingListButtonObject.SetActive(true);
+        recruitListButtonObject.SetActive(true);
         mainCamera.transform.parent = null;
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
         playerScript.Reset();
-        if(gatheredSpells.Count != 0)
-        {
-            spellBookButtonObject.SetActive(true);
-        }
         playerScript.spell1Name.text = "";
         playerScript.spell2Name.text = "";
         playerScript.spell3Name.text = "";
@@ -395,11 +439,13 @@ public class GameManager : MonoBehaviour
         playerScript.manaDisplay.text = "";
         playerScript.healthDisplay.text = "";
     }
-
-
     //Spell and Building UI
     void ToggleSpellBook()
     {
+        if (recruitmentOpen)
+        {
+            ToggleRecruitment();
+        }
         if (buildingListOpen)
         {
             ToggleBuildingList();
@@ -411,8 +457,7 @@ public class GameManager : MonoBehaviour
             {
                 ListSpells(spell);
             }
-            spellXLocation = -250;
-            spellYLocation = 200;
+            ResetSpellLocation();
         }
         else
         {
@@ -425,6 +470,10 @@ public class GameManager : MonoBehaviour
     }
     void ToggleBuildingList()
     {
+        if (recruitmentOpen)
+        {
+            ToggleRecruitment();
+        }
         if (spellBookOpen)
         {
             ToggleSpellBook();
@@ -434,11 +483,9 @@ public class GameManager : MonoBehaviour
             buildingListOpen = true;
             foreach (GameObject building in buildingsAvailable)
             {
-                ListBuildings(building);
+                ListSpells(building);
             }
-            spellXLocation = -250;
-            spellYLocation = 200;
-            spellBookButtonObject.SetActive(false);
+            ResetSpellLocation();
         }
         else
         {
@@ -449,9 +496,43 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    void ToggleRecruitment()
+    {
+        if (buildingListOpen)
+        {
+            ToggleBuildingList();
+        }
+        if (spellBookOpen)
+        {
+            ToggleSpellBook();
+        }
+        if (!recruitmentOpen)
+        {
+            recruitmentOpen = true;
+            if (troopsAvailable.Count != 0)
+            {
+                foreach (GameObject recruit in troopsAvailable)
+                {
+                    ListSpells(recruit);
+                }
+                ResetSpellLocation();
+            } 
+        }
+        else
+        {
+            recruitmentOpen = false;
+            if (troopsAvailable.Count != 0)
+            {
+                foreach (GameObject recruit in troopsAvailable)
+                {
+                    recruit.SetActive(false);
+                }
+            }
+        }
+    }
     void ListSpells(GameObject spell)
     {
-        if (spell.gameObject.activeSelf == false)
+        if (!spell.gameObject.activeSelf)
         {
             spell.SetActive(true);
             spell.GetComponent<RectTransform>().anchoredPosition = new Vector2(spellXLocation, spellYLocation);
@@ -462,24 +543,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 spellXLocation = -250;
-                spellYLocation += 60;
-            }
-        }
-    }
-    void ListBuildings(GameObject building)
-    {
-        if (building.gameObject.activeSelf == false)
-        {
-            building.SetActive(true);
-            building.GetComponent<RectTransform>().anchoredPosition = new Vector2(spellXLocation, spellYLocation);
-            if (spellXLocation < 1)
-            {
-                spellXLocation += 250;
-            }
-            else
-            {
-                spellXLocation = -250;
-                spellYLocation += 60;
+                spellYLocation -= 60;
             }
         }
     }
@@ -496,40 +560,115 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(currentHealthAndDamageCanvas);
             }
+            constructing = true;
+            creationCamera.enabled = true;
             currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
             currentBuildingRangeFinder = rangeFinder;
             currentBuildingCost = cost;
-            currentHealthAndDamageCanvas = Instantiate(healthAndDamageCanvas, new Vector3(healthAndDamageCanvas.transform.position.x, healthAndDamageCanvas.transform.position.y, healthAndDamageCanvas.transform.position.z), Quaternion.identity);
-            healthAndDamageCanvasScript = currentHealthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
-            healthAndDamageCanvasScript.host = currentBuilding;
-            healthAndDamageCanvasScript.offset = offset;
-            //currentHealthAndDamageCanvas.transform.parent = healthAndDamageCanvas.gameObject.transform;
-            InitialBuild();
+            GeneralizedSpawn(offset);
         }
         else
         {
             Debug.Log("You too poor noob");
         }
     }
+    void SpawnEnemy(GameObject enemy, Vector3 offset)
+    {
+        int coinFlip = Random.Range(1, 5);
+        float xPos;
+        float zPos;
+        Quaternion rotation;
+        if (coinFlip == 1)
+        {
+            zPos = -63.5f;
+            xPos = Random.Range(-90.5f, 90.5f);
+            rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (coinFlip == 2)
+        {
+            zPos = 47.75f;
+            xPos = Random.Range(-90.5f, 90.5f);
+            rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (coinFlip == 3)
+        {
+            xPos = -90.5f;
+            zPos = Random.Range(-63.5f, 47.75f);
+            rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else
+        {
+            xPos = 90.5f;
+            zPos = Random.Range(-63.5f, 47.75f);
+            rotation = Quaternion.Euler(0, 270, 0);
+        }
+        currentBuilding = Instantiate(enemy, new Vector3(xPos, enemy.transform.position.y, zPos), rotation);
+        GeneralizedSpawn(offset);
+    }
+    void SpawnEnemyLane(GameObject enemy, Vector3 offset)
+    {
+        if(Mathf.Abs(laneBalance1 - laneBalance2) > 2)
+        {
+            if (laneBalance1 < laneBalance2)
+            {
+                currentBuilding = Instantiate(enemy, lane1Position, lane1Rotation);
+                GeneralizedSpawn(offset);
+            }
+            else
+            {
+                currentBuilding = Instantiate(enemy, lane1Position, lane1Rotation);
+                GeneralizedSpawn(offset);
+            }
+        }
+        else if (Mathf.Abs(laneBalance1 - laneBalance3) > 2)
+        {
+            if (laneBalance1 < laneBalance2)
+            {
+                currentBuilding = Instantiate(enemy, lane1Position, lane1Rotation);
+                GeneralizedSpawn(offset);
+            }
+            else
+            {
+                currentBuilding = Instantiate(enemy, lane3Position, lane3Rotation);
+                GeneralizedSpawn(offset);
+            }
+        }
+        else if (Mathf.Abs(laneBalance2 - laneBalance3) > 2)
+        {
+            if (laneBalance2 < laneBalance3)
+            {
+                currentBuilding = Instantiate(enemy, lane2Position, lane2Rotation);
+                GeneralizedSpawn(offset);
+            }
+            else
+            {
+                currentBuilding = Instantiate(enemy, lane3Position, lane3Rotation);
+                GeneralizedSpawn(offset);
+            }
+        }
+    }
+    void SpawnAlly()
+    {
+
+    }
     //Misc Methods
     void Pause()
     {
         Debug.Log("Game Paused");
     }
-    void ShuffleList(List<GameObject> list)
+    void GeneralizedSpawn(Vector3 offset)
     {
-        for(int i = 0; i < list.Count; i++)
-        {
-            GameObject temp = list[i];
-            int randomIndex = Random.Range(i, list.Count);
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
-        }
+        currentHealthAndDamageCanvas = Instantiate(healthAndDamageCanvas, new Vector3(healthAndDamageCanvas.transform.position.x, healthAndDamageCanvas.transform.position.y, healthAndDamageCanvas.transform.position.z), Quaternion.identity);
+        healthAndDamageCanvasScript = currentHealthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
+        healthAndDamageCanvasScript.host = currentBuilding;
+        healthAndDamageCanvasScript.offset = offset;
+        currentBuildingScript = currentBuilding.GetScript() as Building;
+        currentBuildingScript.healthAndDamageCanvasScript = healthAndDamageCanvasScript;
+        currentBuildingScript.castle = castle;
     }
-    void InitialBuild()
+    void ResetSpellLocation()
     {
-        currentBuildingScript = currentBuilding.GetComponent<Building>();
-        constructing = true;
-        creationCamera.enabled = true;
+        spellXLocation = -250;
+        spellYLocation = 250;
     }
 }

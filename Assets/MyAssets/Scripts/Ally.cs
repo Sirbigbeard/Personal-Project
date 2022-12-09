@@ -16,7 +16,7 @@ public class Ally : Building
         currentHP = 25;
         maxHP = 25;
         Begin();
-        StartCoroutine(TaggingDelay());
+        //StartCoroutine(TaggingDelay());
     }
     void Update()
     {
@@ -27,11 +27,11 @@ public class Ally : Building
         //}
         Move();
     }
-    IEnumerator TaggingDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        rangeFinderScript.validTargetTags.Add("Enemy");
-    }
+    //IEnumerator TaggingDelay()
+    //{
+    //    yield return new WaitForSeconds(.1f);
+    //    rangeFinderScript.validTargetTags.Add("Enemy");
+    //}
     new protected void Move()
     {
 

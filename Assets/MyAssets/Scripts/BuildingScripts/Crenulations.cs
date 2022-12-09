@@ -15,4 +15,8 @@ public class Crenulations : Building
     {
 
     }
+    void Awake()
+    {
+
+    }
 }

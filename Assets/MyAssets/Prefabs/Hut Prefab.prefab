@@ -242,15 +242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd251babfc2d59a40a82e44fb00d6bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
+  projectile: {fileID: 687413961591471314, guid: 833884b8fe544324a9146941d690640b, type: 3}
   target: {fileID: 0}
   rangeFinder: {fileID: 4681869330389500681}
-  buildPositionObject: {fileID: 0}
-  buildPositionScript: {fileID: 0}
   attackRange: 0
+  buildPositionObject: {fileID: 0}
+  healthAndDamageCanvasScript: {fileID: 0}
+  buildPositionScript: {fileID: 0}
   attackCooldownRanged: 3
   hitsFlying: 0
-  weapon: {fileID: 0}
   maxHP: 0
   currentHP: 0
   position1: 0

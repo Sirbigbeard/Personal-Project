@@ -13,13 +13,14 @@ public class Enemy : Building
     void Awake()
     {
         range = 30;
+        attackDamage = 2;
         attackRange = 3;
-        speed = 3;
+        speed = 5;
         currentHP = 25;
         maxHP = 25;
+        attackCooldownFloat = 3.1f;
         Begin();
         StartCoroutine(TaggingDelay());
-
     }
     void Update()
     {
@@ -30,7 +31,7 @@ public class Enemy : Building
         }
         Move();
     }
-    IEnumerator TaggingDelay()
+    new IEnumerator TaggingDelay()
     {
         yield return new WaitForSeconds(.1f);
         rangeFinderScript.validTargetTags.Add("Building");
@@ -44,9 +45,8 @@ public class Enemy : Building
     {
         if(other.name == "IceWaveHitbox" && iceWaveInternalBool == false)
         {
-            Debug.Log("icewave hit");
-            currentHP -= 5;
-            speed /= 2;
+            TakeDamage(5);
+            speed /= 3;
             iceWaveInternalBool = true;
             StartCoroutine(IceWaveInternal());
             StartCoroutine(IceWaveDebuff());
@@ -60,7 +60,42 @@ public class Enemy : Building
     IEnumerator IceWaveDebuff()
     {
         yield return new WaitForSeconds(5);
-        speed *= 2;
+        speed *= 3;
         //add visual effect to model here
+    }
+    new protected void Move()
+    {
+        if (target != null)
+        {
+            distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
+            if (target == castle && (distanceToTarget < 8 || distanceToTarget < attackRange))
+            {
+                if (attackRange < 7.1f)
+                {
+                    attackRange = 7.1f;
+                }
+                rangeFinder.SetActive(false);
+                targets.Clear();
+            }
+            if (distanceToTarget > attackRange)
+            {
+                targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            }
+            else if (!attackCooldownActive && !cleavingAttackBool)
+            {
+                Attack();
+            }
+            else if (!attackCooldownActive && cleavingAttackBool)
+            {
+                //CleavingAttack();
+            }
+            transform.LookAt(targetPosition);
+        }
+        if (target == null)
+        {
+            target = castle;
+            targetScript = target.GetScript() as DamageableObject;
+        }
     }
 }

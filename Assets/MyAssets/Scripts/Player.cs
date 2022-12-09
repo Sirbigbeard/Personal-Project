@@ -4,35 +4,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Player : MonoBehaviour
+public class Player : DamageableObject
 {
     private Rigidbody playerRb;
     private Vector3 moveInput;
     private float rotationRate = 15f;
     private float horizontalInput;
     private float verticalInput;
-    private float speed = 15f;
     private float manaRegenRate = 1;
     public float currentMana;
     public float maxMana;
-    public float currentHP;
-    public float maxHP;
     public int level = 1;
     public int castableSpells = 1;
     public int touchingBuilding = 0;
-    public float basicAttackDamage = 25;
+    public float basicAttackDamage = 13;
     private bool attackCooldownActive = false;
     private bool spellCasted = false;
     public bool attackDurationActive = false;
     private bool bulwarkRefresh = false;
     private bool bulwarkActive = false;
     private bool manaTickActive = false;
-    private float attackCooldownFloat = 3.1f;
     public GameObject GameManager;
     private GameManager gameManagerScript;
-    public GameObject attackHitbox;
-    private AttackHitbox attackHitboxScript;
-    public Enemy closestTargetScript;
+    public DamageableObject closestTargetScript;
     public GameObject mainCamera;
     public GameObject weapon;
     public GameObject head;
@@ -50,7 +44,6 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI spell3Name;
     public TextMeshProUGUI spell4Name;
     public TextMeshProUGUI manaDisplay;
-    public TextMeshProUGUI healthDisplay;
     public List<GameObject> spellList;
     private Renderer leftLegRenderer;
     private Renderer leftArmRenderer;
@@ -60,8 +53,7 @@ public class Player : MonoBehaviour
     private Renderer torsoRenderer;
     private Color playerColor;
     private Color bulwarkColor;
-    //private Weapon weaponScript;
-    private Vector3 startingPosition = new Vector3(0, 3.5f, 0);
+    private Vector3 startingPosition = new Vector3(0, 3f, 0);
 
     void Start()
     {
@@ -69,6 +61,8 @@ public class Player : MonoBehaviour
         playerRb = gameObject.GetComponent<Rigidbody>();
         gameManagerScript = GameManager.GetComponent<GameManager>();
         attackHitboxScript = attackHitbox.GetComponent<AttackHitbox>();
+        healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
+        healthAndDamageCanvasScript.offset = new Vector3(0, 2, 0);
         bulwarkColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
         playerColor = new Color(.82f, .79f, .19f, 1f);
         leftLegRenderer = leftLeg.GetComponent<Renderer>();
@@ -90,6 +84,8 @@ public class Player : MonoBehaviour
         maxHP = 10;
         currentMana = 10;
         maxMana = 10;
+        speed = 15f;
+        attackCooldownFloat = 3.1f;
         transform.position = startingPosition;
     }
 
@@ -210,31 +206,17 @@ public class Player : MonoBehaviour
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(.01f);
-        closestTarget = null;
-        if (attackHitboxScript.targets != null)
+        closestTarget = gameObject.GetClosest(attackHitboxScript.targets);
+        if (closestTarget != null)
         {
-            float closestDistance = 9999f;
-            foreach (GameObject target in attackHitboxScript.targets)
-            {
-                float distanceVector = Vector3.Distance(transform.position, target.transform.position);
-                if (distanceVector < closestDistance)
-                {
-                    closestDistance = distanceVector;
-                    closestTarget = target;
-                }
-            }
-            if (closestTarget != null)
-            {
-                BasicAttack();
-            }
-            attackDurationActive = false;
+            BasicAttack();
         }
+        attackDurationActive = false;
     } 
     void BasicAttack()
     {
-        closestTargetScript = closestTarget.GetComponent<Enemy>();
-        //closestTarget.gameObject.transform.position = new Vector3(100000, 10000, 10000);
-        closestTargetScript.currentHP -= basicAttackDamage;
+        closestTargetScript = closestTarget.GetScript() as DamageableObject;
+        closestTargetScript.TakeDamage(basicAttackDamage);
     }
     public void CastSpell(GameObject spell)
     {
@@ -271,7 +253,6 @@ public class Player : MonoBehaviour
     }
     public void CastFireball()
     {
-        Debug.Log("Fireball Casted");
         GameObject currentFireball = Instantiate(fireball, new Vector3(transform.position.x, 2f, transform.position.z), transform.rotation);
         currentFireball.transform.Translate(Vector3.forward * 1);
     }
@@ -292,7 +273,6 @@ public class Player : MonoBehaviour
     }
     public void CastSummonImp()
     {
-        Debug.Log("Summon Imp Casted");
         Instantiate(imp, gameObject.transform.position, gameObject.transform.rotation);
     }
     public void CastBulwark()
@@ -390,7 +370,7 @@ public class Player : MonoBehaviour
     }
     IEnumerator IceWaveHitDuration()
     {
-        yield return new WaitForSeconds(.01f);
+        yield return new WaitForSeconds(.05f);
         iceWaveHitbox.SetActive(false);
     }
 }

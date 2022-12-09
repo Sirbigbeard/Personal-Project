@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AttackHitbox : MonoBehaviour
 {
-    public GameObject building;
+    public GameObject host;
     //private GameObject attackTarget;
-    private Building buildingScript;
+    private DamageableObject hostScript;
     public List<string> validTargetTags;
     public List<GameObject> targets;
     void Start()
@@ -17,7 +17,7 @@ public class AttackHitbox : MonoBehaviour
     {
         validTargetTags = new List<string>();
         targets = new List<GameObject>();
-        buildingScript = building.GetComponent<Building>();
+        hostScript = host.GetScript() as DamageableObject;
     }
     void Update()
     {
@@ -25,12 +25,10 @@ public class AttackHitbox : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("colission");
         foreach (string validTarget in validTargetTags)
         {
             if (other.gameObject.tag == validTarget)
             {
-                Debug.Log("nig");
                 targets.Add(other.gameObject);
             }
         }

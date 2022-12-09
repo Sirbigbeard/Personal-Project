@@ -15,7 +15,7 @@ public class RangeFinder : MonoBehaviour
     void Awake()
     {
         validTargetTags = new List<string>();
-        buildingScript = building.GetComponent<Building>();
+        buildingScript = building.GetScript() as Building;
     }
     void Update()
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponizedBuilding : Building
+public class NoobCruncherScript : Enemy
 {
     // Start is called before the first frame update
     void Start()

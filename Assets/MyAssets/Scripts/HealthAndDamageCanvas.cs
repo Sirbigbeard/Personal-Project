@@ -29,7 +29,7 @@ public class HealthAndDamageCanvas : MonoBehaviour
     {
         yield return new WaitForSeconds(.1f);
         healthScript.offset = offset;
-        damageScript.offset = offset;//plus .4 to y value
+        damageScript.offset = new Vector3(offset.x, offset.y + .4f, offset.z);
         healthScript.host = host.transform;
         damageScript.host = host.transform;
     }

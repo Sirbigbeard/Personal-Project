@@ -12,7 +12,6 @@ public class ImpScript : Ally
     void Awake()
     {
         transform.Translate(Vector3.forward * 1);
-        StartCoroutine(TaggingDelay());
         speed = 3;
         Begin();
     }
@@ -21,10 +20,5 @@ public class ImpScript : Ally
     void Update()
     {
         Move();
-    }
-    IEnumerator TaggingDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        rangeFinderScript.validTargetTags.Add("Enemy");
     }
 }

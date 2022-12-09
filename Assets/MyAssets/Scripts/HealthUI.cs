@@ -6,7 +6,6 @@ using TMPro;
 
 public class HealthUI : MonoBehaviour
 {
-    public TextMeshProUGUI goldDisplay;
     public Vector3 offset = new Vector3(0f, 1.6f, 0f);
     public Vector3 location;
     public Transform host;
@@ -21,10 +20,13 @@ public class HealthUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        location = cam.WorldToScreenPoint(host.position + offset);
-        if (transform.position != location)
+        if (host != null)
         {
-            transform.position = location;
+            location = cam.WorldToScreenPoint(host.position + offset);
+            if (transform.position != location)
+            {
+                transform.position = location;
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
     public bool hit;
     private bool targetChecked = false;
     public GameObject target;
-    public Enemy targetScript;
+    public DamageableObject targetScript;
     public int damage = 10;
     private float missileSpeed = 5f;
     public GameObject building;
@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour
     { 
         if (other.gameObject.GetInstanceID() == target.GetInstanceID())//== target
         {
-            targetScript.currentHP -= 10;
+            targetScript.TakeDamage(damage);
             if (targetScript.currentHP <= 0)
             {
                 buildingScript.RemoveTarget(other.gameObject);
@@ -54,7 +54,7 @@ public class Projectile : MonoBehaviour
     IEnumerator TargetCheck()
     {
         yield return new WaitForSeconds(.001f);
-        targetScript = target.GetComponent<Enemy>();
+
         targetChecked = true;
     }
 }

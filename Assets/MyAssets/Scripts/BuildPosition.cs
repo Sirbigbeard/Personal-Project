@@ -653,7 +653,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position1 = true;
             building1 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -665,7 +665,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position2 = true;
             building2 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -677,7 +677,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position3 = true;
             building3 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -689,7 +689,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position4 = true;
             building4 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -701,7 +701,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position5 = true;
             building5 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -713,7 +713,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position6 = true;
             building6 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -725,7 +725,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position7 = true;
             building7 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -737,7 +737,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position8 = true;
             building8 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -749,7 +749,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position9 = true;
             building9 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-65f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -761,7 +761,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position10 = true;
             building10 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -773,7 +773,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position11 = true;
             building11 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -785,7 +785,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position12 = true;
             building12 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -797,7 +797,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position13 = true;
             building13 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -809,7 +809,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position14 = true;
             building14 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -821,7 +821,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position15 = true;
             building15 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -833,7 +833,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position16 = true;
             building16 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -845,7 +845,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position17 = true;
             building17 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -857,7 +857,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position18 = true;
             building18 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-55f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -869,7 +869,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position19 = true;
             building19 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -881,7 +881,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position20 = true;
             building20 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -893,7 +893,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position21 = true;
             building21 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -905,7 +905,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position22 = true;
             building22 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -917,7 +917,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position23 = true;
             building23 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -929,7 +929,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position24 = true;
             building24 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -941,7 +941,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position25 = true;
             building25 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -953,7 +953,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position26 = true;
             building26 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -965,7 +965,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position27 = true;
             building27 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-45f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -977,7 +977,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position28 = true;
             building28 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -989,7 +989,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position29 = true;
             building29 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1001,7 +1001,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position30 = true;
             building30 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1013,7 +1013,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position31 = true;
             building31 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1025,7 +1025,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position32 = true;
             building32 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1037,7 +1037,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position33 = true;
             building33 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1049,7 +1049,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position34 = true;
             building34 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1061,7 +1061,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position35 = true;
             building35 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1073,7 +1073,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position36 = true;
             building36 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-35f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1085,7 +1085,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position37 = true;
             building37 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1097,7 +1097,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position38 = true;
             building38 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1109,7 +1109,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position39 = true;
             building39 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1121,7 +1121,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position40 = true;
             building40 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1133,7 +1133,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position41 = true;
             building41 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1145,7 +1145,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position42 = true;
             building42 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1157,7 +1157,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position43 = true;
             building43 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1169,7 +1169,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position44 = true;
             building44 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1181,7 +1181,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position45 = true;
             building45 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-25f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1193,7 +1193,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position46 = true;
             building46 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1205,7 +1205,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position47 = true;
             building47 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1217,7 +1217,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position48 = true;
             building48 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1229,7 +1229,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position49 = true;
             building49 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1241,7 +1241,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position50 = true;
             building50 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1253,7 +1253,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position51 = true;
             building51 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1265,7 +1265,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position52 = true;
             building52 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1277,7 +1277,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position53 = true;
             building53 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1289,7 +1289,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position54 = true;
             building54 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-15f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1301,7 +1301,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position55 = true;
             building55 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1313,7 +1313,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position56 = true;
             building56 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1325,7 +1325,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position57 = true;
             building57 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1337,7 +1337,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position58 = true;
             building58 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1349,7 +1349,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position59 = true;
             building59 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1361,7 +1361,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position60 = true;
             building60 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1373,7 +1373,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position61 = true;
             building61 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1385,7 +1385,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position62 = true;
             building62 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1397,7 +1397,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position63 = true;
             building63 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(-5f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1409,7 +1409,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position64 = true;
             building64 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1421,7 +1421,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position65 = true;
             building65 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1433,7 +1433,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position66 = true;
             building66 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1445,7 +1445,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position67 = true;
             building67 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1457,7 +1457,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position68 = true;
             building68 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1469,7 +1469,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position69 = true;
             building69 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1481,7 +1481,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position70 = true;
             building70 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1493,7 +1493,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position71 = true;
             building71 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1505,7 +1505,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position72 = true;
             building72 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(5f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1517,7 +1517,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position73 = true;
             building73 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1529,7 +1529,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position74 = true;
             building74 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1541,7 +1541,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position75 = true;
             building75 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1553,7 +1553,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position76 = true;
             building76 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1565,7 +1565,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position77 = true;
             building77 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1577,7 +1577,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position78 = true;
             building78 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1589,7 +1589,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position79 = true;
             building79 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1601,7 +1601,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position80 = true;
             building80 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1613,7 +1613,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position81 = true;
             building81 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(15f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1625,7 +1625,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position82 = true;
             building82 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1637,7 +1637,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position83 = true;
             building83 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1649,7 +1649,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position84 = true;
             building84 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1661,7 +1661,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position85 = true;
             building85 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1673,7 +1673,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position86 = true;
             building86 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1685,7 +1685,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position87 = true;
             building87 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1697,7 +1697,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position88 = true;
             building88 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1709,7 +1709,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position89 = true;
             building89 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1721,7 +1721,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position90 = true;
             building90 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(25f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1733,7 +1733,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position91 = true;
             building91 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1745,7 +1745,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position92 = true;
             building92 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1757,7 +1757,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position93 = true;
             building93 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1769,7 +1769,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position94 = true;
             building94 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1781,7 +1781,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position95 = true;
             building95 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1793,7 +1793,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position96 = true;
             building96 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1805,7 +1805,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position97 = true;
             building97 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1817,7 +1817,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position98 = true;
             building98 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1829,7 +1829,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position99 = true;
             building99 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(35f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1841,7 +1841,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position100 = true;
             building100 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1853,7 +1853,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position101 = true;
             building101 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1865,7 +1865,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position102 = true;
             building102 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1877,7 +1877,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position103 = true;
             building103 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1889,7 +1889,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position104 = true;
             building104 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -1901,7 +1901,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position105 = true;
             building105 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -1913,7 +1913,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position106 = true;
             building106 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -1925,7 +1925,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position107 = true;
             building107 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -1937,7 +1937,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position108 = true;
             building108 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(45f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -1949,7 +1949,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position109 = true;
             building109 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -1961,7 +1961,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position110 = true;
             building110 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -1973,7 +1973,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position111 = true;
             building111 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -1985,7 +1985,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position112 = true;
             building112 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -1997,7 +1997,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position113 = true;
             building113 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -2009,7 +2009,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position114 = true;
             building114 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -2021,7 +2021,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position115 = true;
             building115 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -2033,7 +2033,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position116 = true;
             building116 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -2045,7 +2045,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position117 = true;
             building117 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(55f, gameManagerScript.currentBuilding.transform.position.y, -45f);
@@ -2057,7 +2057,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position118 = true;
             building118 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, 35f);
@@ -2069,7 +2069,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position119 = true;
             building119 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, 25f);
@@ -2081,7 +2081,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position120 = true;
             building120 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, 15f);
@@ -2093,7 +2093,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position121 = true;
             building121 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, 5f);
@@ -2105,7 +2105,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position122 = true;
             building122 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, -5f);
@@ -2117,7 +2117,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position123 = true;
             building123 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, -15f);
@@ -2129,7 +2129,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position124 = true;
             building124 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, -25f);
@@ -2141,7 +2141,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position125 = true;
             building125 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, -35f);
@@ -2153,7 +2153,7 @@ public class BuildPosition : MonoBehaviour
     {
         if (gameManagerScript.constructing)
         {
-            currentBuildingScript = gameManagerScript.currentBuilding.GetComponent<Building>();
+            currentBuildingScript = gameManagerScript.currentBuildingScript;
             currentBuildingScript.position126 = true;
             building126 = gameManagerScript.currentBuilding;
             gameManagerScript.currentBuilding.transform.position = new Vector3(65f, gameManagerScript.currentBuilding.transform.position.y, -45f);
