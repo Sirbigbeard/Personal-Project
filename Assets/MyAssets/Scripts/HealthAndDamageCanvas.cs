@@ -23,7 +23,7 @@ public class HealthAndDamageCanvas : MonoBehaviour
     }
     void Update()
     {
-        
+
     }
     IEnumerator HostPassDelay()
     {

@@ -147,7 +147,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4681869330389500674}
-  - {fileID: 5936262460369271252}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -242,17 +241,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd251babfc2d59a40a82e44fb00d6bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHP: 0
+  healthAndDamageCanvas: {fileID: 0}
+  healthAndDamageCanvasScript: {fileID: 0}
+  validTargetTags: []
+  attackHitbox: {fileID: 0}
+  attackHitboxScript: {fileID: 0}
+  healthDisplay: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
   projectile: {fileID: 687413961591471314, guid: 833884b8fe544324a9146941d690640b, type: 3}
   target: {fileID: 0}
   rangeFinder: {fileID: 4681869330389500681}
+  castle: {fileID: 0}
   attackRange: 0
   buildPositionObject: {fileID: 0}
-  healthAndDamageCanvasScript: {fileID: 0}
   buildPositionScript: {fileID: 0}
   attackCooldownRanged: 3
   hitsFlying: 0
-  maxHP: 0
-  currentHP: 0
+  targetScript: {fileID: 0}
+  parentObject: {fileID: 0}
   position1: 0
   position2: 0
   position3: 0
@@ -379,100 +387,129 @@ MonoBehaviour:
   position124: 0
   position125: 0
   position126: 0
---- !u!1 &6386487064229263639
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5936262460369271252}
-  - component: {fileID: 6474448914661608785}
-  - component: {fileID: 5068390805665210066}
-  - component: {fileID: 409491399327834275}
-  m_Layer: 0
-  m_Name: Hut Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5936262460369271252
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6386487064229263639}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4681869331273843636}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6474448914661608785
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6386487064229263639}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5068390805665210066
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6386487064229263639}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &409491399327834275
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6386487064229263639}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  position1R: 0
+  position2R: 0
+  position3R: 0
+  position4R: 0
+  position5R: 0
+  position6R: 0
+  position7R: 0
+  position8R: 0
+  position9R: 0
+  position10R: 0
+  position11R: 0
+  position12R: 0
+  position13R: 0
+  position14R: 0
+  position15R: 0
+  position16R: 0
+  position17R: 0
+  position18R: 0
+  position19R: 0
+  position20R: 0
+  position21R: 0
+  position22R: 0
+  position23R: 0
+  position24R: 0
+  position25R: 0
+  position26R: 0
+  position27R: 0
+  position28R: 0
+  position29R: 0
+  position30R: 0
+  position31R: 0
+  position32R: 0
+  position33R: 0
+  position34R: 0
+  position35R: 0
+  position36R: 0
+  position37R: 0
+  position38R: 0
+  position39R: 0
+  position40R: 0
+  position41R: 0
+  position42R: 0
+  position43R: 0
+  position44R: 0
+  position45R: 0
+  position46R: 0
+  position47R: 0
+  position48R: 0
+  position49R: 0
+  position50R: 0
+  position51R: 0
+  position52R: 0
+  position53R: 0
+  position54R: 0
+  position55R: 0
+  position56R: 0
+  position57R: 0
+  position58R: 0
+  position59R: 0
+  position60R: 0
+  position61R: 0
+  position62R: 0
+  position63R: 0
+  position64R: 0
+  position65R: 0
+  position66R: 0
+  position67R: 0
+  position68R: 0
+  position69R: 0
+  position70R: 0
+  position71R: 0
+  position72R: 0
+  position73R: 0
+  position74R: 0
+  position75R: 0
+  position76R: 0
+  position77R: 0
+  position78R: 0
+  position79R: 0
+  position80R: 0
+  position81R: 0
+  position82R: 0
+  position83R: 0
+  position84R: 0
+  position85R: 0
+  position86R: 0
+  position87R: 0
+  position88R: 0
+  position89R: 0
+  position90R: 0
+  position91R: 0
+  position92R: 0
+  position93R: 0
+  position94R: 0
+  position95R: 0
+  position96R: 0
+  position97R: 0
+  position98R: 0
+  position99R: 0
+  position100R: 0
+  position101R: 0
+  position102R: 0
+  position103R: 0
+  position104R: 0
+  position105R: 0
+  position106R: 0
+  position107R: 0
+  position108R: 0
+  position109R: 0
+  position110R: 0
+  position111R: 0
+  position112R: 0
+  position113R: 0
+  position114R: 0
+  position115R: 0
+  position116R: 0
+  position117R: 0
+  position118R: 0
+  position119R: 0
+  position120R: 0
+  position121R: 0
+  position122R: 0
+  position123R: 0
+  position124R: 0
+  position125R: 0
+  position126R: 0

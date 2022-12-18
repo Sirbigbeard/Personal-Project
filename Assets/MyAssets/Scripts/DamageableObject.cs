@@ -20,10 +20,7 @@ public class DamageableObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(name == "Castle")
-        {
-            healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
-        }
+        
     }
     // Update is called once per frame
     void Update()

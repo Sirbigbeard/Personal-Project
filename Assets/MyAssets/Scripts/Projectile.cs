@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     public GameObject target;
     public DamageableObject targetScript;
     public int damage = 10;
-    private float missileSpeed = 5f;
+    private float missileSpeed = 20f;
     public GameObject building;
     private Vector3 targetPosition;
     public Building buildingScript;

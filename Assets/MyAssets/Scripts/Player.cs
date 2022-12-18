@@ -17,7 +17,7 @@ public class Player : DamageableObject
     public int level = 1;
     public int castableSpells = 1;
     public int touchingBuilding = 0;
-    public float basicAttackDamage = 13;
+    private float basicAttackDamage = 2;
     private bool attackCooldownActive = false;
     private bool spellCasted = false;
     public bool attackDurationActive = false;
@@ -54,7 +54,7 @@ public class Player : DamageableObject
     private Color playerColor;
     private Color bulwarkColor;
     private Vector3 startingPosition = new Vector3(0, 3f, 0);
-
+    public ParticleSystem iceWaveParticle;
     void Start()
     {
         spellList = new List<GameObject>();
@@ -157,10 +157,7 @@ public class Player : DamageableObject
     }
     void FixedUpdate()
     {
-        if (!Input.GetKey("tab"))
-        {
-            RegisterMovement();
-        }
+        RegisterMovement();
     }
     //registers wasd and moves character correspondingly
     private void RegisterMovement()
@@ -269,7 +266,10 @@ public class Player : DamageableObject
         currentMana -= 5;
         manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
         iceWaveHitbox.SetActive(true);
+        iceWaveParticle.gameObject.SetActive(true);
+        //iceWaveParticle.Play();
         StartCoroutine(IceWaveHitDuration());
+        StartCoroutine(IceWaveParticleDuration());
     }
     public void CastSummonImp()
     {
@@ -318,7 +318,6 @@ public class Player : DamageableObject
         yield return new WaitForSeconds(5);
         if (!bulwarkRefresh)
         {
-            Debug.Log("Bulwark was refreshed");
             leftLegRenderer.material.SetColor("_Color", playerColor);
             rightLegRenderer.material.SetColor("_Color", playerColor);
             leftArmRenderer.material.SetColor("_Color", playerColor);
@@ -327,7 +326,6 @@ public class Player : DamageableObject
             torsoRenderer.material.SetColor("_Color", playerColor);
             bulwarkActive = false;
         }
-        Debug.Log("Bulwark not refreshed");
         bulwarkRefresh = false;
     }
     public void Reset()
@@ -372,5 +370,10 @@ public class Player : DamageableObject
     {
         yield return new WaitForSeconds(.05f);
         iceWaveHitbox.SetActive(false);
+    }
+    IEnumerator IceWaveParticleDuration()
+    {
+        yield return new WaitForSeconds(2f);
+        iceWaveParticle.gameObject.SetActive(false);
     }
 }

@@ -8,17 +8,15 @@ public class SpellBookButton : MonoBehaviour
     public GameObject gameManager;
     private GameManager gameManagerScript;
     private Button button;
+    private Image image;
     //public ParticleSystem glow;
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
-        if(gameManager == null)
-        {
-            Debug.Log("win");
-        }
         gameManagerScript = gameManager.GetComponent<GameManager>();
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(AddSpell);
+        image = GetComponent<Image>();
     }
     void Update()
     {
@@ -29,12 +27,12 @@ public class SpellBookButton : MonoBehaviour
         if (gameManagerScript.activeSpells.Contains(gameObject))
         {
             gameManagerScript.activeSpells.Remove(gameObject);
-            //remove glow effect from card
+            image.color = Color.white;
         }
         else if (gameManagerScript.activeSpells.Count < gameManagerScript.maxActiveSpells)
         {
             gameManagerScript.activeSpells.Add(gameObject);
-            //add glow effect to card
+            image.color = Color.red;
         }
         else
         {

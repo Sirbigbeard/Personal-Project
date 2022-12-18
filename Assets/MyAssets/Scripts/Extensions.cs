@@ -30,6 +30,10 @@ public static class Extensions : object
         {
             return obj.GetComponent<Building>();
         }
+        if (obj.HasComponent<DamageableObject>())
+        {
+            return obj.GetComponent<DamageableObject>();
+        }
         return null;
     }
     public static void ShuffleList(this List<GameObject> list)
@@ -45,7 +49,7 @@ public static class Extensions : object
     public static GameObject GetClosest(this GameObject obj, List<GameObject> list)//change to RangeObject and make RangeObject.cs parent to rf and ah
     {
         GameObject closestTarget = null;
-        if (list.Count == 0)
+        if (list.Count != 0)
         {
             float closestDistance = 9999f;
             foreach (GameObject target in list)
@@ -57,7 +61,6 @@ public static class Extensions : object
                     closestTarget = target;
                 }
             }
-            //list.Clear();
         }
         return closestTarget;
     }

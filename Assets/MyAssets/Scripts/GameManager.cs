@@ -6,66 +6,43 @@ using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
-{ 
-    //troubleshoot building 106/55
-    //make an enemybody script that pulls its enemy parent item to it's position if their distanceto is too great.
-    //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
-    //solve player attack
-    //make tab not disable player controls
-    //why does new removeTarget not work for building
-    //test enemy spawner (rotations need fixing)
+{
+    //brainless creativeless
+    //buildposition position lines
+    //variable name brush ups
+    //comment every variable with what it does and under what
+
+    //add an interface to show I know how to use them
+    //fix upside down localized ui
+    //0: try to fuck around with blender basic modeling and animation
     //use the physics engine for all movement, fuck it. then you can have knockbacks and stuff, you could even incorporate gravity, things could slide when frozen by ice skeet, etc
+    //taunt spell that works like follow for enemys
+    //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
     //make a building that does aoe damage by cycling through all targets on the list and doing damage to each of them. 
     //reduce a defensive stat during the attack window of attack duration
-    //0: learn about extentions and comb through code for where implementing them could improve things, comment as I go //test spell shuffle on round start
-    //0: try to fuck around with blender basic modeling and animation
-    //1: look into making static dealdamage method, make all things inherit from character, which has a maxHP and currentHP, then try typecasting the script as a character and doing the modifications there directly. 
-    //2: test fire projectile method of building to ensure typecasting the script is working, test both typecasts to see if they work on children
-    //fill out getScript in extensions as more scripts are added
-    //look into interfaces for player class 
-    //3: then do enemy spawn method that attaches UI to them and test that as well.
-    //4: fill out archer and footman gameobjects and figure out how to spawn them in. (maybe they spawn one at a time in front of your main building, then you left click them and right click an enemy to set that enemy as their target, if they get stuck on a building figure out a fix) maybe they also have a random run direction unti orders are given
-    //test recruit button once ally class has been branched. 
-    //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target
-    //5: BUILDING/ALLY/ENEMY VARIETY: make at least 3 diff buildings, allies, and enemies
-    //ENEMY MOVEMENT: fix bug where enemies will get stuck to each other. 
-    //PLAYER MOVEMENT: change player movement to obey physics but remain crispy, (register movement of player) leave systems commented out till new system works well.
-    //EFFECTS: give enemies blue effect, player silver effect when casting bulwark/icewave... figure out how to use effects and create some basic ones
-    //SPAWN METHOD: make a spawn method similar to the build method that passes the healthAndDamageCanvas to 
-    //HOME BASE: make a home base that when destroyed ends the game
+    //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target 
     //ROUNDS: figure out how rounds will work and program the necessary systems
     //TUTORIAL: add tutorial that shows off all systems (maybe)
     //TOOLTIPS: use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
-    //this will run child overriden method, base will run parent. (apparently)
     //spell ideas: Vengeance: rank1: charge for 3 seconds, then attack, dealing bonus damage equal to the damage taken, rank2: 50% damage reduction for dur, rank3: damage immunity for dur. 
-    //look into changing rangefinder objects to just distance methods, nahh i dont think so
-    //fuck you matt, dont make this a pussy shit half assed thing, aim for the stars.
-    //add enemy aggro system where top source of damage is swapped to if its in targetlist
-    //change rangefinder bool to hasrangedfinder
+    //add enemy aggro system where top source of damage is swapped to if its in targetlist?
     //begin flushing out offense/adventuring
     //make blacksmith button that can make gear for you for $$ or can get gear adventuring
-    //retargeting rangefinder with range/2 or something that checks to override target
     //first few rounds are pretty easy with the inital gold you get, but if you choose to adventure your early buildings take significant damage which takes gold to repair. 
-    //figure out how allies are going to be implemented (maybe they teleport over from adventuring side to active button spots randomly, maybe you place them like buildings, maybe you can place them on top of buildings if the building is already there
-    //maybe you can place them in the areas between the buildings, maybe they only help for adventuring (i like this)
     //figure out what other stat systems I want to have in place, armor, attributes, etc.
-    //replace all references to game manager within prefabs to gameManager = GameObject.Find("GameManager"); as currently they lose reference when instantiated.
-    //models and animations
-    //spell effects
-    //UI/overlay look good
     //pause functionality
-    //bug where enemies target each other
-    //have a forward area with smaller areas that allies can be placed upon, or upon buildings if they have capacity. 
-    //comment every variable with what it does and under what  
+    //make aggro
+    //figure out how to make effect
+    //choose class at start, diff stats, special buildings/recruits, abilities, gear
     //Design offense map/maps (im thinking large labyrith of smallish rooms, when you enter one you cannot enter another new one till next round, when you start round if you are in hitbox of an uncleared room you fight it.
     //NOT offense, adventuring. when you are adventuring you have to just trust in your men to hold, you will take more damage to your defenses, but you can find dank skeet. 
     //maybe give option to watch the defense first
     //you have to decide wether you want sick items and artifacts bases from adventuring or to build up your economy and infrastructure by defending your base better/investing in base/interest on rescources.
-    //when offense starts the square you are on determines the dungeon you do, which becomes the new offense map until the round finishes. 
-    //have a max number of buildings, which can be increased
+    //when offense starts the square you are on determines the dungeon you do, which becomes the new offense map until the round finishes. (teleports you and allies there) 
     //To add spell ui images just perform a check for the first 4 spells listed in the round begin of game manager and display the corresponding image, then each time a spell is cast do a check with a FindImage()
     //method that takes in the name of the spell as a parameter and displays the corresponding image to the correct position on the UI
     //something to try: if running a method in a grandparent class of a child, you call the method, and it is overriden in the parent, does the method run the grandparent or parent version
+    //how i could have done buildposition better: made an array 126 large for each variable, with the correct variable in the correct location, then just have each button have the same script and an int variable which just calls buildposition passing its corresponding int. 
 
     public bool currentBuildingRangeFinder = false;
     public bool roundBegun = false;
@@ -74,6 +51,7 @@ public class GameManager : MonoBehaviour
     private bool buildingListOpen = false;
     private bool recruitmentOpen = false;
     public bool constructing = false;
+    public bool recruiting = false;
     public GameObject healthAndDamageCanvas;
     public GameObject currentHealthAndDamageCanvas;
     public GameObject currentBuilding;
@@ -82,7 +60,8 @@ public class GameManager : MonoBehaviour
     public GameObject mainCamera;
     public Camera creationCamera;
     public GameObject enemy;
-    public GameObject ally;
+    public GameObject footman;
+    public GameObject archer;
     public GameObject hut;
     public GameObject crenelations;
     public GameObject watchtower;
@@ -175,6 +154,8 @@ public class GameManager : MonoBehaviour
         recruitListButton.onClick.AddListener(ToggleRecruitment);
         hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true, 15, new Vector3(0, 2.5f, 0)); });
         crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5, new Vector3(0, 6, 0)); });
+        footmanButton.onClick.AddListener(delegate { Recruit(footman, false, 5, new Vector3(0, 4, 0)); });
+        archerButton.onClick.AddListener(delegate { Recruit(archer, false, 5, new Vector3(0, 4, 0)); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
@@ -190,7 +171,6 @@ public class GameManager : MonoBehaviour
         creationCamera.enabled = false;
         gold = 100;
         goldDisplay.text = "Gold: " + gold;
-        SpawnEnemy(enemy, new Vector3(0,4,0));
     }
     void Update()
     {
@@ -379,7 +359,7 @@ public class GameManager : MonoBehaviour
         }
         if (recruitmentOpen)
         {
-            ToggleBuildingList();
+            ToggleRecruitment();
         }
         roundBegun = true;
         offenseMapButtonObject.SetActive(false);
@@ -400,7 +380,6 @@ public class GameManager : MonoBehaviour
             }
             if (spellUINumber == 0 && playerScript.castableSpells > 0)
             {
-                Debug.Log(spell.name);
                 playerScript.spell1Name.text = spell.name;
             }
             if (spellUINumber == 1 && playerScript.castableSpells > 1)
@@ -419,6 +398,15 @@ public class GameManager : MonoBehaviour
         }
         playerScript.manaDisplay.text = "Mana: " + playerScript.currentMana + "/" + playerScript.maxMana;
         playerScript.healthDisplay.text = "Health: " + playerScript.currentHP + "/" + playerScript.maxHP;
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        SpawnEnemy(enemy, new Vector3(0, 4, 0));
     }
 
     void EndRound()
@@ -561,8 +549,34 @@ public class GameManager : MonoBehaviour
                 Destroy(currentHealthAndDamageCanvas);
             }
             constructing = true;
+            recruiting = false;
             creationCamera.enabled = true;
             currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
+            currentBuildingRangeFinder = rangeFinder;
+            currentBuildingCost = cost;
+            GeneralizedSpawn(offset);
+        }
+        else
+        {
+            Debug.Log("You too poor noob");
+        }
+    }
+    void Recruit(GameObject recruit, bool rangeFinder, int cost, Vector3 offset)
+    {
+        if (gold >= cost)
+        {
+            if (currentBuilding != null)
+            {
+                Destroy(currentBuilding);
+            }
+            if (currentHealthAndDamageCanvas != null)
+            {
+                Destroy(currentHealthAndDamageCanvas);
+            }
+            constructing = true;
+            recruiting = true;
+            creationCamera.enabled = true;
+            currentBuilding = Instantiate(recruit, new Vector3(0f, recruit.transform.position.y, 447.0f), recruit.transform.rotation);
             currentBuildingRangeFinder = rangeFinder;
             currentBuildingCost = cost;
             GeneralizedSpawn(offset);

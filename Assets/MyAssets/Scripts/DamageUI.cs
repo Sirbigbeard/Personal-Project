@@ -17,6 +17,7 @@ public class DamageUI : MonoBehaviour
     {
         cam = Camera.main;
         textMesh = GetComponent<TMPro.TextMeshProUGUI>();
+        textMesh.text = "";
     }
     void Update()
     {
