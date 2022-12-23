@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ally : Building
 {
+    //this class is parent to RangedAlly and MelleAlly
     private bool following = false;
     void Start()
     {
@@ -11,12 +12,6 @@ public class Ally : Building
     }
     void Awake()
     {
-        range = 30;
-        attackRange = 3;
-        speed = 3;
-        currentHP = 25;
-        maxHP = 25;
-        Begin();
         
     }
     void Update()
@@ -40,7 +35,7 @@ public class Ally : Building
             }
             else if (!attackCooldownActive && !cleavingAttackBool && !isRanged)
             {
-                Attack();
+                MelleAttack();
             }
             else if (!attackCooldownActive && cleavingAttackBool)
             {

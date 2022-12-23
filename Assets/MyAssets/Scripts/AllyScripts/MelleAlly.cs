@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class MelleAlly : Ally
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //Template for any Melle under Ally class
     void Awake()
     {
         range = 30;
         attackRange = 3;
-        rangedAttackRange = 2;
+        rangedAttackRange = -1;
         speed = 3;
         attackDamage = 1;
         attackCooldownFloat = 2;
@@ -22,11 +18,10 @@ public class MelleAlly : Ally
         Begin();
         StartCoroutine(TaggingDelay());
     }
-    // Update is called once per frame
     void Update()
     {
-        HealthCheck();
         Move();
+        BuildingUpdate();
     }
     new IEnumerator TaggingDelay()
     {

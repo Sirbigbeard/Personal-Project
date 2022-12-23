@@ -2660,7 +2660,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position77Recruit)
             {
                 currentBuildingScript.position77R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position77ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position77ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position77Recruit = true;
                 FinishBuild();
@@ -2668,7 +2668,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position77Building)
             {
                 currentBuildingScript.position77 = true;
-                gameManagerScript.currentBuilding.transform.position = position77ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position77ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position77ButtonObject.transform.position.z);
                 position77Building = true;
                 FinishBuild();
             }
@@ -2683,7 +2683,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position78Recruit)
             {
                 currentBuildingScript.position78R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position78ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position78ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position78Recruit = true;
                 FinishBuild();
@@ -2691,7 +2691,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position78Building)
             {
                 currentBuildingScript.position78 = true;
-                gameManagerScript.currentBuilding.transform.position = position78ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position78ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position78ButtonObject.transform.position.z);
                 position78Building = true;
                 FinishBuild();
             }
@@ -2706,7 +2706,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position79Recruit)
             {
                 currentBuildingScript.position79R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position79ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position79ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position79Recruit = true;
                 FinishBuild();
@@ -2714,7 +2714,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position79Building)
             {
                 currentBuildingScript.position79 = true;
-                gameManagerScript.currentBuilding.transform.position = position79ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position79ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position79ButtonObject.transform.position.z);
                 position79Building = true;
                 FinishBuild();
             }
@@ -2729,7 +2729,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position80Recruit)
             {
                 currentBuildingScript.position80R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position80ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position80ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position80Recruit = true;
                 FinishBuild();
@@ -2737,7 +2737,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position80Building)
             {
                 currentBuildingScript.position80 = true;
-                gameManagerScript.currentBuilding.transform.position = position80ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position80ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position80ButtonObject.transform.position.z);
                 position80Building = true;
                 FinishBuild();
             }
@@ -2752,7 +2752,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position81Recruit)
             {
                 currentBuildingScript.position81R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position81ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position81ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position81Recruit = true;
                 FinishBuild();
@@ -2760,7 +2760,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position81Building)
             {
                 currentBuildingScript.position81 = true;
-                gameManagerScript.currentBuilding.transform.position = position81ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position81ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position81ButtonObject.transform.position.z);
                 position81Building = true;
                 FinishBuild();
             }
@@ -2775,7 +2775,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position82Recruit)
             {
                 currentBuildingScript.position82R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position82ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position82ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position82Recruit = true;
                 FinishBuild();
@@ -2783,7 +2783,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position82Building)
             {
                 currentBuildingScript.position82 = true;
-                gameManagerScript.currentBuilding.transform.position = position82ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position82ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position82ButtonObject.transform.position.z);
                 position82Building = true;
                 FinishBuild();
             }
@@ -2798,7 +2798,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position83Recruit)
             {
                 currentBuildingScript.position83R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position83ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position83ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position83Recruit = true;
                 FinishBuild();
@@ -2806,7 +2806,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position83Building)
             {
                 currentBuildingScript.position83 = true;
-                gameManagerScript.currentBuilding.transform.position = position83ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position83ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position83ButtonObject.transform.position.z);
                 position83Building = true;
                 FinishBuild();
             }
@@ -2821,7 +2821,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position84Recruit)
             {
                 currentBuildingScript.position84R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position84ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position84ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position84Recruit = true;
                 FinishBuild();
@@ -2829,7 +2829,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position84Building)
             {
                 currentBuildingScript.position84 = true;
-                gameManagerScript.currentBuilding.transform.position = position84ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position84ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position84ButtonObject.transform.position.z);
                 position84Building = true;
                 FinishBuild();
             }
@@ -2844,7 +2844,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position85Recruit)
             {
                 currentBuildingScript.position85R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position85ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position85ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position85Recruit = true;
                 FinishBuild();
@@ -2852,7 +2852,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position85Building)
             {
                 currentBuildingScript.position85 = true;
-                gameManagerScript.currentBuilding.transform.position = position85ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position85ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position85ButtonObject.transform.position.z);
                 position85Building = true;
                 FinishBuild();
             }
@@ -2867,7 +2867,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position86Recruit)
             {
                 currentBuildingScript.position86R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position86ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position86ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position86Recruit = true;
                 FinishBuild();
@@ -2875,7 +2875,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position86Building)
             {
                 currentBuildingScript.position86 = true;
-                gameManagerScript.currentBuilding.transform.position = position86ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position86ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position86ButtonObject.transform.position.z);
                 position86Building = true;
                 FinishBuild();
             }
@@ -2890,7 +2890,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position87Recruit)
             {
                 currentBuildingScript.position87R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position87ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position87ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position87Recruit = true;
                 FinishBuild();
@@ -2898,7 +2898,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position87Building)
             {
                 currentBuildingScript.position87 = true;
-                gameManagerScript.currentBuilding.transform.position = position87ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position87ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position87ButtonObject.transform.position.z);
                 position87Building = true;
                 FinishBuild();
             }
@@ -2913,7 +2913,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position88Recruit)
             {
                 currentBuildingScript.position88R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position88ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position88ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position88Recruit = true;
                 FinishBuild();
@@ -2921,7 +2921,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position88Building)
             {
                 currentBuildingScript.position88 = true;
-                gameManagerScript.currentBuilding.transform.position = position88ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position88ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position88ButtonObject.transform.position.z);
                 position88Building = true;
                 FinishBuild();
             }
@@ -2936,7 +2936,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position89Recruit)
             {
                 currentBuildingScript.position89R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position89ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position89ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position89Recruit = true;
                 FinishBuild();
@@ -2944,7 +2944,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position89Building)
             {
                 currentBuildingScript.position89 = true;
-                gameManagerScript.currentBuilding.transform.position = position89ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position89ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position89ButtonObject.transform.position.z);
                 position89Building = true;
                 FinishBuild();
             }
@@ -2959,7 +2959,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position90Recruit)
             {
                 currentBuildingScript.position90R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position90ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position90ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position90Recruit = true;
                 FinishBuild();
@@ -2967,7 +2967,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position90Building)
             {
                 currentBuildingScript.position90 = true;
-                gameManagerScript.currentBuilding.transform.position = position90ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position90ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position90ButtonObject.transform.position.z);
                 position90Building = true;
                 FinishBuild();
             }
@@ -2982,7 +2982,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position91Recruit)
             {
                 currentBuildingScript.position91R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position91ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position91ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position91Recruit = true;
                 FinishBuild();
@@ -2990,7 +2990,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position91Building)
             {
                 currentBuildingScript.position91 = true;
-                gameManagerScript.currentBuilding.transform.position = position91ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position91ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position91ButtonObject.transform.position.z);
                 position91Building = true;
                 FinishBuild();
             }
@@ -3005,7 +3005,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position92Recruit)
             {
                 currentBuildingScript.position92R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position92ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position92ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position92Recruit = true;
                 FinishBuild();
@@ -3013,7 +3013,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position92Building)
             {
                 currentBuildingScript.position92 = true;
-                gameManagerScript.currentBuilding.transform.position = position92ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position92ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position92ButtonObject.transform.position.z);
                 position92Building = true;
                 FinishBuild();
             }
@@ -3028,7 +3028,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position93Recruit)
             {
                 currentBuildingScript.position93R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position93ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position93ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position93Recruit = true;
                 FinishBuild();
@@ -3036,7 +3036,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position93Building)
             {
                 currentBuildingScript.position93 = true;
-                gameManagerScript.currentBuilding.transform.position = position93ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position93ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position93ButtonObject.transform.position.z);
                 position93Building = true;
                 FinishBuild();
             }
@@ -3051,7 +3051,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position94Recruit)
             {
                 currentBuildingScript.position94R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position94ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position94ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position94Recruit = true;
                 FinishBuild();
@@ -3059,7 +3059,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position94Building)
             {
                 currentBuildingScript.position94 = true;
-                gameManagerScript.currentBuilding.transform.position = position94ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position94ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position94ButtonObject.transform.position.z);
                 position94Building = true;
                 FinishBuild();
             }
@@ -3074,7 +3074,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position95Recruit)
             {
                 currentBuildingScript.position95R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position95ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position95ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position95Recruit = true;
                 FinishBuild();
@@ -3082,7 +3082,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position95Building)
             {
                 currentBuildingScript.position95 = true;
-                gameManagerScript.currentBuilding.transform.position = position95ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position95ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position95ButtonObject.transform.position.z);
                 position95Building = true;
                 FinishBuild();
             }
@@ -3097,7 +3097,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position96Recruit)
             {
                 currentBuildingScript.position96R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position96ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position96ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position96Recruit = true;
                 FinishBuild();
@@ -3105,7 +3105,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position96Building)
             {
                 currentBuildingScript.position96 = true;
-                gameManagerScript.currentBuilding.transform.position = position96ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position96ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position96ButtonObject.transform.position.z);
                 position96Building = true;
                 FinishBuild();
             }
@@ -3120,7 +3120,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position97Recruit)
             {
                 currentBuildingScript.position97R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position97ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position97ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position97Recruit = true;
                 FinishBuild();
@@ -3128,7 +3128,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position97Building)
             {
                 currentBuildingScript.position97 = true;
-                gameManagerScript.currentBuilding.transform.position = position97ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position97ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position97ButtonObject.transform.position.z);
                 position97Building = true;
                 FinishBuild();
             }
@@ -3143,7 +3143,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position98Recruit)
             {
                 currentBuildingScript.position98R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position98ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position98ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position98Recruit = true;
                 FinishBuild();
@@ -3151,7 +3151,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position98Building)
             {
                 currentBuildingScript.position98 = true;
-                gameManagerScript.currentBuilding.transform.position = position98ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position98ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position98ButtonObject.transform.position.z);
                 position98Building = true;
                 FinishBuild();
             }
@@ -3166,7 +3166,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position99Recruit)
             {
                 currentBuildingScript.position99R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position99ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position99ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position99Recruit = true;
                 FinishBuild();
@@ -3174,7 +3174,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position99Building)
             {
                 currentBuildingScript.position99 = true;
-                gameManagerScript.currentBuilding.transform.position = position99ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position99ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position99ButtonObject.transform.position.z);
                 position99Building = true;
                 FinishBuild();
             }
@@ -3189,7 +3189,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position100Recruit)
             {
                 currentBuildingScript.position100R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position100ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position100ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position100Recruit = true;
                 FinishBuild();
@@ -3197,7 +3197,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position100Building)
             {
                 currentBuildingScript.position100 = true;
-                gameManagerScript.currentBuilding.transform.position = position100ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position100ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position100ButtonObject.transform.position.z);
                 position100Building = true;
                 FinishBuild();
             }
@@ -3212,7 +3212,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position101Recruit)
             {
                 currentBuildingScript.position101R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position101ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position101ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position101Recruit = true;
                 FinishBuild();
@@ -3220,7 +3220,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position101Building)
             {
                 currentBuildingScript.position101 = true;
-                gameManagerScript.currentBuilding.transform.position = position101ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position101ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position101ButtonObject.transform.position.z);
                 position101Building = true;
                 FinishBuild();
             }
@@ -3235,7 +3235,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position102Recruit)
             {
                 currentBuildingScript.position102R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position102ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position102ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position102Recruit = true;
                 FinishBuild();
@@ -3243,7 +3243,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position102Building)
             {
                 currentBuildingScript.position102 = true;
-                gameManagerScript.currentBuilding.transform.position = position102ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position102ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position102ButtonObject.transform.position.z);
                 position102Building = true;
                 FinishBuild();
             }
@@ -3258,7 +3258,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position103Recruit)
             {
                 currentBuildingScript.position103R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position103ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position103ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position103Recruit = true;
                 FinishBuild();
@@ -3266,7 +3266,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position103Building)
             {
                 currentBuildingScript.position103 = true;
-                gameManagerScript.currentBuilding.transform.position = position103ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position103ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position103ButtonObject.transform.position.z);
                 position103Building = true;
                 FinishBuild();
             }
@@ -3281,7 +3281,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position104Recruit)
             {
                 currentBuildingScript.position104R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position104ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position104ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position104Recruit = true;
                 FinishBuild();
@@ -3289,7 +3289,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position104Building)
             {
                 currentBuildingScript.position104 = true;
-                gameManagerScript.currentBuilding.transform.position = position104ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position104ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position104ButtonObject.transform.position.z);
                 position104Building = true;
                 FinishBuild();
             }
@@ -3304,7 +3304,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position105Recruit)
             {
                 currentBuildingScript.position105R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position105ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position105ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position105Recruit = true;
                 FinishBuild();
@@ -3312,7 +3312,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position105Building)
             {
                 currentBuildingScript.position105 = true;
-                gameManagerScript.currentBuilding.transform.position = position105ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position105ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position105ButtonObject.transform.position.z);
                 position105Building = true;
                 FinishBuild();
             }
@@ -3327,7 +3327,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position106Recruit)
             {
                 currentBuildingScript.position106R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position106ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position106ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position106Recruit = true;
                 FinishBuild();
@@ -3335,7 +3335,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position106Building)
             {
                 currentBuildingScript.position106 = true;
-                gameManagerScript.currentBuilding.transform.position = position106ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position106ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position106ButtonObject.transform.position.z);
                 position106Building = true;
                 FinishBuild();
             }
@@ -3350,7 +3350,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position107Recruit)
             {
                 currentBuildingScript.position107R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position107ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position107ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position107Recruit = true;
                 FinishBuild();
@@ -3358,7 +3358,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position107Building)
             {
                 currentBuildingScript.position107 = true;
-                gameManagerScript.currentBuilding.transform.position = position107ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position107ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position107ButtonObject.transform.position.z);
                 position107Building = true;
                 FinishBuild();
             }
@@ -3373,7 +3373,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position108Recruit)
             {
                 currentBuildingScript.position108R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position108ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position108ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position108Recruit = true;
                 FinishBuild();
@@ -3381,7 +3381,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position108Building)
             {
                 currentBuildingScript.position108 = true;
-                gameManagerScript.currentBuilding.transform.position = position108ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position108ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position108ButtonObject.transform.position.z);
                 position108Building = true;
                 FinishBuild();
             }
@@ -3396,7 +3396,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position109Recruit)
             {
                 currentBuildingScript.position109R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position109ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position109ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position109Recruit = true;
                 FinishBuild();
@@ -3404,7 +3404,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position109Building)
             {
                 currentBuildingScript.position109 = true;
-                gameManagerScript.currentBuilding.transform.position = position109ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position109ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position109ButtonObject.transform.position.z);
                 position109Building = true;
                 FinishBuild();
             }
@@ -3419,7 +3419,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position110Recruit)
             {
                 currentBuildingScript.position110R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position110ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position110ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position110Recruit = true;
                 FinishBuild();
@@ -3427,7 +3427,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position110Building)
             {
                 currentBuildingScript.position110 = true;
-                gameManagerScript.currentBuilding.transform.position = position110ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position110ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position110ButtonObject.transform.position.z);
                 position110Building = true;
                 FinishBuild();
             }
@@ -3442,7 +3442,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position111Recruit)
             {
                 currentBuildingScript.position111R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position111ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position111ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position111Recruit = true;
                 FinishBuild();
@@ -3450,7 +3450,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position111Building)
             {
                 currentBuildingScript.position111 = true;
-                gameManagerScript.currentBuilding.transform.position = position111ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position111ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position111ButtonObject.transform.position.z);
                 position111Building = true;
                 FinishBuild();
             }
@@ -3465,7 +3465,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position112Recruit)
             {
                 currentBuildingScript.position112R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position112ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position112ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position112Recruit = true;
                 FinishBuild();
@@ -3473,7 +3473,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position112Building)
             {
                 currentBuildingScript.position112 = true;
-                gameManagerScript.currentBuilding.transform.position = position112ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position112ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position112ButtonObject.transform.position.z);
                 position112Building = true;
                 FinishBuild();
             }
@@ -3488,7 +3488,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position113Recruit)
             {
                 currentBuildingScript.position113R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position113ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position113ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position113Recruit = true;
                 FinishBuild();
@@ -3496,7 +3496,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position113Building)
             {
                 currentBuildingScript.position113 = true;
-                gameManagerScript.currentBuilding.transform.position = position113ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position113ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position113ButtonObject.transform.position.z);
                 position113Building = true;
                 FinishBuild();
             }
@@ -3511,7 +3511,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position114Recruit)
             {
                 currentBuildingScript.position114R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position114ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position114ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position114Recruit = true;
                 FinishBuild();
@@ -3519,7 +3519,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position114Building)
             {
                 currentBuildingScript.position114 = true;
-                gameManagerScript.currentBuilding.transform.position = position114ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position114ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position114ButtonObject.transform.position.z);
                 position114Building = true;
                 FinishBuild();
             }
@@ -3534,7 +3534,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position115Recruit)
             {
                 currentBuildingScript.position115R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position115ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position115ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position115Recruit = true;
                 FinishBuild();
@@ -3542,7 +3542,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position115Building)
             {
                 currentBuildingScript.position115 = true;
-                gameManagerScript.currentBuilding.transform.position = position115ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position115ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position115ButtonObject.transform.position.z);
                 position115Building = true;
                 FinishBuild();
             }
@@ -3557,7 +3557,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position116Recruit)
             {
                 currentBuildingScript.position116R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position116ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position116ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position116Recruit = true;
                 FinishBuild();
@@ -3565,7 +3565,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position116Building)
             {
                 currentBuildingScript.position116 = true;
-                gameManagerScript.currentBuilding.transform.position = position116ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position116ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position116ButtonObject.transform.position.z);
                 position116Building = true;
                 FinishBuild();
             }
@@ -3580,7 +3580,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position117Recruit)
             {
                 currentBuildingScript.position117R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position117ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position117ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position117Recruit = true;
                 FinishBuild();
@@ -3588,7 +3588,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position117Building)
             {
                 currentBuildingScript.position117 = true;
-                gameManagerScript.currentBuilding.transform.position = position117ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position117ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position117ButtonObject.transform.position.z);
                 position117Building = true;
                 FinishBuild();
             }
@@ -3603,7 +3603,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position118Recruit)
             {
                 currentBuildingScript.position118R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position118ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position118ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position118Recruit = true;
                 FinishBuild();
@@ -3611,7 +3611,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position118Building)
             {
                 currentBuildingScript.position118 = true;
-                gameManagerScript.currentBuilding.transform.position = position118ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position118ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position118ButtonObject.transform.position.z);
                 position118Building = true;
                 FinishBuild();
             }
@@ -3626,7 +3626,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position119Recruit)
             {
                 currentBuildingScript.position119R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position119ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position119ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position119Recruit = true;
                 FinishBuild();
@@ -3634,7 +3634,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position119Building)
             {
                 currentBuildingScript.position119 = true;
-                gameManagerScript.currentBuilding.transform.position = position119ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position119ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position119ButtonObject.transform.position.z);
                 position119Building = true;
                 FinishBuild();
             }
@@ -3649,7 +3649,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position120Recruit)
             {
                 currentBuildingScript.position120R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position120ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position120ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position120Recruit = true;
                 FinishBuild();
@@ -3657,7 +3657,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position120Building)
             {
                 currentBuildingScript.position120 = true;
-                gameManagerScript.currentBuilding.transform.position = position120ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position120ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position120ButtonObject.transform.position.z);
                 position120Building = true;
                 FinishBuild();
             }
@@ -3672,7 +3672,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position121Recruit)
             {
                 currentBuildingScript.position121R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position121ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position121ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position121Recruit = true;
                 FinishBuild();
@@ -3680,7 +3680,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position121Building)
             {
                 currentBuildingScript.position121 = true;
-                gameManagerScript.currentBuilding.transform.position = position121ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position121ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position121ButtonObject.transform.position.z);
                 position121Building = true;
                 FinishBuild();
             }
@@ -3695,7 +3695,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position122Recruit)
             {
                 currentBuildingScript.position122R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position122ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position122ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position122Recruit = true;
                 FinishBuild();
@@ -3703,7 +3703,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position122Building)
             {
                 currentBuildingScript.position122 = true;
-                gameManagerScript.currentBuilding.transform.position = position122ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position122ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position122ButtonObject.transform.position.z);
                 position122Building = true;
                 FinishBuild();
             }
@@ -3718,7 +3718,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position123Recruit)
             {
                 currentBuildingScript.position123R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position123ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position123ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position123Recruit = true;
                 FinishBuild();
@@ -3726,7 +3726,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position123Building)
             {
                 currentBuildingScript.position123 = true;
-                gameManagerScript.currentBuilding.transform.position = position123ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position123ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position123ButtonObject.transform.position.z);
                 position123Building = true;
                 FinishBuild();
             }
@@ -3741,7 +3741,7 @@ public class BuildPosition : MonoBehaviour
             if (gameManagerScript.recruiting && !position124Recruit)
             {
                 currentBuildingScript.position124R = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position1ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position1ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position124ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position124ButtonObject.transform.position.z) + recruitOffset;
                 currentBuildingScript.startPosition = gameManagerScript.currentBuilding.transform.position;
                 position124Recruit = true;
                 FinishBuild();
@@ -3749,7 +3749,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position124Building)
             {
                 currentBuildingScript.position124 = true;
-                gameManagerScript.currentBuilding.transform.position = position124ButtonObject.transform.position;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position124ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position124ButtonObject.transform.position.z);
                 position124Building = true;
                 FinishBuild();
             }
@@ -3772,7 +3772,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position125Building)
             {
                 currentBuildingScript.position125 = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position125ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position125ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position125ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position125ButtonObject.transform.position.z);
                 position125Building = true;
                 FinishBuild();
             }
@@ -3795,7 +3795,7 @@ public class BuildPosition : MonoBehaviour
             else if (!gameManagerScript.recruiting && !position126Building)
             {
                 currentBuildingScript.position126 = true;
-                gameManagerScript.currentBuilding.transform.position = new Vector3(position126ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position126ButtonObject.transform.position.z) + recruitOffset;
+                gameManagerScript.currentBuilding.transform.position = new Vector3(position126ButtonObject.transform.position.x, gameManagerScript.currentBuilding.transform.position.y, position126ButtonObject.transform.position.z);
                 position126Building = true;
                 FinishBuild();
             }

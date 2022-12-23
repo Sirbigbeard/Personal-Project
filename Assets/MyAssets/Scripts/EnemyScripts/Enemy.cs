@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class Enemy : Building
 {
+    //this class is parent to RangedAlly and MelleAlly
     private bool iceWaveInternalBool = false;
     void Start()
     {
@@ -12,8 +13,10 @@ public class Enemy : Building
     }
     void Awake()
     {
+        experienceReward = 13;
         range = 30;
         attackDamage = 2;
+        rangedAttackRange = -1;
         attackRange = 3;
         speed = 5;
         currentHP = 25;
@@ -24,7 +27,7 @@ public class Enemy : Building
     }
     void Update()
     {
-        HealthCheck();
+        BuildingUpdate();
         Move();
     }
     new IEnumerator TaggingDelay()
@@ -42,6 +45,10 @@ public class Enemy : Building
         if(other.name == "IceWaveHitbox" && iceWaveInternalBool == false)
         {
             TakeDamage(5);
+            if(currentHP < 1)
+            {
+                playerScript.GainXP(experienceReward);
+            }
             speed /= 3;
             iceWaveInternalBool = true;
             StartCoroutine(IceWaveInternal());
@@ -80,7 +87,7 @@ public class Enemy : Building
             }
             else if (!attackCooldownActive && !cleavingAttackBool)
             {
-                Attack();
+                MelleAttack();
             }
             else if (!attackCooldownActive && cleavingAttackBool)
             {

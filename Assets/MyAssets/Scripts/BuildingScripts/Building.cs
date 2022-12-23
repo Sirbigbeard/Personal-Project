@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Building : DamageableObject
 {
-    //this class controls building functionality, and is also parent class to all ally and enemy classes to reuse targeting code.
+    //This class is parent to Ally and Enemy.
     public Vector3 startPosition;
     public GameObject projectile;
     protected GameObject player;
@@ -36,7 +36,10 @@ public class Building : DamageableObject
     protected bool cleavingAttackCooldownActive = true;
     protected bool cleavingAttackDurationActive = true;
     public GameObject parentObject;
-   
+    protected int potentialXP;
+    protected int currentXP;
+    protected int level;
+    public Player playerScript;
 
     void Start()
     {
@@ -46,17 +49,17 @@ public class Building : DamageableObject
     {
         
     }
+    //Handles all communal code needed for buildings, call method in update. For melle, set rangedAttackRange to -1 or any value at least .5 below their attackRange.
     protected void BuildingUpdate()
     {
+        //Ranged Attack
         if (attackReadyRanged && target != null && distanceToTarget <= rangedAttackRange + .4f)
         {
             FireProjectile();
         }
-        if (currentHP < 1)
-        {
-            transform.Translate(100000, 100000, 100000);
-            StartCoroutine(DestroyDelay());
-        }
+        //Death Check
+        HealthCheck();
+        //Retargeting
         if(target != null)
         {
             if (targetScript.currentHP <= 0)
@@ -64,31 +67,50 @@ public class Building : DamageableObject
                 RemoveTarget(target);
             }
         }
+        //Sets elements of the building to inactive so that UI buttons do not get accidentally covered when building or recruiting between rounds, then reactivates when round begins.
         if (gameManagerScript.roundBegun)
         {
-            rangeFinder.SetActive(true);
+            if (!rangeFinder.activeSelf)
+            {
+                rangeFinder.SetActive(true);
+            }
+            if (!healthAndDamageCanvas.activeSelf)
+            {
+                healthAndDamageCanvas.SetActive(true);
+            }
         }
         else
         {
-            rangeFinder.SetActive(false);
+            if (rangeFinder.activeSelf)
+            {
+                rangeFinder.SetActive(false);
+            }
+            if (healthAndDamageCanvas.activeSelf)
+            {
+                healthAndDamageCanvas.SetActive(false);
+            }
         }
     }
     void Awake()
     {
+        //Wonky code specifically so that I could be lazy and implement the castle (home base) with less effort.
         if (name == "Castle")
         {
             healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
         }
         else
         {
+            //Call Begin(); at the end of all building child objects' Start or Awake functions.
             Begin();
         }
     }
+    //All standardized building initializations.
     protected void Begin()
     {
         StartCoroutine(TaggingDelay());
         gameManager = GameObject.Find("GameManager");
         player = GameObject.Find("Character");
+        playerScript = player.GetComponent<Player>();
         gameManagerScript = gameManager.GetComponent<GameManager>();
         buildPositionObject = GameObject.Find("BuildPosition");
         buildPositionScript = buildPositionObject.GetComponent<BuildPosition>();
@@ -103,6 +125,7 @@ public class Building : DamageableObject
             rangeFinder.transform.localScale = new Vector3(range, 2, range);
         }
     }
+    //Creates an object assigned as the projectile and initializes it properly. Projectile code will determine things like speed and projectile damage, but could modify it here if I want to add buffs to buildings.
     protected void FireProjectile()
     {
         Vector3 spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
@@ -126,23 +149,26 @@ public class Building : DamageableObject
         yield return new WaitForSeconds(attackCooldownRanged);
         attackReadyRanged = true;
     }
+    //Needs to be overridden for tags to be valid. for some reason without it the tags do not get passed. 
     protected IEnumerator TaggingDelay()
     {
         yield return new WaitForSeconds(.1f);
         //Override this noob
     }
-    protected void Attack()
+    //MelleAttack is called if not a cleaving unit
+    protected void MelleAttack()
     {
         attackCooldownActive = true;
         attackDurationActive = true;
         StartCoroutine(MelleAttackCooldown());
-        targetScript.TakeDamage(attackDamage);
+        DealDamage(attackDamage);
     }
     IEnumerator MelleAttackCooldown()
     {
         yield return new WaitForSeconds(attackCooldownFloat);
         attackCooldownActive = false;
     }
+    //CleavingAttack is called if is a cleaving unit
     protected void CleavingAttack()
     {
         cleavingAttackCooldownActive = true;
@@ -155,6 +181,7 @@ public class Building : DamageableObject
         yield return new WaitForSeconds(attackCooldownFloat);
         cleavingAttackCooldownActive = false;
     }
+    //Damages all objects within the attackHitbox
     protected IEnumerator cleavingAttackDuration()
     {
         yield return new WaitForSeconds(.01f);
@@ -165,6 +192,7 @@ public class Building : DamageableObject
         }
         cleavingAttackDurationActive = false;
     }
+    //Adds a target to the targetList, if it is the only target then it is set as the target object, if not the only one then RemoveTarget will handle resetting target gameObject.
     public void AddTarget(GameObject newTarget)
     {
         targets.Add(newTarget);
@@ -174,6 +202,7 @@ public class Building : DamageableObject
             targetScript = target.GetScript() as DamageableObject;
         }
     }
+    //Removes the target and sets the next available target in targets[] to the target gameObject.
     public void RemoveTarget(GameObject targetToRemove)
     {
         targets.Remove(targetToRemove);
@@ -184,6 +213,7 @@ public class Building : DamageableObject
         }
         else
         {
+            //Back to back extension usage here, feeling pretty fly :)
             target = gameObject.GetClosest(targets);
             if(target != null)
             {
@@ -191,24 +221,47 @@ public class Building : DamageableObject
             }
         }
     }
-    public void ChangeRange(int change)
+    private void DealDamage(float damage)
     {
-        range += change;
+        potentialXP = targetScript.TakeDamage(damage);
+        if (level < 3 && tag == "Ally")
+        {
+            if (potentialXP > 0)
+            {
+                GainXP(potentialXP);
+            }
+        } 
     }
-    public void SetRange(int newRange)
+    public void GainXP(int xp)
     {
-        range = newRange;
+        currentXP += potentialXP;
+        if (currentXP >= 10 + 5 * level)
+        {
+            currentXP -= 10 + 5 * level;
+            level++;
+            //maxHP += 2;
+            //levelDisplay.text = "" + level;
+        }
     }
+    //public void ChangeRange(int change)
+    //{
+    //    range += change;
+    //}
+    //public void SetRange(int newRange)
+    //{
+    //    range = newRange;
+    //}
+    //Must be moved before destruction or retargeting of other gameObjects fails. 
     protected IEnumerator DestroyDelay()
     {
         transform.Translate(100000, 100000, 100000);
         yield return new WaitForSeconds(.1f);
+        //if ally or enemy, will make place built available for building/recruiting once more. 
         ResetPositionScript();
         Destroy(gameObject);
     }
-    
 
-
+    //Handles re-enabling the relevant build position after building is destroyed
     public bool position1 = false;
     public bool position2 = false;
     public bool position3 = false;

@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class ImpScript : Ally
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
     void Awake()
     {
-        transform.Translate(Vector3.forward * 1);
-        speed = 3;
+        range = 30;
+        attackRange = 3;
+        rangedAttackRange = -1;
+        speed = 5;
+        attackDamage = 1;
+        attackCooldownFloat = 2;
+        currentHP = 8;
+        maxHP = 8;
         Begin();
+        StartCoroutine(TaggingDelay());
     }
-
-    // Update is called once per frame
     void Update()
     {
         Move();
+        BuildingUpdate();
+    }
+    new IEnumerator TaggingDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        rangeFinderScript.validTargetTags.Add("Enemy");
     }
 }

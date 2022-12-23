@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RangedAlly : Ally
 {
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -22,10 +21,8 @@ public class RangedAlly : Ally
         Begin();
         StartCoroutine(TaggingDelay());
     }
-    // Update is called once per frame
     void Update()
     {
-        HealthCheck();
         Move();
         BuildingUpdate();
     }

@@ -7,42 +7,43 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //brainless creativeless
-    //buildposition position lines
+    //draw mana cost on icons
+    //make rest of icons
+    //add an xp ui for player that pops up opposite side as the incomingdamage
+    //make health bars work by concatinating string +/- "_" in for loop with damage
+    //test ally xp/level ups, make aspects of the game object that become active to signify leveling up for allies and/or player (for player maybe just go from tan color to blood red.
+    //use the physics engine for all movement, fuck it. then you can have knockbacks and stuff, you could even incorporate gravity, things could slide when frozen by ice skeet, etc
     //variable name brush ups
     //comment every variable with what it does and under what
+    //TUTORIAL: add tutorial that shows off all systems (maybe)
+    //TOOLTIPS: use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
+    //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good.)
+    //death screen (when base dies not player, when player dies put screen to overhead view and respawn player at the end of the round.
+    //change the way the player spawns in to not be janky
 
-    //add an interface to show I know how to use them
+    // make defend key for ally that makes their move target the base until
+    //fix follow
     //fix upside down localized ui
     //0: try to fuck around with blender basic modeling and animation
-    //use the physics engine for all movement, fuck it. then you can have knockbacks and stuff, you could even incorporate gravity, things could slide when frozen by ice skeet, etc
     //taunt spell that works like follow for enemys
     //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
     //make a building that does aoe damage by cycling through all targets on the list and doing damage to each of them. 
     //reduce a defensive stat during the attack window of attack duration
     //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target 
-    //ROUNDS: figure out how rounds will work and program the necessary systems
-    //TUTORIAL: add tutorial that shows off all systems (maybe)
-    //TOOLTIPS: use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
-    //spell ideas: Vengeance: rank1: charge for 3 seconds, then attack, dealing bonus damage equal to the damage taken, rank2: 50% damage reduction for dur, rank3: damage immunity for dur. 
+    //spell ideas: Vengeance: rank1: charge for 3 seconds, then attack, dealing bonus damage equal to the damage taken, rank2: 50% damage reduction for dur, rank3: damage immunity for dur.
     //add enemy aggro system where top source of damage is swapped to if its in targetlist?
-    //begin flushing out offense/adventuring
     //make blacksmith button that can make gear for you for $$ or can get gear adventuring
     //first few rounds are pretty easy with the inital gold you get, but if you choose to adventure your early buildings take significant damage which takes gold to repair. 
     //figure out what other stat systems I want to have in place, armor, attributes, etc.
-    //pause functionality
-    //make aggro
-    //figure out how to make effect
     //choose class at start, diff stats, special buildings/recruits, abilities, gear
     //Design offense map/maps (im thinking large labyrith of smallish rooms, when you enter one you cannot enter another new one till next round, when you start round if you are in hitbox of an uncleared room you fight it.
     //NOT offense, adventuring. when you are adventuring you have to just trust in your men to hold, you will take more damage to your defenses, but you can find dank skeet. 
     //maybe give option to watch the defense first
     //you have to decide wether you want sick items and artifacts bases from adventuring or to build up your economy and infrastructure by defending your base better/investing in base/interest on rescources.
     //when offense starts the square you are on determines the dungeon you do, which becomes the new offense map until the round finishes. (teleports you and allies there) 
-    //To add spell ui images just perform a check for the first 4 spells listed in the round begin of game manager and display the corresponding image, then each time a spell is cast do a check with a FindImage()
-    //method that takes in the name of the spell as a parameter and displays the corresponding image to the correct position on the UI
     //something to try: if running a method in a grandparent class of a child, you call the method, and it is overriden in the parent, does the method run the grandparent or parent version
     //how i could have done buildposition better: made an array 126 large for each variable, with the correct variable in the correct location, then just have each button have the same script and an int variable which just calls buildposition passing its corresponding int. 
+
 
     public bool currentBuildingRangeFinder = false;
     public bool roundBegun = false;
@@ -94,9 +95,11 @@ public class GameManager : MonoBehaviour
     private Button archerButton;
     private Button footmanButton;
     public TextMeshProUGUI goldDisplay;
+    public TextMeshProUGUI roundDisplay;
     private float mapZoomInput;
     private float mouseXInput;
     private float mouseYInput;
+    public int maxActiveSpells = 1;
     private int cameraZoomSpeed = 5000;
     private int cameraPanSpeed = 250;
     private int cameraPanLowerBound = -45;
@@ -105,13 +108,12 @@ public class GameManager : MonoBehaviour
     private int cameraPanRightBound = 20;
     private int spellXLocation;
     private int spellYLocation;
-    private int spellUINumber = 0;
     private int laneBalance1 = 0;
     private int laneBalance2 = 0;
     private int laneBalance3 = 0;
+    private int currentRound = 1;
     public int gold;
     public int currentBuildingCost;
-    public int maxActiveSpells = 8;
     private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -14f);
     private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -14f);
     private Vector3 offensePlayerPosition = new Vector3(500f, 3.54f, 0f);
@@ -122,6 +124,7 @@ public class GameManager : MonoBehaviour
     private Vector3 lane1Position;
     private Vector3 lane2Position;
     private Vector3 lane3Position;
+    private Vector3 enemyOffset = new Vector3(0, 4, 0);
     private Quaternion cameraRotation;
     private Quaternion lane1Rotation;
     private Quaternion lane2Rotation;
@@ -371,42 +374,8 @@ public class GameManager : MonoBehaviour
         mainCamera.transform.parent = player.transform;
         ZoomIn();
         activeSpells.ShuffleList();
-        spellUINumber = 0;
-        foreach(GameObject spell in activeSpells)
-        {
-            if (!playerScript.spellList.Contains(spell) && playerScript.spellList.Count < maxActiveSpells)
-            {
-                playerScript.spellList.Add(spell);
-            }
-            if (spellUINumber == 0 && playerScript.castableSpells > 0)
-            {
-                playerScript.spell1Name.text = spell.name;
-            }
-            if (spellUINumber == 1 && playerScript.castableSpells > 1)
-            {
-                playerScript.spell2Name.text = spell.name;
-            }
-            if (spellUINumber == 2 && playerScript.castableSpells > 2)
-            {
-                playerScript.spell3Name.text = spell.name;
-            }
-            if (spellUINumber == 3 && playerScript.castableSpells > 3)
-            {
-                playerScript.spell4Name.text = spell.name;
-            }
-            spellUINumber++;
-        }
-        playerScript.manaDisplay.text = "Mana: " + playerScript.currentMana + "/" + playerScript.maxMana;
-        playerScript.healthDisplay.text = "Health: " + playerScript.currentHP + "/" + playerScript.maxHP;
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
-        SpawnEnemy(enemy, new Vector3(0, 4, 0));
+        playerScript.RoundBegin();
+        SpawnRoundWave();
     }
 
     void EndRound()
@@ -419,13 +388,7 @@ public class GameManager : MonoBehaviour
         mainCamera.transform.parent = null;
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
-        playerScript.Reset();
-        playerScript.spell1Name.text = "";
-        playerScript.spell2Name.text = "";
-        playerScript.spell3Name.text = "";
-        playerScript.spell4Name.text = "";
-        playerScript.manaDisplay.text = "";
-        playerScript.healthDisplay.text = "";
+        playerScript.RoundEnd();
     }
     //Spell and Building UI
     void ToggleSpellBook()
@@ -661,14 +624,40 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    void SpawnAlly()
+    private void SpawnRoundWave()
     {
-
+        if(currentRound == 1)
+        {
+            SpawnEnemy(enemy, enemyOffset);
+            roundDisplay.text = "Round 1";
+            StartCoroutine(RoundTextReset());
+        }
+        if (currentRound == 2)
+        {
+            roundDisplay.text = "Round 2";
+        }
+        if (currentRound == 3)
+        {
+            roundDisplay.text = "Round 3";
+        }
+        currentRound++;
+    }
+    private IEnumerator RoundTextReset()
+    {
+        yield return new WaitForSeconds(3);
+        roundDisplay.text = "";
     }
     //Misc Methods
     void Pause()
     {
-        Debug.Log("Game Paused");
+        if(Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
     void GeneralizedSpawn(Vector3 offset)
     {
@@ -677,6 +666,7 @@ public class GameManager : MonoBehaviour
         healthAndDamageCanvasScript.host = currentBuilding;
         healthAndDamageCanvasScript.offset = offset;
         currentBuildingScript = currentBuilding.GetScript() as Building;
+        currentBuildingScript.healthAndDamageCanvas = currentHealthAndDamageCanvas;
         currentBuildingScript.healthAndDamageCanvasScript = healthAndDamageCanvasScript;
         currentBuildingScript.castle = castle;
     }

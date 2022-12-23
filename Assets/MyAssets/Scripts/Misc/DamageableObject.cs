@@ -16,18 +16,17 @@ public class DamageableObject : MonoBehaviour
     public GameObject attackHitbox;
     public AttackHitbox attackHitboxScript;
     public TextMeshProUGUI healthDisplay;
+    protected int experienceReward;
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
-    // Update is called once per frame
     void Update()
     {
         
     }
-    public void TakeDamage(float damageDealt)
+    public int TakeDamage(float damageDealt)
     {
         currentHP -= damageDealt;
         if(tag == "Player")
@@ -35,5 +34,13 @@ public class DamageableObject : MonoBehaviour
             healthDisplay.text = "Health: " + currentHP + "/" + maxHP;
         }
         healthAndDamageCanvasScript.damageScript.DamageIncoming(damageDealt);
+        if (currentHP < 1)
+        {
+            if(experienceReward > 0)
+            {
+                return experienceReward;
+            }
+        }
+        return 0;
     }
 }

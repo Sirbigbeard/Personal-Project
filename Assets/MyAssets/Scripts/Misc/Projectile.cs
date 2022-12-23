@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     { 
-        if (other.gameObject.GetInstanceID() == target.GetInstanceID())//== target
+        if (other.gameObject.GetInstanceID() == target.GetInstanceID())
         {
             targetScript.TakeDamage(damage);
             if (targetScript.currentHP <= 0)
