@@ -16,7 +16,7 @@ public class DamageableObject : MonoBehaviour
     public GameObject attackHitbox;
     public AttackHitbox attackHitboxScript;
     public TextMeshProUGUI healthDisplay;
-    protected int experienceReward;
+    public int experienceReward;
 
     void Start()
     {
@@ -33,7 +33,7 @@ public class DamageableObject : MonoBehaviour
         {
             healthDisplay.text = "Health: " + currentHP + "/" + maxHP;
         }
-        healthAndDamageCanvasScript.damageScript.DamageIncoming(damageDealt);
+        healthAndDamageCanvasScript.DamageIncoming(damageDealt);
         if (currentHP < 1)
         {
             if(experienceReward > 0)

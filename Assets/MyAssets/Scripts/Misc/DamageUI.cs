@@ -10,7 +10,7 @@ public class DamageUI : MonoBehaviour
     public Vector3 location;
     public Transform host;
     public TextMeshProUGUI textMesh;
-    public int incomingDamageCount = 0;
+
     private Camera cam;
 
     void Start()
@@ -30,19 +30,6 @@ public class DamageUI : MonoBehaviour
             }
         }
     }
-    public void DamageIncoming(float damage)
-    {
-        textMesh.text = "-" + damage;
-        incomingDamageCount++;
-        StartCoroutine(DamageFade());
-    }
-    IEnumerator DamageFade()
-    {
-        yield return new WaitForSeconds(1);
-        incomingDamageCount--;
-        if (incomingDamageCount == 0)
-        {
-            textMesh.text = "";
-        }
-    }
+    
+    
 }

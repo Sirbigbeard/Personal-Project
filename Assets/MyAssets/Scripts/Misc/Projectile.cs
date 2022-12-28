@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     public GameObject building;
     private Vector3 targetPosition;
     public Building buildingScript;
+    //private int potentialXP;
     void Start()
     {
         buildingScript = building.GetComponent<Building>();
@@ -43,9 +44,11 @@ public class Projectile : MonoBehaviour
     { 
         if (other.gameObject.GetInstanceID() == target.GetInstanceID())
         {
-            targetScript.TakeDamage(damage);
+            int potentialXP = targetScript.TakeDamage(damage);
             if (targetScript.currentHP <= 0)
             {
+                buildingScript.GainXP(potentialXP);
+                //buildingScript.rank2Marker.SetActive(true);
                 buildingScript.RemoveTarget(other.gameObject);
             }
             Destroy(gameObject);

@@ -58,7 +58,7 @@ public class Player : DamageableObject
     private Renderer torsoRenderer;
     private Color playerColor;
     private Color bulwarkColor;
-    private Vector3 startingPosition = new Vector3(0, 3f, 0);
+    private Vector3 startingPosition = new Vector3(0, 3f, 5);
     public ParticleSystem iceWaveParticle;
     public Sprite fireBallSprite;
     public Sprite slamSprite;
@@ -110,75 +110,79 @@ public class Player : DamageableObject
         spell2Image.SetActive(false);
         spell3Image.SetActive(false);
         spell4Image.SetActive(false);
+        healthAndDamageCanvasScript.health = (int)maxHP;
     }
 
     void Update()
     {
-        if (gameManagerScript.roundBegun)
+        if(currentHP > 0)
         {
-            if (!attackCooldownActive)
+            if (gameManagerScript.roundBegun)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (!attackCooldownActive)
                 {
-                    Attack();
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        Attack();
+                    }
                 }
-            }
-            if (Input.GetKeyDown("1") && spellList.Count > 0)
-            {
-                CastSpell(spellList[0]);
-                if (spellList.Count > castableSpells && spellCasted)
+                if (Input.GetKeyDown("1") && spellList.Count > 0)
                 {
-                    spellList.Add(spellList[0]);
-                    spellList[0] = spellList[castableSpells];
-                    spell1Image.GetComponent<Image>().sprite = FindImage(spellList[0]);
-                    spell1Name.text = spellList[castableSpells].name;
-                    spellList.RemoveAt(castableSpells);
+                    CastSpell(spellList[0]);
+                    if (spellList.Count > castableSpells && spellCasted)
+                    {
+                        spellList.Add(spellList[0]);
+                        spellList[0] = spellList[castableSpells];
+                        spell1Image.GetComponent<Image>().sprite = FindImage(spellList[0]);
+                        spell1Name.text = spellList[castableSpells].name;
+                        spellList.RemoveAt(castableSpells);
+                    }
+                    spellCasted = false;
                 }
-                spellCasted = false;
-            }
-            if (Input.GetKeyDown("2") && spellList.Count > 1)
-            {
-                CastSpell(spellList[1]);
-                if (spellList.Count > castableSpells && spellCasted)
+                if (Input.GetKeyDown("2") && spellList.Count > 1)
                 {
-                    spellList.Add(spellList[1]);
-                    spellList[1] = spellList[castableSpells];
-                    spell2Image.GetComponent<Image>().sprite = FindImage(spellList[1]);
-                    spell2Name.text = spellList[castableSpells].name;
-                    spellList.RemoveAt(castableSpells);
+                    CastSpell(spellList[1]);
+                    if (spellList.Count > castableSpells && spellCasted)
+                    {
+                        spellList.Add(spellList[1]);
+                        spellList[1] = spellList[castableSpells];
+                        spell2Image.GetComponent<Image>().sprite = FindImage(spellList[1]);
+                        spell2Name.text = spellList[castableSpells].name;
+                        spellList.RemoveAt(castableSpells);
+                    }
+                    spellCasted = false;
                 }
-                spellCasted = false;
-            }
-            if (Input.GetKeyDown("3") && spellList.Count > 2)
-            {
-                CastSpell(spellList[2]);
-                if (spellList.Count > castableSpells && spellCasted)
+                if (Input.GetKeyDown("3") && spellList.Count > 2)
                 {
-                    spellList.Add(spellList[2]);
-                    spellList[2] = spellList[castableSpells];
-                    spell3Image.GetComponent<Image>().sprite = FindImage(spellList[2]);
-                    spell3Name.text = spellList[castableSpells].name;
-                    spellList.RemoveAt(castableSpells);
+                    CastSpell(spellList[2]);
+                    if (spellList.Count > castableSpells && spellCasted)
+                    {
+                        spellList.Add(spellList[2]);
+                        spellList[2] = spellList[castableSpells];
+                        spell3Image.GetComponent<Image>().sprite = FindImage(spellList[2]);
+                        spell3Name.text = spellList[castableSpells].name;
+                        spellList.RemoveAt(castableSpells);
+                    }
+                    spellCasted = false;
                 }
-                spellCasted = false;
-            }
-            if (Input.GetKeyDown("4") && spellList.Count > 3)
-            {
-                CastSpell(spellList[3]);
-                if (spellList.Count > castableSpells && spellCasted)
+                if (Input.GetKeyDown("4") && spellList.Count > 3)
                 {
-                    spellList.Add(spellList[3]);
-                    spellList[3] = spellList[castableSpells];
-                    spell4Image.GetComponent<Image>().sprite = FindImage(spellList[3]);
-                    spell4Name.text = spellList[castableSpells].name;
-                    spellList.RemoveAt(castableSpells);
+                    CastSpell(spellList[3]);
+                    if (spellList.Count > castableSpells && spellCasted)
+                    {
+                        spellList.Add(spellList[3]);
+                        spellList[3] = spellList[castableSpells];
+                        spell4Image.GetComponent<Image>().sprite = FindImage(spellList[3]);
+                        spell4Name.text = spellList[castableSpells].name;
+                        spellList.RemoveAt(castableSpells);
+                    }
+                    spellCasted = false;
                 }
-                spellCasted = false;
-            }
-            if(currentMana < maxMana && !manaTickActive)
-            {
-                StartCoroutine(ManaTick());
-                manaTickActive = true;
+                if (currentMana < maxMana && !manaTickActive)
+                {
+                    StartCoroutine(ManaTick());
+                    manaTickActive = true;
+                }
             }
         }
     }
@@ -199,7 +203,7 @@ public class Player : DamageableObject
                 playerRb.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
             }
         }
-        if (gameManagerScript.roundBegun)
+        if (gameManagerScript.roundBegun && currentHP > 0)
         {
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
@@ -213,6 +217,10 @@ public class Player : DamageableObject
             {
                 playerRb.AddForce(transform.forward * speed * 10 * verticalInput);
             }
+        }
+        if(currentHP <= 0)
+        {
+            transform.Translate(1000, 1000, 1000);
         }
     }
     
@@ -284,7 +292,7 @@ public class Player : DamageableObject
         }
         if (spell.name == "Slam")
         {
-            
+            return slamSprite;
         }
         if (spell.name == "Ice Wave")
         {
@@ -292,15 +300,15 @@ public class Player : DamageableObject
         }
         if (spell.name == "Summon Imp")
         {
-            
+            return summonImpSprite;
         }
         if (spell.name == "Bulwark")
         {
-            
+            return bulwarkSprite;
         }
         if (spell.name == "Blink")
         {
-            
+            return blinkSprite;
         }
         return null;
     }
@@ -339,6 +347,7 @@ public class Player : DamageableObject
         currentSummonedCreatureScript.healthAndDamageCanvas = currentHealthAndDamageCanvas;
         currentSummonedCreatureScript.healthAndDamageCanvasScript = summonedHealthAndDamageCanvasScript;
         currentSummonedCreatureScript.castle = gameManagerScript.castle;
+        currentSummonedCreatureScript.healthAndDamageCanvasScript.health = (int)currentSummonedCreatureScript.maxHP;
     }
     public void CastBulwark()
     {
@@ -446,6 +455,7 @@ public class Player : DamageableObject
     public void RoundEnd()
     {
         transform.position = startingPosition;
+        healthAndDamageCanvasScript.GainHealth(maxHP - currentHP);
         currentHP = maxHP;
         if (gameManagerScript.gatheredSpells.Count != 0)
         {
@@ -495,6 +505,7 @@ public class Player : DamageableObject
             xPDisplay.text = "XP: " + currentXP + "/" + (5 + 5 * level);
             level++;
             maxHP += 2;
+            healthAndDamageCanvasScript.GainHealth(2);
             manaRegenRate += .1f;
             if (gameManagerScript.maxActiveSpells < 8)
             {

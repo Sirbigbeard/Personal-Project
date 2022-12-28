@@ -10,14 +10,15 @@ public class HealthUI : MonoBehaviour
     public Vector3 location;
     public Transform host;
     private Camera cam;
-    // Start is called before the first frame update
+    public int health;
+    public TextMeshProUGUI textMesh;
+
     void Start()
     {
         cam = Camera.main;
-        GetComponent<TMPro.TextMeshProUGUI>().text = "----------";
+        textMesh = GetComponent<TMPro.TextMeshProUGUI>();
+        //textMesh.text = "";
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (host != null)

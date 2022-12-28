@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Building : DamageableObject
 {
@@ -38,8 +39,11 @@ public class Building : DamageableObject
     public GameObject parentObject;
     protected int potentialXP;
     protected int currentXP;
-    protected int level;
+    private int level = 0;
     public Player playerScript;
+    public GameObject rank2Marker;
+    public GameObject rank3Marker;
+    private bool canvasTimer;
 
     void Start()
     {
@@ -47,7 +51,7 @@ public class Building : DamageableObject
     }
     void Update()
     {
-        
+        HealthCheck();
     }
     //Handles all communal code needed for buildings, call method in update. For melle, set rangedAttackRange to -1 or any value at least .5 below their attackRange.
     protected void BuildingUpdate()
@@ -68,18 +72,7 @@ public class Building : DamageableObject
             }
         }
         //Sets elements of the building to inactive so that UI buttons do not get accidentally covered when building or recruiting between rounds, then reactivates when round begins.
-        if (gameManagerScript.roundBegun)
-        {
-            if (!rangeFinder.activeSelf)
-            {
-                rangeFinder.SetActive(true);
-            }
-            if (!healthAndDamageCanvas.activeSelf)
-            {
-                healthAndDamageCanvas.SetActive(true);
-            }
-        }
-        else
+        if (!gameManagerScript.roundBegun && canvasTimer)
         {
             if (rangeFinder.activeSelf)
             {
@@ -90,6 +83,17 @@ public class Building : DamageableObject
                 healthAndDamageCanvas.SetActive(false);
             }
         }
+        else
+        {
+            if (!rangeFinder.activeSelf)
+            {
+                rangeFinder.SetActive(true);
+            }
+            if (!healthAndDamageCanvas.activeSelf)
+            {
+                healthAndDamageCanvas.SetActive(true);
+            }
+        }
     }
     void Awake()
     {
@@ -97,6 +101,7 @@ public class Building : DamageableObject
         if (name == "Castle")
         {
             healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
+            healthAndDamageCanvasScript.health = 50;
         }
         else
         {
@@ -116,6 +121,7 @@ public class Building : DamageableObject
         buildPositionScript = buildPositionObject.GetComponent<BuildPosition>();
         targets = new List<GameObject>();
         rangeFinderScript = rangeFinder.GetComponent<RangeFinder>();
+        StartCoroutine(CanvasTimer());
         if (!hitsFlying)
         {
             rangeFinder.transform.localScale = new Vector3(range, .25f, range);
@@ -133,6 +139,7 @@ public class Building : DamageableObject
         projectileScript = projectileFired.GetScript() as Projectile;
         projectileScript.target = target;
         projectileScript.targetScript = targetScript;
+        projectileScript.building = gameObject;
         attackReadyRanged = false;
         StartCoroutine(RangedAttackCooldown());
     }
@@ -142,6 +149,10 @@ public class Building : DamageableObject
         {
             transform.Translate(100000, 100000, 100000);
             StartCoroutine(DestroyDelay());
+            if(name == "Castle")
+            {
+                SceneManager.LoadScene("Game Over Scene");
+            }
         }
     }
     protected IEnumerator RangedAttackCooldown()
@@ -162,6 +173,11 @@ public class Building : DamageableObject
         attackDurationActive = true;
         StartCoroutine(MelleAttackCooldown());
         DealDamage(attackDamage);
+    }
+    IEnumerator CanvasTimer()
+    {
+        yield return new WaitForSeconds(1);
+        canvasTimer = true;
     }
     IEnumerator MelleAttackCooldown()
     {
@@ -224,7 +240,7 @@ public class Building : DamageableObject
     private void DealDamage(float damage)
     {
         potentialXP = targetScript.TakeDamage(damage);
-        if (level < 3 && tag == "Ally")
+        if (level < 3)
         {
             if (potentialXP > 0)
             {
@@ -234,11 +250,25 @@ public class Building : DamageableObject
     }
     public void GainXP(int xp)
     {
-        currentXP += potentialXP;
-        if (currentXP >= 10 + 5 * level)
+        currentXP += xp;
+        if (currentXP >= 10 + 10 * level)
         {
-            currentXP -= 10 + 5 * level;
+            currentXP -= 10 + 10 * level;
+            Debug.Log(level);
             level++;
+            Debug.Log(level);
+            //rank2Marker.SetActive(true);
+            //Debug.Log(rank2Marker.activeSelf);
+            if (level == 1)
+            {
+                rank2Marker.SetActive(true);
+                Debug.Log(rank2Marker.activeSelf);
+            }
+            if(level == 2)
+            {
+                rank3Marker.SetActive(true);
+                Debug.Log(rank3Marker.activeSelf);
+            }
             //maxHP += 2;
             //levelDisplay.text = "" + level;
         }

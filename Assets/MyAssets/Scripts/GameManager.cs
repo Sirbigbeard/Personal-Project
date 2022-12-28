@@ -7,26 +7,24 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //draw mana cost on icons
-    //make rest of icons
-    //add an xp ui for player that pops up opposite side as the incomingdamage
-    //make health bars work by concatinating string +/- "_" in for loop with damage
-    //test ally xp/level ups, make aspects of the game object that become active to signify leveling up for allies and/or player (for player maybe just go from tan color to blood red.
+    //test player and gameManager deaths
+    //change round end from button press to when all enemies are dead (make an enemy list and fill it with all the enemy game objects as you spawn them into the rounds
+    //change the way the player spawns in to not be jank
     //use the physics engine for all movement, fuck it. then you can have knockbacks and stuff, you could even incorporate gravity, things could slide when frozen by ice skeet, etc
     //variable name brush ups
     //comment every variable with what it does and under what
     //TUTORIAL: add tutorial that shows off all systems (maybe)
     //TOOLTIPS: use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
+    //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
     //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good.)
-    //death screen (when base dies not player, when player dies put screen to overhead view and respawn player at the end of the round.
-    //change the way the player spawns in to not be janky
+    //fix upside down localized ui
 
+    //repair buildings function
+    //change colors of health bars dependign on type
     // make defend key for ally that makes their move target the base until
     //fix follow
-    //fix upside down localized ui
     //0: try to fuck around with blender basic modeling and animation
     //taunt spell that works like follow for enemys
-    //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
     //make a building that does aoe damage by cycling through all targets on the list and doing damage to each of them. 
     //reduce a defensive stat during the attack window of attack duration
     //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target 
@@ -209,7 +207,15 @@ public class GameManager : MonoBehaviour
         }
         if (roundBegun)
         {
-            RegisterCameraMovementInRound();
+            if(playerScript.currentHP <= 0)
+            {
+                RegisterCameraMovementOverhead();
+            }
+            else
+            {
+                RegisterCameraMovementInRound();
+            }
+
             if (Input.GetKeyDown("escape"))
             {
                 Pause();
@@ -446,6 +452,19 @@ public class GameManager : MonoBehaviour
                 building.SetActive(false);
             }
         }
+        if (constructing)
+        {
+            if (currentBuilding != null)
+            {
+                Destroy(currentBuilding);
+            }
+            if (currentHealthAndDamageCanvas != null)
+            {
+                Destroy(currentHealthAndDamageCanvas);
+            }
+            constructing = false;
+            creationCamera.enabled = false;
+        }
     }
     void ToggleRecruitment()
     {
@@ -629,6 +648,15 @@ public class GameManager : MonoBehaviour
         if(currentRound == 1)
         {
             SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
+            SpawnEnemy(enemy, enemyOffset);
             roundDisplay.text = "Round 1";
             StartCoroutine(RoundTextReset());
         }
@@ -668,6 +696,8 @@ public class GameManager : MonoBehaviour
         currentBuildingScript = currentBuilding.GetScript() as Building;
         currentBuildingScript.healthAndDamageCanvas = currentHealthAndDamageCanvas;
         currentBuildingScript.healthAndDamageCanvasScript = healthAndDamageCanvasScript;
+        currentBuildingScript.castle = castle;
+        currentBuildingScript.healthAndDamageCanvasScript.health = (int)currentBuildingScript.maxHP;
         currentBuildingScript.castle = castle;
     }
     void ResetSpellLocation()
