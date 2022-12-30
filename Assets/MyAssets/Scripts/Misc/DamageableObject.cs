@@ -43,4 +43,22 @@ public class DamageableObject : MonoBehaviour
         }
         return 0;
     }
+    public void Heal(float health)
+    {
+        currentHP += health;
+        if(currentHP > maxHP)
+        {
+            currentHP = maxHP;
+            healthAndDamageCanvasScript.GainHealth(maxHP - currentHP);
+        }
+        else
+        {
+            healthAndDamageCanvasScript.GainHealth(health);
+        }
+    }
+    public void FullHeal()
+    {
+        currentHP = maxHP;
+        healthAndDamageCanvasScript.GainHealth(maxHP - currentHP);
+    }
 }

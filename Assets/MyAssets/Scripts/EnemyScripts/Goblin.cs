@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MelleEnemy : Enemy
+public class Goblin : MelleEnemy
 {
-    void Start()
-    {
-
-    }
     void Awake()
     {
         range = 30;
         attackRange = 3;
         rangedAttackRange = -1;
-        speed = 3;
+        speed = 4.2f;
         attackDamage = 1;
-        attackCooldownFloat = 2;
-        currentHP = 25;
-        maxHP = 25;
+        attackCooldownFloat = 2.3f;
+        currentHP = 10;
+        maxHP = 10;
         Begin();
-        itemDrops.Add(fireBallBook);
+        itemDrops.Add(slamBook);
+        itemDrops.Add(summonImpBook);
+        itemDrops.Add(bulwarkBook);
+        itemDrops.Add(blinkBook);
         StartCoroutine(TaggingDelay());
     }
     void Update()
@@ -35,4 +34,3 @@ public class MelleEnemy : Enemy
         rangeFinderScript.validTargetTags.Add("Ally");
     }
 }
-

@@ -21,7 +21,6 @@ public class Ignition : MonoBehaviour
     }
     public void BeginGame()
     {
-        Debug.Log("tap that");
-        SceneManager.LoadScene("Gameplay Scene");
+        SceneManager.LoadScene(1);
     }
 }

@@ -7,18 +7,23 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //test player and gameManager deaths
-    //change round end from button press to when all enemies are dead (make an enemy list and fill it with all the enemy game objects as you spawn them into the rounds
-    //change the way the player spawns in to not be jank
+    //enemies dropping multiple things on occation (should be fixd)
+    //crenulations health ui
+    //end round button should appear where begin round button is instead of violently yanking you out of the round.
+    //hold shift to run, running and attacking use stam
+    //drops from enemies (gold and spells, given random arc velocity to sort of bounce out of corpses.) handled in building destroyDelay()
     //use the physics engine for all movement, fuck it. then you can have knockbacks and stuff, you could even incorporate gravity, things could slide when frozen by ice skeet, etc
     //variable name brush ups
     //comment every variable with what it does and under what
     //TUTORIAL: add tutorial that shows off all systems (maybe)
     //TOOLTIPS: use code in ui block to on mouseover display tooltips above spells, gear, enemy names maybe, tooltip for build
     //at start, randomize 3 locations on different walls at least 40ish units apart that can be for boss spawning, so that you can setup extra strong defenses around those points.
-    //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good.)
+    //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good. toggle spellbook not bad, building relation to melle enemy/ally, move function placement etc)
     //fix upside down localized ui
 
+
+    //text pop up over players head when collecting loot.. "spell learned: fireball" "+5 Gold" etc
+    //recoloring round display in beginround, end round, and player death not working
     //repair buildings function
     //change colors of health bars dependign on type
     // make defend key for ally that makes their move target the base until
@@ -51,6 +56,7 @@ public class GameManager : MonoBehaviour
     private bool recruitmentOpen = false;
     public bool constructing = false;
     public bool recruiting = false;
+    private bool playerDeath = false;
     public GameObject healthAndDamageCanvas;
     public GameObject currentHealthAndDamageCanvas;
     public GameObject currentBuilding;
@@ -59,6 +65,8 @@ public class GameManager : MonoBehaviour
     public GameObject mainCamera;
     public Camera creationCamera;
     public GameObject enemy;
+    public GameObject grunt;
+    public GameObject javleneer;
     public GameObject footman;
     public GameObject archer;
     public GameObject hut;
@@ -81,6 +89,7 @@ public class GameManager : MonoBehaviour
     public GameObject recruitListButtonObject;
     public GameObject archerButtonObject;
     public GameObject footmanButtonObject;
+    private GameObject currentEnemy;
     private Button offenseMapButton;
     private Button defenseMapButton;
     private Button beginRoundButton;
@@ -110,6 +119,7 @@ public class GameManager : MonoBehaviour
     private int laneBalance2 = 0;
     private int laneBalance3 = 0;
     private int currentRound = 1;
+    public int enemyCount = 0;
     public int gold;
     public int currentBuildingCost;
     private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -14f);
@@ -209,6 +219,13 @@ public class GameManager : MonoBehaviour
         {
             if(playerScript.currentHP <= 0)
             {
+                if (!playerDeath)
+                {
+                    mainCamera.transform.parent = null;
+                    mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
+                    mainCamera.transform.position = defenseCameraPosition;
+                    playerDeath = true;
+                }
                 RegisterCameraMovementOverhead();
             }
             else
@@ -220,7 +237,11 @@ public class GameManager : MonoBehaviour
             {
                 Pause();
             }
-            if (Input.GetKeyDown("h"))
+            //if (Input.GetKeyDown("h"))//get rid of this when done testing
+            //{
+            //    EndRound();
+            //}
+            if(enemyCount == 0)//handled in building under healthcheck()
             {
                 EndRound();
             }
@@ -381,12 +402,16 @@ public class GameManager : MonoBehaviour
         ZoomIn();
         activeSpells.ShuffleList();
         playerScript.RoundBegin();
+        roundDisplay.text = "Round " + currentRound;
+        roundDisplay.color = new Color(99, 212, 49, 1);
+        StartCoroutine(RoundTextReset());
         SpawnRoundWave();
     }
 
     void EndRound()
     {
         roundBegun = false;
+        playerDeath = false;
         offenseMapButtonObject.SetActive(true);
         beginRoundButtonObject.SetActive(true);
         buildingListButtonObject.SetActive(true);
@@ -395,6 +420,10 @@ public class GameManager : MonoBehaviour
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
         playerScript.RoundEnd();
+        roundDisplay.text = "Round " + currentRound + " Completed";
+        roundDisplay.color = new Color(41, 55, 198, 255);
+        StartCoroutine(RoundTextReset());
+        currentRound++;
     }
     //Spell and Building UI
     void ToggleSpellBook()
@@ -568,7 +597,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("You too poor noob");
         }
     }
-    void SpawnEnemy(GameObject enemy, Vector3 offset)
+    public GameObject SpawnEnemy(GameObject enemy, Vector3 offset)
     {
         int coinFlip = Random.Range(1, 5);
         float xPos;
@@ -600,6 +629,8 @@ public class GameManager : MonoBehaviour
         }
         currentBuilding = Instantiate(enemy, new Vector3(xPos, enemy.transform.position.y, zPos), rotation);
         GeneralizedSpawn(offset);
+        enemyCount++;
+        return currentBuilding;
     }
     void SpawnEnemyLane(GameObject enemy, Vector3 offset)
     {
@@ -642,37 +673,29 @@ public class GameManager : MonoBehaviour
                 GeneralizedSpawn(offset);
             }
         }
+        enemyCount++;
     }
     private void SpawnRoundWave()
     {
         if(currentRound == 1)
         {
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            SpawnEnemy(enemy, enemyOffset);
-            roundDisplay.text = "Round 1";
-            StartCoroutine(RoundTextReset());
+            SpawnEnemy(grunt, enemyOffset);
+            SpawnEnemy(grunt, enemyOffset);
+            SpawnEnemy(javleneer, enemyOffset);
         }
         if (currentRound == 2)
         {
-            roundDisplay.text = "Round 2";
+            
         }
         if (currentRound == 3)
         {
-            roundDisplay.text = "Round 3";
+            
         }
-        currentRound++;
     }
     private IEnumerator RoundTextReset()
     {
         yield return new WaitForSeconds(3);
+        roundDisplay.color = new Color(0, 0, 0, 0);
         roundDisplay.text = "";
     }
     //Misc Methods

@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class Building : DamageableObject
 {
     //This class is parent to Ally and Enemy.
+    public bool endRoundCheck = false;
     public Vector3 startPosition;
+    private Vector3 lootPosition;
     public GameObject projectile;
     protected GameObject player;
     protected bool isRanged = false;
+    private bool lootPositionChecked = false;
     public GameObject target;
     public GameObject rangeFinder;
     public GameObject castle;
@@ -44,6 +47,22 @@ public class Building : DamageableObject
     public GameObject rank2Marker;
     public GameObject rank3Marker;
     private bool canvasTimer;
+    private bool checkedSpawn = false;
+    protected List<GameObject> itemDrops;
+    public static GameObject fireBallBook;
+    public static GameObject blinkBook;
+    public static GameObject bulwarkBook;
+    public static GameObject summonImpBook;
+    public static GameObject iceWaveBook;
+    public static GameObject slamBook;
+    public static GameObject smallGoldReward;
+    public static GameObject mediumGoldReward;
+    public static GameObject largeGoldReward;
+    public static GameObject mountainousGoldReward;
+    public static GameObject smallXPReward;
+    public static GameObject largeXPReward;
+
+    public Vector3 startingPosition;
 
     void Start()
     {
@@ -51,18 +70,17 @@ public class Building : DamageableObject
     }
     void Update()
     {
-        HealthCheck();
+        StatusCheck();
     }
     //Handles all communal code needed for buildings, call method in update. For melle, set rangedAttackRange to -1 or any value at least .5 below their attackRange.
     protected void BuildingUpdate()
     {
         //Ranged Attack
-        if (attackReadyRanged && target != null && distanceToTarget <= rangedAttackRange + .4f)
+        if (attackReadyRanged && target != null && distanceToTarget <= rangedAttackRange + .4f && checkedSpawn)
         {
             FireProjectile();
         }
-        //Death Check
-        HealthCheck();
+        StatusCheck();
         //Retargeting
         if(target != null)
         {
@@ -94,14 +112,31 @@ public class Building : DamageableObject
                 healthAndDamageCanvas.SetActive(true);
             }
         }
+        if(gameManagerScript.roundBegun && endRoundCheck)
+        {
+            endRoundCheck = false;
+        }
     }
     void Awake()
     {
         //Wonky code specifically so that I could be lazy and implement the castle (home base) with less effort.
         if (name == "Castle")
         {
+            gameManagerScript = gameManager.GetComponent<GameManager>();
             healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
             healthAndDamageCanvasScript.health = 50;
+            fireBallBook = GameObject.Find("FireBallBook");
+            blinkBook = GameObject.Find("BlinkBook");
+            bulwarkBook = GameObject.Find("BulwarkBook");
+            summonImpBook = GameObject.Find("SummonImpBook");
+            iceWaveBook = GameObject.Find("IceWaveBook");
+            slamBook = GameObject.Find("SlamBook");
+            //smallGoldReward = GameObject.Find("SmallGoldReward");
+            //mediumGoldReward = GameObject.Find("MediumGoldReward");
+            //largeGoldReward = GameObject.Find("LargeGoldReward");
+            //mountainousGoldReward = GameObject.Find("MountainousGoldReward");
+            //smallXPReward = GameObject.Find("SmallXPReward");
+            //largeXPReward = GameObject.Find("LargeXPReward");
         }
         else
         {
@@ -113,6 +148,7 @@ public class Building : DamageableObject
     protected void Begin()
     {
         StartCoroutine(TaggingDelay());
+        StartCoroutine(SpawnChecker());
         gameManager = GameObject.Find("GameManager");
         player = GameObject.Find("Character");
         playerScript = player.GetComponent<Player>();
@@ -130,6 +166,11 @@ public class Building : DamageableObject
         {
             rangeFinder.transform.localScale = new Vector3(range, 2, range);
         }
+        if(tag == "Enemy")
+        {
+            itemDrops = new List<GameObject>();
+            //fireBallBook = GameObject.Find("FireBallBook");
+        }
     }
     //Creates an object assigned as the projectile and initializes it properly. Projectile code will determine things like speed and projectile damage, but could modify it here if I want to add buffs to buildings.
     protected void FireProjectile()
@@ -143,16 +184,27 @@ public class Building : DamageableObject
         attackReadyRanged = false;
         StartCoroutine(RangedAttackCooldown());
     }
-    protected void HealthCheck()
+    protected void StatusCheck()
     {
         if (currentHP < 1)
         {
+            if (!lootPositionChecked)
+            {
+                lootPosition = transform.position;
+                lootPositionChecked = true;
+            }
             transform.Translate(100000, 100000, 100000);
             StartCoroutine(DestroyDelay());
             if(name == "Castle")
             {
-                SceneManager.LoadScene("Game Over Scene");
+                SceneManager.LoadScene(2);
             }
+        }
+        if (!gameManagerScript.roundBegun && !endRoundCheck && !gameManagerScript.constructing && (tag == "Ally" || name == "Castle"))
+        {
+            //endRoundCheck = true;
+            //FullHeal();
+            //transform.position = startingPosition;
         }
     }
     protected IEnumerator RangedAttackCooldown()
@@ -165,6 +217,11 @@ public class Building : DamageableObject
     {
         yield return new WaitForSeconds(.1f);
         //Override this noob
+    }
+    private IEnumerator SpawnChecker()
+    {
+        yield return new WaitForSeconds(.1f);
+        checkedSpawn = true;
     }
     //MelleAttack is called if not a cleaving unit
     protected void MelleAttack()
@@ -254,20 +311,14 @@ public class Building : DamageableObject
         if (currentXP >= 10 + 10 * level)
         {
             currentXP -= 10 + 10 * level;
-            Debug.Log(level);
             level++;
-            Debug.Log(level);
-            //rank2Marker.SetActive(true);
-            //Debug.Log(rank2Marker.activeSelf);
             if (level == 1)
             {
                 rank2Marker.SetActive(true);
-                Debug.Log(rank2Marker.activeSelf);
             }
             if(level == 2)
             {
                 rank3Marker.SetActive(true);
-                Debug.Log(rank3Marker.activeSelf);
             }
             //maxHP += 2;
             //levelDisplay.text = "" + level;
@@ -283,11 +334,32 @@ public class Building : DamageableObject
     //}
     //Must be moved before destruction or retargeting of other gameObjects fails. 
     protected IEnumerator DestroyDelay()
-    {
+    { 
         transform.Translate(100000, 100000, 100000);
         yield return new WaitForSeconds(.1f);
-        //if ally or enemy, will make place built available for building/recruiting once more. 
+        //if ally or building, will make place built available for building/recruiting once more. 
         ResetPositionScript();
+        if (tag == "Enemy")
+        {
+            gameManagerScript.enemyCount--;
+            float dropRoll = Random.Range(0, 100);
+            if (dropRoll > .9)
+            {
+                Instantiate(itemDrops[0], lootPosition, itemDrops[0].transform.rotation);
+            }
+            else if (dropRoll > .75)
+            {
+                Instantiate(itemDrops[1], lootPosition, itemDrops[0].transform.rotation);
+            }
+            else if (dropRoll > .5)
+            {
+                Instantiate(itemDrops[2], lootPosition, itemDrops[0].transform.rotation);
+            }
+            else
+            {
+                Instantiate(itemDrops[3], lootPosition, itemDrops[0].transform.rotation);
+            }
+        }
         Destroy(gameObject);
     }
 

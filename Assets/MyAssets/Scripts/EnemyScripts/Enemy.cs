@@ -6,13 +6,24 @@ using UnityEditor;
 public class Enemy : Building
 {
     //this class is parent to RangedAlly and MelleAlly
+    //Add to item drops from highest change to lowest chance 50/25/15/10 (max 4 loot items in table)
     private bool iceWaveInternalBool = false;
+    protected float goldDropAmount;
+    protected float goldDropChance;
+    protected float itemDropChance;
+    protected float xpDropChance;
+
     void Start()
     {
         
     }
     void Awake()
     {
+        goldDropAmount = 0f;
+        goldDropChance = 0f;
+        itemDropChance = 0f;
+        xpDropChance = 0f;
+        //itemDrops.Add();
         experienceReward = 13;
         range = 30;
         attackDamage = 2;
@@ -99,6 +110,10 @@ public class Enemy : Building
         {
             target = castle;
             targetScript = target.GetScript() as DamageableObject;
+        }
+        if(parentObject.transform.position.y != transform.position.y)
+        {
+            parentObject.transform.position = new Vector3(parentObject.transform.position.x, transform.position.y, parentObject.transform.position.z);
         }
     }
 }

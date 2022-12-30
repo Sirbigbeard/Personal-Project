@@ -185,6 +185,8 @@ MonoBehaviour:
   attackHitbox: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   healthDisplay: {fileID: 0}
+  experienceReward: 0
+  endRoundCheck: 0
   startPosition: {x: 0, y: 0, z: 0}
   projectile: {fileID: 687413961591471314, guid: 833884b8fe544324a9146941d690640b, type: 3}
   target: {fileID: 0}
@@ -200,6 +202,11 @@ MonoBehaviour:
   hitsFlying: 0
   targetScript: {fileID: 0}
   parentObject: {fileID: 0}
+  playerScript: {fileID: 0}
+  rank2Marker: {fileID: 0}
+  rank3Marker: {fileID: 0}
+  fireBallBook: {fileID: 0}
+  startingPosition: {x: 0, y: 0, z: 0}
   position1: 0
   position2: 0
   position3: 0
@@ -463,8 +470,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3753357, y: 4.7250223, z: 1}
-  m_Center: {x: -0.01706028, y: -0.7471075, z: 0}
+  m_Size: {x: 0.4202013, y: 1.4922595, z: 1}
+  m_Center: {x: -0.004814625, y: -0.012388468, z: 0}
 --- !u!1001 &4264853995097149924
 PrefabInstance:
   m_ObjectHideFlags: 0

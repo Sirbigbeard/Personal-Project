@@ -125,9 +125,9 @@ GameObject:
   - component: {fileID: 7538239678303165050}
   - component: {fileID: 7538239678303165051}
   - component: {fileID: 2183810815049724329}
-  - component: {fileID: 1377837464414477349}
+  - component: {fileID: 553266625128656200}
   m_Layer: 0
-  m_Name: Grunt
+  m_Name: Goblin
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,7 +221,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1377837464414477349
+--- !u!114 &553266625128656200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7640242026671168404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: facb9326423ec8746a849a4ac3c93c29, type: 3}
+  m_Script: {fileID: 11500000, guid: f2851bee478f8a74f9f168d2400f858c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 0
@@ -241,6 +241,7 @@ MonoBehaviour:
   attackHitbox: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   healthDisplay: {fileID: 0}
+  experienceReward: 0
   startPosition: {x: 0, y: 0, z: 0}
   projectile: {fileID: 0}
   target: {fileID: 0}
@@ -255,7 +256,11 @@ MonoBehaviour:
   attackCooldownRanged: 3
   hitsFlying: 0
   targetScript: {fileID: 0}
-  parentObject: {fileID: 0}
+  parentObject: {fileID: 7387373967864687008}
+  playerScript: {fileID: 0}
+  rank2Marker: {fileID: 0}
+  rank3Marker: {fileID: 0}
+  fireBallBook: {fileID: 0}
   position1: 0
   position2: 0
   position3: 0
@@ -573,5 +578,10 @@ PrefabInstance:
 --- !u!4 &1263367076133224466 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1136620095012676037, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
+  m_PrefabInstance: {fileID: 2183810815559557591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7387373967864687008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8704135530824042615, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
   m_PrefabInstance: {fileID: 2183810815559557591}
   m_PrefabAsset: {fileID: 0}

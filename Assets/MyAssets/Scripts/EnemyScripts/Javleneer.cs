@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MelleEnemy : Enemy
+public class Javleneer : RangedEnemy
 {
-    void Start()
-    {
-
-    }
     void Awake()
     {
-        range = 30;
-        attackRange = 3;
-        rangedAttackRange = -1;
+        isRanged = true;
+        range = 60;
+        rangedAttackRange = 18f;
+        attackRange = -3;
         speed = 3;
-        attackDamage = 1;
-        attackCooldownFloat = 2;
-        currentHP = 25;
-        maxHP = 25;
+        attackCooldownRanged = 4.5f;
+        currentHP = 8;
+        maxHP = 8;
         Begin();
+        itemDrops.Add(fireBallBook);
+        itemDrops.Add(fireBallBook);
+        itemDrops.Add(fireBallBook);
         itemDrops.Add(fireBallBook);
         StartCoroutine(TaggingDelay());
     }
@@ -35,4 +34,3 @@ public class MelleEnemy : Enemy
         rangeFinderScript.validTargetTags.Add("Ally");
     }
 }
-

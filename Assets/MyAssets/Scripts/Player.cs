@@ -27,6 +27,7 @@ public class Player : DamageableObject
     private bool bulwarkRefresh = false;
     private bool bulwarkActive = false;
     private bool manaTickActive = false;
+    private bool died = false;
     public GameObject GameManager;
     private GameManager gameManagerScript;
     public DamageableObject closestTargetScript;
@@ -49,6 +50,7 @@ public class Player : DamageableObject
     public TextMeshProUGUI manaDisplay;
     public TextMeshProUGUI levelDisplay;
     public TextMeshProUGUI xPDisplay;
+    public TextMeshProUGUI roundDisplay;
     public List<GameObject> spellList;
     private Renderer leftLegRenderer;
     private Renderer leftArmRenderer;
@@ -139,7 +141,7 @@ public class Player : DamageableObject
                     }
                     spellCasted = false;
                 }
-                if (Input.GetKeyDown("2") && spellList.Count > 1)
+                if (Input.GetKeyDown("2") && spellList.Count > 1 && castableSpells > 1)
                 {
                     CastSpell(spellList[1]);
                     if (spellList.Count > castableSpells && spellCasted)
@@ -152,7 +154,7 @@ public class Player : DamageableObject
                     }
                     spellCasted = false;
                 }
-                if (Input.GetKeyDown("3") && spellList.Count > 2)
+                if (Input.GetKeyDown("3") && spellList.Count > 2 && castableSpells > 2)
                 {
                     CastSpell(spellList[2]);
                     if (spellList.Count > castableSpells && spellCasted)
@@ -165,7 +167,7 @@ public class Player : DamageableObject
                     }
                     spellCasted = false;
                 }
-                if (Input.GetKeyDown("4") && spellList.Count > 3)
+                if (Input.GetKeyDown("4") && spellList.Count > 3 && castableSpells > 3)
                 {
                     CastSpell(spellList[3]);
                     if (spellList.Count > castableSpells && spellCasted)
@@ -218,12 +220,21 @@ public class Player : DamageableObject
                 playerRb.AddForce(transform.forward * speed * 10 * verticalInput);
             }
         }
-        if(currentHP <= 0)
+        if(currentHP <= 0 && !died)
         {
+            died = true;
             transform.Translate(1000, 1000, 1000);
+            roundDisplay.text = "Knocked Out ";
+            roundDisplay.color = new Color(205, 0, 0, 255);
+            StartCoroutine(RoundTextReset());
         }
     }
-    
+    private IEnumerator RoundTextReset()
+    {
+        yield return new WaitForSeconds(3);
+        roundDisplay.color = new Color(0, 0, 0, 0);
+        roundDisplay.text = "";
+    }
     private void Attack()
     {
         attackCooldownActive = true;
@@ -405,6 +416,25 @@ public class Player : DamageableObject
     public void RoundBegin()
     {
         spellUINumber = 0;
+        if (gameManagerScript.gatheredSpells.Count != 0)
+        {
+            if (level < 3)
+            {
+                castableSpells = 1;
+            }
+            else if (level < 6)
+            {
+                castableSpells = 2;
+            }
+            else if (level < 10)
+            {
+                castableSpells = 3;
+            }
+            else
+            {
+                castableSpells = 4;
+            }
+        }
         foreach (GameObject spell in gameManagerScript.activeSpells)
         {
             if (!spellList.Contains(spell) && spellList.Count < gameManagerScript.maxActiveSpells)
@@ -454,9 +484,11 @@ public class Player : DamageableObject
     }
     public void RoundEnd()
     {
+        died = false;
         transform.position = startingPosition;
-        healthAndDamageCanvasScript.GainHealth(maxHP - currentHP);
-        currentHP = maxHP;
+        FullHeal();
+        //healthAndDamageCanvasScript.GainHealth(maxHP - currentHP);
+        //currentHP = maxHP;
         if (gameManagerScript.gatheredSpells.Count != 0)
         {
             if (level < 3)

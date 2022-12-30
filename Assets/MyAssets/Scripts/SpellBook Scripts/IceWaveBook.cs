@@ -6,16 +6,10 @@ public class IceWaveBook : MonoBehaviour
 {
     public GameObject gameManager;
     private GameManager gameManagerScript;
-    // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     void OnTriggerEnter(Collider other)
     {

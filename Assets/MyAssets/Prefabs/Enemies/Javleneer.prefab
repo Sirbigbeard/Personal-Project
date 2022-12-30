@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1909179257504053372}
   - component: {fileID: 1909179257504053373}
   - component: {fileID: 7831061813883081647}
-  - component: {fileID: 4852511420843098106}
+  - component: {fileID: 5632389352896799580}
   m_Layer: 0
   m_Name: Javleneer
   m_TagString: Enemy
@@ -108,7 +108,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4852511420843098106
+--- !u!114 &5632389352896799580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1793671541665282450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32dfcfe1a6c61549a4c4cc64a7d4d5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f3dfad848fa40d43ba87c22ee316533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 0
@@ -128,8 +128,9 @@ MonoBehaviour:
   attackHitbox: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   healthDisplay: {fileID: 0}
+  experienceReward: 0
   startPosition: {x: 0, y: 0, z: 0}
-  projectile: {fileID: 0}
+  projectile: {fileID: 189482988494051118, guid: 3cbb248bc8a388d4f96a1eff54036d04, type: 3}
   target: {fileID: 0}
   rangeFinder: {fileID: 5444709556512771424}
   castle: {fileID: 0}
@@ -142,7 +143,11 @@ MonoBehaviour:
   attackCooldownRanged: 3
   hitsFlying: 0
   targetScript: {fileID: 0}
-  parentObject: {fileID: 0}
+  parentObject: {fileID: 1470082354870193062}
+  playerScript: {fileID: 0}
+  rank2Marker: {fileID: 0}
+  rank3Marker: {fileID: 0}
+  fireBallBook: {fileID: 0}
   position1: 0
   position2: 0
   position3: 0
@@ -570,6 +575,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3712997276759011504, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
+--- !u!1 &1470082354870193062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8704135530824042615, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
+  m_PrefabInstance: {fileID: 7831061815500211153}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7163978849666540052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1136620095012676037, guid: bca4480e69f7bc24c9bf5156ba5611a9, type: 3}
