@@ -18,14 +18,6 @@ public class DamageableObject : MonoBehaviour
     public TextMeshProUGUI healthDisplay;
     public int experienceReward;
 
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-        
-    }
     public int TakeDamage(float damageDealt)
     {
         currentHP -= damageDealt;
@@ -55,10 +47,18 @@ public class DamageableObject : MonoBehaviour
         {
             healthAndDamageCanvasScript.GainHealth(health);
         }
+        if (tag == "Player")
+        {
+            healthDisplay.text = "Health: " + currentHP + "/" + maxHP;
+        }
     }
     public void FullHeal()
     {
-        currentHP = maxHP;
         healthAndDamageCanvasScript.GainHealth(maxHP - currentHP);
+        currentHP = maxHP;
+        if (tag == "Player")
+        {
+            healthDisplay.text = "Health: " + currentHP + "/" + maxHP;
+        }
     }
 }

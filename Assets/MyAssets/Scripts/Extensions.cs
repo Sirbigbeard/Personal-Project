@@ -22,9 +22,9 @@ public static class Extensions : object
         {
             return obj.GetComponent<Enemy>();
         }
-        if (obj.HasComponent<Hut>())
+        if (obj.HasComponent<RangedBuilding>())
         {
-            return obj.GetComponent<Hut>();
+            return obj.GetComponent<RangedBuilding>();
         }
         if (obj.HasComponent<Building>())
         {

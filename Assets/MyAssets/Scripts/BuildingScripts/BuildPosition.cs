@@ -897,11 +897,6 @@ public class BuildPosition : MonoBehaviour
         position125Button.onClick.AddListener(BuildPosition125);
         position126Button.onClick.AddListener(BuildPosition126);
     }
-
-    void Update()
-    {
-        
-    }
     void BuildPosition1()
     {
         if (gameManagerScript.constructing)
@@ -922,7 +917,6 @@ public class BuildPosition : MonoBehaviour
                 position1Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition2()
@@ -945,7 +939,6 @@ public class BuildPosition : MonoBehaviour
                 position2Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition3()
@@ -968,7 +961,6 @@ public class BuildPosition : MonoBehaviour
                 position3Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition4()
@@ -991,7 +983,6 @@ public class BuildPosition : MonoBehaviour
                 position4Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition5()
@@ -1014,7 +1005,6 @@ public class BuildPosition : MonoBehaviour
                 position5Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition6()
@@ -1037,7 +1027,6 @@ public class BuildPosition : MonoBehaviour
                 position6Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition7()
@@ -1060,7 +1049,6 @@ public class BuildPosition : MonoBehaviour
                 position7Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition8()
@@ -1083,7 +1071,6 @@ public class BuildPosition : MonoBehaviour
                 position8Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition9()
@@ -1106,7 +1093,6 @@ public class BuildPosition : MonoBehaviour
                 position9Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition10()
@@ -1129,7 +1115,6 @@ public class BuildPosition : MonoBehaviour
                 position10Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition11()
@@ -1152,7 +1137,6 @@ public class BuildPosition : MonoBehaviour
                 position11Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition12()
@@ -1175,7 +1159,6 @@ public class BuildPosition : MonoBehaviour
                 position12Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition13()
@@ -1198,7 +1181,6 @@ public class BuildPosition : MonoBehaviour
                 position13Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition14()
@@ -1221,7 +1203,6 @@ public class BuildPosition : MonoBehaviour
                 position14Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition15()
@@ -1244,7 +1225,6 @@ public class BuildPosition : MonoBehaviour
                 position15Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition16()
@@ -1267,7 +1247,6 @@ public class BuildPosition : MonoBehaviour
                 position16Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition17()
@@ -1290,7 +1269,6 @@ public class BuildPosition : MonoBehaviour
                 position17Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition18()
@@ -1313,7 +1291,6 @@ public class BuildPosition : MonoBehaviour
                 position18Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition19()
@@ -1336,7 +1313,6 @@ public class BuildPosition : MonoBehaviour
                 position19Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition20()
@@ -1359,7 +1335,6 @@ public class BuildPosition : MonoBehaviour
                 position20Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition21()
@@ -1382,7 +1357,6 @@ public class BuildPosition : MonoBehaviour
                 position21Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition22()
@@ -1405,7 +1379,6 @@ public class BuildPosition : MonoBehaviour
                 position22Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition23()
@@ -1428,7 +1401,6 @@ public class BuildPosition : MonoBehaviour
                 position23Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition24()
@@ -1451,7 +1423,6 @@ public class BuildPosition : MonoBehaviour
                 position24Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition25()
@@ -1474,7 +1445,6 @@ public class BuildPosition : MonoBehaviour
                 position25Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition26()
@@ -1497,7 +1467,6 @@ public class BuildPosition : MonoBehaviour
                 position26Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition27()
@@ -1520,7 +1489,6 @@ public class BuildPosition : MonoBehaviour
                 position27Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition28()
@@ -1543,7 +1511,6 @@ public class BuildPosition : MonoBehaviour
                 position28Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition29()
@@ -1566,7 +1533,6 @@ public class BuildPosition : MonoBehaviour
                 position29Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition30()
@@ -1589,7 +1555,6 @@ public class BuildPosition : MonoBehaviour
                 position30Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition31()
@@ -1612,7 +1577,6 @@ public class BuildPosition : MonoBehaviour
                 position31Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition32()
@@ -1635,7 +1599,6 @@ public class BuildPosition : MonoBehaviour
                 position32Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition33()
@@ -1658,7 +1621,6 @@ public class BuildPosition : MonoBehaviour
                 position33Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition34()
@@ -1681,7 +1643,6 @@ public class BuildPosition : MonoBehaviour
                 position34Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition35()
@@ -1704,7 +1665,6 @@ public class BuildPosition : MonoBehaviour
                 position35Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition36()
@@ -1727,7 +1687,6 @@ public class BuildPosition : MonoBehaviour
                 position36Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition37()
@@ -1750,7 +1709,6 @@ public class BuildPosition : MonoBehaviour
                 position37Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition38()
@@ -1773,7 +1731,6 @@ public class BuildPosition : MonoBehaviour
                 position38Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition39()
@@ -1796,7 +1753,6 @@ public class BuildPosition : MonoBehaviour
                 position39Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition40()
@@ -1821,7 +1777,6 @@ public class BuildPosition : MonoBehaviour
                 position40Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition41()
@@ -1844,7 +1799,6 @@ public class BuildPosition : MonoBehaviour
                 position41Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition42()
@@ -1867,7 +1821,6 @@ public class BuildPosition : MonoBehaviour
                 position42Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition43()
@@ -1890,7 +1843,6 @@ public class BuildPosition : MonoBehaviour
                 position43Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition44()
@@ -1913,7 +1865,6 @@ public class BuildPosition : MonoBehaviour
                 position44Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition45()
@@ -1936,7 +1887,6 @@ public class BuildPosition : MonoBehaviour
                 position45Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition46()
@@ -1959,7 +1909,6 @@ public class BuildPosition : MonoBehaviour
                 position46Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition47()
@@ -1982,7 +1931,6 @@ public class BuildPosition : MonoBehaviour
                 position47Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition48()
@@ -2005,7 +1953,6 @@ public class BuildPosition : MonoBehaviour
                 position48Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition49()
@@ -2028,7 +1975,6 @@ public class BuildPosition : MonoBehaviour
                 position49Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition50()
@@ -2051,7 +1997,6 @@ public class BuildPosition : MonoBehaviour
                 position50Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition51()
@@ -2074,7 +2019,6 @@ public class BuildPosition : MonoBehaviour
                 position51Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition52()
@@ -2097,7 +2041,6 @@ public class BuildPosition : MonoBehaviour
                 position52Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition53()
@@ -2120,7 +2063,6 @@ public class BuildPosition : MonoBehaviour
                 position53Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition54()
@@ -2143,7 +2085,6 @@ public class BuildPosition : MonoBehaviour
                 position54Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition55()
@@ -2166,7 +2107,6 @@ public class BuildPosition : MonoBehaviour
                 position55Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition56()
@@ -2189,7 +2129,6 @@ public class BuildPosition : MonoBehaviour
                 position56Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition57()
@@ -2212,7 +2151,6 @@ public class BuildPosition : MonoBehaviour
                 position57Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition58()
@@ -2235,7 +2173,6 @@ public class BuildPosition : MonoBehaviour
                 position58Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition59()
@@ -2258,7 +2195,6 @@ public class BuildPosition : MonoBehaviour
                 position59Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition60()
@@ -2281,7 +2217,6 @@ public class BuildPosition : MonoBehaviour
                 position60Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition61()
@@ -2304,7 +2239,6 @@ public class BuildPosition : MonoBehaviour
                 position61Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition62()
@@ -2327,7 +2261,6 @@ public class BuildPosition : MonoBehaviour
                 position62Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition63()
@@ -2350,7 +2283,6 @@ public class BuildPosition : MonoBehaviour
                 position63Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition64()
@@ -2373,7 +2305,6 @@ public class BuildPosition : MonoBehaviour
                 position64Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition65()
@@ -2396,7 +2327,6 @@ public class BuildPosition : MonoBehaviour
                 position65Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition66()
@@ -2419,7 +2349,6 @@ public class BuildPosition : MonoBehaviour
                 position66Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition67()
@@ -2442,7 +2371,6 @@ public class BuildPosition : MonoBehaviour
                 position67Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition68()
@@ -2465,7 +2393,6 @@ public class BuildPosition : MonoBehaviour
                 position68Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition69()
@@ -2488,7 +2415,6 @@ public class BuildPosition : MonoBehaviour
                 position69Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition70()
@@ -2511,7 +2437,6 @@ public class BuildPosition : MonoBehaviour
                 position70Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition71()
@@ -2534,7 +2459,6 @@ public class BuildPosition : MonoBehaviour
                 position71Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition72()
@@ -2557,7 +2481,6 @@ public class BuildPosition : MonoBehaviour
                 position72Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition73()
@@ -2580,7 +2503,6 @@ public class BuildPosition : MonoBehaviour
                 position73Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition74()
@@ -2603,7 +2525,6 @@ public class BuildPosition : MonoBehaviour
                 position74Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition75()
@@ -2626,7 +2547,6 @@ public class BuildPosition : MonoBehaviour
                 position75Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition76()
@@ -2649,7 +2569,6 @@ public class BuildPosition : MonoBehaviour
                 position76Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition77()
@@ -2672,7 +2591,6 @@ public class BuildPosition : MonoBehaviour
                 position77Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition78()
@@ -2695,7 +2613,6 @@ public class BuildPosition : MonoBehaviour
                 position78Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition79()
@@ -2718,7 +2635,6 @@ public class BuildPosition : MonoBehaviour
                 position79Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition80()
@@ -2741,7 +2657,6 @@ public class BuildPosition : MonoBehaviour
                 position80Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition81()
@@ -2764,7 +2679,6 @@ public class BuildPosition : MonoBehaviour
                 position81Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition82()
@@ -2787,7 +2701,6 @@ public class BuildPosition : MonoBehaviour
                 position82Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition83()
@@ -2810,7 +2723,6 @@ public class BuildPosition : MonoBehaviour
                 position83Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition84()
@@ -2833,7 +2745,6 @@ public class BuildPosition : MonoBehaviour
                 position84Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition85()
@@ -2856,7 +2767,6 @@ public class BuildPosition : MonoBehaviour
                 position85Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition86()
@@ -2879,7 +2789,6 @@ public class BuildPosition : MonoBehaviour
                 position86Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition87()
@@ -2902,7 +2811,6 @@ public class BuildPosition : MonoBehaviour
                 position87Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition88()
@@ -2925,7 +2833,6 @@ public class BuildPosition : MonoBehaviour
                 position88Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition89()
@@ -2948,7 +2855,6 @@ public class BuildPosition : MonoBehaviour
                 position89Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition90()
@@ -2971,7 +2877,6 @@ public class BuildPosition : MonoBehaviour
                 position90Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition91()
@@ -2994,7 +2899,6 @@ public class BuildPosition : MonoBehaviour
                 position91Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition92()
@@ -3017,7 +2921,6 @@ public class BuildPosition : MonoBehaviour
                 position92Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition93()
@@ -3040,7 +2943,6 @@ public class BuildPosition : MonoBehaviour
                 position93Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition94()
@@ -3063,7 +2965,6 @@ public class BuildPosition : MonoBehaviour
                 position94Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition95()
@@ -3086,7 +2987,6 @@ public class BuildPosition : MonoBehaviour
                 position95Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition96()
@@ -3109,7 +3009,6 @@ public class BuildPosition : MonoBehaviour
                 position96Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition97()
@@ -3132,7 +3031,6 @@ public class BuildPosition : MonoBehaviour
                 position97Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition98()
@@ -3155,7 +3053,6 @@ public class BuildPosition : MonoBehaviour
                 position98Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition99()
@@ -3178,7 +3075,6 @@ public class BuildPosition : MonoBehaviour
                 position99Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition100()
@@ -3201,7 +3097,6 @@ public class BuildPosition : MonoBehaviour
                 position100Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition101()
@@ -3224,7 +3119,6 @@ public class BuildPosition : MonoBehaviour
                 position101Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition102()
@@ -3247,7 +3141,6 @@ public class BuildPosition : MonoBehaviour
                 position102Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition103()
@@ -3270,7 +3163,6 @@ public class BuildPosition : MonoBehaviour
                 position103Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition104()
@@ -3293,7 +3185,6 @@ public class BuildPosition : MonoBehaviour
                 position104Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition105()
@@ -3316,7 +3207,6 @@ public class BuildPosition : MonoBehaviour
                 position105Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition106()
@@ -3339,7 +3229,6 @@ public class BuildPosition : MonoBehaviour
                 position106Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition107()
@@ -3362,7 +3251,6 @@ public class BuildPosition : MonoBehaviour
                 position107Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition108()
@@ -3385,7 +3273,6 @@ public class BuildPosition : MonoBehaviour
                 position108Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition109()
@@ -3408,7 +3295,6 @@ public class BuildPosition : MonoBehaviour
                 position109Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition110()
@@ -3431,7 +3317,6 @@ public class BuildPosition : MonoBehaviour
                 position110Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition111()
@@ -3454,7 +3339,6 @@ public class BuildPosition : MonoBehaviour
                 position111Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition112()
@@ -3477,7 +3361,6 @@ public class BuildPosition : MonoBehaviour
                 position112Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition113()
@@ -3500,7 +3383,6 @@ public class BuildPosition : MonoBehaviour
                 position113Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition114()
@@ -3523,7 +3405,6 @@ public class BuildPosition : MonoBehaviour
                 position114Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition115()
@@ -3546,7 +3427,6 @@ public class BuildPosition : MonoBehaviour
                 position115Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition116()
@@ -3569,7 +3449,6 @@ public class BuildPosition : MonoBehaviour
                 position116Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition117()
@@ -3592,7 +3471,6 @@ public class BuildPosition : MonoBehaviour
                 position117Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition118()
@@ -3615,7 +3493,6 @@ public class BuildPosition : MonoBehaviour
                 position118Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition119()
@@ -3638,7 +3515,6 @@ public class BuildPosition : MonoBehaviour
                 position119Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition120()
@@ -3661,7 +3537,6 @@ public class BuildPosition : MonoBehaviour
                 position120Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition121()
@@ -3684,7 +3559,6 @@ public class BuildPosition : MonoBehaviour
                 position121Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition122()
@@ -3707,7 +3581,6 @@ public class BuildPosition : MonoBehaviour
                 position122Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition123()
@@ -3730,7 +3603,6 @@ public class BuildPosition : MonoBehaviour
                 position123Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition124()
@@ -3753,7 +3625,6 @@ public class BuildPosition : MonoBehaviour
                 position124Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition125()
@@ -3776,7 +3647,6 @@ public class BuildPosition : MonoBehaviour
                 position125Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void BuildPosition126()
@@ -3799,7 +3669,6 @@ public class BuildPosition : MonoBehaviour
                 position126Building = true;
                 FinishBuild();
             }
-            //building1 = gameManagerScript.currentBuilding;
         }
     }
     void FinishBuild()
@@ -3809,11 +3678,9 @@ public class BuildPosition : MonoBehaviour
             gameManagerScript.currentBuildingScript.rangeFinder.GetComponent<MeshRenderer>().enabled = false;
         }
         currentBuildingScript.startingPosition = gameManagerScript.currentBuilding.transform.position;
-        gameManagerScript.gold -= gameManagerScript.currentBuildingCost;
-        gameManagerScript.goldDisplay.text = "Gold: " + gameManagerScript.gold;
+        gameManagerScript.GainGold(-gameManagerScript.currentBuildingCost);
         gameManagerScript.creationCamera.enabled = false;
         gameManagerScript.constructing = false;
         gameManagerScript.currentBuilding = null;
-        gameManagerScript.currentHealthAndDamageCanvas = null;
     }
 }

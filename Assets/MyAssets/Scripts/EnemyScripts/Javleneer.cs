@@ -7,18 +7,18 @@ public class Javleneer : RangedEnemy
     void Awake()
     {
         isRanged = true;
-        range = 60;
+        range = 30;
         rangedAttackRange = 18f;
-        attackRange = -3;
-        speed = 3;
-        attackCooldownRanged = 4.5f;
+        speed = 5;
+        attackCooldownRanged = 4.2f;
         currentHP = 8;
         maxHP = 8;
+        experienceReward = 5;
         Begin();
-        itemDrops.Add(fireBallBook);
-        itemDrops.Add(fireBallBook);
-        itemDrops.Add(fireBallBook);
-        itemDrops.Add(fireBallBook);
+        itemDrops.Add(smallGoldReward);
+        itemDrops.Add(mediumGoldReward);
+        itemDrops.Add(smallXPReward);
+        itemDrops.Add(bulwarkBook);
         StartCoroutine(TaggingDelay());
     }
     void Update()

@@ -7,14 +7,14 @@ public class MelleAlly : Ally
     //Template for any Melle under Ally class
     void Awake()
     {
-        range = 30;
+        range = 40;
         attackRange = 3;
         rangedAttackRange = -1;
-        speed = 3;
+        speed = 5;
         attackDamage = 1;
-        attackCooldownFloat = 2;
-        currentHP = 25;
-        maxHP = 25;
+        attackCooldownFloat = 2.3f;
+        currentHP = 16;
+        maxHP = 16;
         Begin();
         StartCoroutine(TaggingDelay());
     }

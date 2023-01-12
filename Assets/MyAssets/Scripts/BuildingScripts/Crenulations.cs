@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class Crenulations : Building
 {
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentHP = 25;
         maxHP = 25;
+        Begin();
     }
-
-    // Update is called once per frame
     void Update()
     {
-
-    }
-    void Awake()
-    {
-
+        BuildingUpdate();
     }
 }

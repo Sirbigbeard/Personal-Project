@@ -131,6 +131,6 @@ MonoBehaviour:
   hit: 0
   target: {fileID: 0}
   targetScript: {fileID: 0}
-  damage: 10
+  damage: 4
   building: {fileID: 4681869331273843635, guid: 81dc2020881d5a747b8b3e7aaebd77b4, type: 3}
   buildingScript: {fileID: 0}

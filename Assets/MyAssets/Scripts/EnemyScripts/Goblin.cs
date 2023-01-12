@@ -9,16 +9,17 @@ public class Goblin : MelleEnemy
         range = 30;
         attackRange = 3;
         rangedAttackRange = -1;
-        speed = 4.2f;
+        speed = 6.2f;
         attackDamage = 1;
         attackCooldownFloat = 2.3f;
         currentHP = 10;
         maxHP = 10;
+        experienceReward = 3;
         Begin();
+        itemDrops.Add(smallGoldReward);
+        itemDrops.Add(smallGoldReward);
+        itemDrops.Add(smallGoldReward);
         itemDrops.Add(slamBook);
-        itemDrops.Add(summonImpBook);
-        itemDrops.Add(bulwarkBook);
-        itemDrops.Add(blinkBook);
         StartCoroutine(TaggingDelay());
     }
     void Update()

@@ -20,6 +20,9 @@ public class XPReward : MonoBehaviour
         {
             Destroy(gameObject);
             playerScript.GainXP(xP);
+            playerScript.gameManagerScript.itemDropText.color = new Color(.0706f, .3176f, .898f, 1);
+            playerScript.gameManagerScript.itemDropText.text = "+" + xP + " Experience";
+            playerScript.gameManagerScript.DropTextResetShell(2.1f);
         }
     }
 }

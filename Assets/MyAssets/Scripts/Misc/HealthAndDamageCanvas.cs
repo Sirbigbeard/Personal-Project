@@ -6,52 +6,22 @@ public class HealthAndDamageCanvas : MonoBehaviour
 {
     public GameObject healthUI;
     public GameObject damageUI;
-    public Vector3 offset;
-    public int health;
-    public HealthUI healthScript;
-    public DamageUI damageScript;
-    public GameObject host;
+    public float maxHP;
+    public HealthUI2 healthScript;
+    public DamageUI2 damageScript;
     public int incomingDamageCount = 0;
     public float currentHealth;
 
-    void Start()
-    {
-        
-    }
     void Awake()
     {
-        healthScript = healthUI.GetComponent<HealthUI>();
-        damageScript = damageUI.GetComponent<DamageUI>();
+        healthScript = healthUI.GetComponent<HealthUI2>();
+        damageScript = damageUI.GetComponent<DamageUI2>();
         StartCoroutine(HostPassDelay());
-    }
-    void Update()
-    {
-
     }
     IEnumerator HostPassDelay()
     {
         yield return new WaitForSeconds(.1f);
-        healthScript.offset = offset;
-        damageScript.offset = new Vector3(offset.x, offset.y + .4f, offset.z);
-        healthScript.host = host.transform;
-        damageScript.host = host.transform;
-        if(host.tag == "Ally")
-        {
-            //change color to light green
-        }
-        if (host.tag == "Building")
-        {
-            //change color to dark green
-        }
-        if (host.tag == "Player")
-        {
-            //change color to blue
-        }
-        if (host.tag == "Enemy")
-        {
-            //change color to red
-        }
-        GainHealth(health);
+        GainHealth(maxHP);
     }
     public void DamageIncoming(float damage)
     {
@@ -69,22 +39,21 @@ public class HealthAndDamageCanvas : MonoBehaviour
             damageScript.textMesh.text = "";
         }
     }
-    public void GainHealth(float health)
+    public void GainHealth(float healthGained)
     {
-        for (int i = 0; i < health; i++)
-        {
-            //Debug.Log(healthScript.textMesh.text);
-            healthScript.textMesh.text += "_";
-        }
-        currentHealth += health;
-    }
-    public void LoseHealth(float damage)
-    {
-        currentHealth -= damage;
         healthScript.textMesh.text = "";
+        currentHealth += healthGained;
         for (int i = 0; i < currentHealth; i++)
         {
             healthScript.textMesh.text += "_";
         }
+        for (float i = currentHealth; i < maxHP; i++)
+        {
+            healthScript.textMesh.text += "*";
+        }
+    }
+    public void LoseHealth(float damage)
+    {
+        GainHealth(-damage);
     }
 }

@@ -10,9 +10,7 @@ public class DamageUI : MonoBehaviour
     public Vector3 location;
     public Transform host;
     public TextMeshProUGUI textMesh;
-
     private Camera cam;
-
     void Start()
     {
         cam = Camera.main;
@@ -30,6 +28,4 @@ public class DamageUI : MonoBehaviour
             }
         }
     }
-    
-    
 }

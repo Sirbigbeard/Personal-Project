@@ -5,19 +5,11 @@ using UnityEngine;
 public class FireballScript : MonoBehaviour
 {
     private int speed = 55;
-    public int damage = 7;
+    public int damage = 5;
     public DamageableObject targetScript;
-    void Start()
-    {
-        
-    }
     void Awake()
     {
         StartCoroutine(DeathDelay());
-    }
-    void Update()
-    {
-        
     }
     void LateUpdate()
     {

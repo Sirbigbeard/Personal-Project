@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class RangedAlly : Ally
 {
-    void Start()
-    {
-        
-    }
     void Awake()
     {
         isRanged = true;
-        range = 60;
+        range = 50;
         rangedAttackRange = 18f;
-        attackRange = 3;
-        speed = 3;
+        attackRange = -3;
+        speed = 4;
         attackCooldownRanged = 2f;
-        currentHP = 25;
-        maxHP = 25;
+        currentHP = 11;
+        maxHP = 11;
         Begin();
         StartCoroutine(TaggingDelay());
     }

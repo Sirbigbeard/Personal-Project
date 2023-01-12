@@ -13,13 +13,10 @@ public class Projectile : MonoBehaviour
     public GameObject building;
     private Vector3 targetPosition;
     public Building buildingScript;
-    //private int potentialXP;
-    void Start()
-    {
-        buildingScript = building.GetComponent<Building>();
-    }
+
     void Awake()
     {
+        buildingScript = building.GetComponent<Building>();
         StartCoroutine(TargetCheck());
     }
     void Update()
@@ -30,7 +27,6 @@ public class Projectile : MonoBehaviour
             targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
             transform.LookAt(targetPosition);
         }
-        
         if (targetChecked)
         {
             if (target == null)
@@ -38,7 +34,6 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
     }
     void OnTriggerEnter(Collider other)
     { 
@@ -48,7 +43,6 @@ public class Projectile : MonoBehaviour
             if (targetScript.currentHP <= 0)
             {
                 buildingScript.GainXP(potentialXP);
-                //buildingScript.rank2Marker.SetActive(true);
                 buildingScript.RemoveTarget(other.gameObject);
             }
             Destroy(gameObject);
@@ -57,7 +51,6 @@ public class Projectile : MonoBehaviour
     IEnumerator TargetCheck()
     {
         yield return new WaitForSeconds(.001f);
-
         targetChecked = true;
     }
 }

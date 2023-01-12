@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImpScript : Ally
+public class ImpScript : MelleAlly
 {
     void Awake()
     {
@@ -10,8 +10,8 @@ public class ImpScript : Ally
         attackRange = 3;
         rangedAttackRange = -1;
         speed = 5;
-        attackDamage = 1;
-        attackCooldownFloat = 2;
+        attackDamage = 2;
+        attackCooldownFloat = 2.6f;
         currentHP = 8;
         maxHP = 8;
         Begin();

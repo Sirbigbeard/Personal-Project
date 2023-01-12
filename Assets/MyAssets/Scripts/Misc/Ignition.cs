@@ -13,12 +13,6 @@ public class Ignition : MonoBehaviour
         gameStartButton = gameStartButtonObject.GetComponent<Button>();
         gameStartButton.onClick.AddListener(BeginGame);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void BeginGame()
     {
         SceneManager.LoadScene(1);

@@ -6,24 +6,10 @@ using UnityEditor;
 public class Enemy : Building
 {
     //this class is parent to RangedAlly and MelleAlly
-    //Add to item drops from highest change to lowest chance 50/25/15/10 (max 4 loot items in table)
     private bool iceWaveInternalBool = false;
-    protected float goldDropAmount;
-    protected float goldDropChance;
-    protected float itemDropChance;
-    protected float xpDropChance;
 
-    void Start()
-    {
-        
-    }
     void Awake()
     {
-        goldDropAmount = 0f;
-        goldDropChance = 0f;
-        itemDropChance = 0f;
-        xpDropChance = 0f;
-        //itemDrops.Add();
         experienceReward = 13;
         range = 30;
         attackDamage = 2;
@@ -47,9 +33,6 @@ public class Enemy : Building
         rangeFinderScript.validTargetTags.Add("Building");
         rangeFinderScript.validTargetTags.Add("Player");
         rangeFinderScript.validTargetTags.Add("Ally");
-        //attackHitboxScript.validTargetTags.Add("Building");
-        //attackHitboxScript.validTargetTags.Add("Player");
-        //attackHitboxScript.validTargetTags.Add("Ally");
     }
     void OnTriggerEnter(Collider other)
     {
@@ -75,7 +58,6 @@ public class Enemy : Building
     {
         yield return new WaitForSeconds(5);
         speed *= 3;
-        //add visual effect to model here
     }
     protected void Move()
     {
@@ -89,31 +71,40 @@ public class Enemy : Building
                     attackRange = 7.5f;
                 }
                 rangeFinder.SetActive(false);
-                targets.Clear();
+                targetScript = castle.GetScript() as DamageableObject;
+                //targets.Clear();
             }
-            if (distanceToTarget > attackRange)
+            if (isRanged)
             {
-                targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                if (distanceToTarget > rangedAttackRange)
+                {
+                    targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                }
             }
-            else if (!attackCooldownActive && !cleavingAttackBool)
+            else
             {
-                MelleAttack();
-            }
-            else if (!attackCooldownActive && cleavingAttackBool)
-            {
-                //CleavingAttack();
+                if (distanceToTarget > attackRange)
+                {
+                    
+                    targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                }
+                else if (!attackCooldownActive && !cleavingAttackBool)
+                {
+                    MelleAttack();
+                }
+                else if (!attackCooldownActive && cleavingAttackBool)
+                {
+                    //CleavingAttack();
+                }
             }
             transform.LookAt(targetPosition);
         }
         if (target == null)
         {
             target = castle;
-            targetScript = target.GetScript() as DamageableObject;
-        }
-        if(parentObject.transform.position.y != transform.position.y)
-        {
-            parentObject.transform.position = new Vector3(parentObject.transform.position.x, transform.position.y, parentObject.transform.position.z);
+            targetScript = castle.GetScript() as DamageableObject;
         }
     }
 }

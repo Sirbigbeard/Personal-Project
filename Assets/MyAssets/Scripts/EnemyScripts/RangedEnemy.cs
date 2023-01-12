@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy
 {
-    void Start()
-    {
-
-    }
     void Awake()
     {
         isRanged = true;

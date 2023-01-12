@@ -5,23 +5,14 @@ using UnityEngine;
 public class AttackHitbox : MonoBehaviour
 {
     public GameObject host;
-    //private GameObject attackTarget;
     private DamageableObject hostScript;
     public List<string> validTargetTags;
     public List<GameObject> targets;
-    void Start()
-    {
-
-    }
     void Awake()
     {
         validTargetTags = new List<string>();
         targets = new List<GameObject>();
         hostScript = host.GetScript() as DamageableObject;
-    }
-    void Update()
-    {
-
     }
     void OnTriggerEnter(Collider other)
     {

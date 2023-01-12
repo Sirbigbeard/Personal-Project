@@ -11,10 +11,6 @@ public class LevelUpCapsule : MonoBehaviour
         player = GameObject.Find("Character");
         playerScript = player.GetComponent<Player>();
     }
-    void Update()
-    {
-        
-    }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

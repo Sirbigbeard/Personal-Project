@@ -8,22 +8,13 @@ public class RangeFinder : MonoBehaviour
     public GameObject building;
     private Building buildingScript;
     public List<string> validTargetTags;
-    void Start()
-    {
-      
-    }
     void Awake()
     {
         validTargetTags = new List<string>();
         buildingScript = building.GetScript() as Building;
     }
-    void Update()
-    {
-        
-    }
     void OnTriggerEnter(Collider other)
     {
-        //not sure i need this conditional
         if (validTargetTags.Count != 0)
         {
             foreach (string validTarget in validTargetTags)
@@ -31,6 +22,7 @@ public class RangeFinder : MonoBehaviour
                 if (other.gameObject.tag == validTarget)
                 {
                     buildingScript.AddTarget(other.gameObject);
+                    StartCoroutine(SpikeDamageDelay());
                 }
             }
         }
@@ -46,6 +38,14 @@ public class RangeFinder : MonoBehaviour
                     buildingScript.RemoveTarget(other.gameObject);
                 }
             }
+        }
+    }
+    public IEnumerator SpikeDamageDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        if (building.name == "Spikes(Clone)")
+        {
+            buildingScript.SpikeDamageLoop(buildingScript.targetScript);
         }
     }
 }

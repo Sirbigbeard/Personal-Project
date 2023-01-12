@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class MelleEnemy : Enemy
 {
-    void Start()
-    {
-
-    }
     void Awake()
     {
         range = 30;
