@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class MelleEnemy : Enemy
 {
+    //Template for any melle under Enemy class
     void Awake()
     {
-        range = 30;
-        attackRange = 3;
-        rangedAttackRange = -1;
-        speed = 3;
-        attackDamage = 1;
-        attackCooldownFloat = 2;
-        currentHP = 25;
-        maxHP = 25;
         Begin();
-        itemDrops.Add(fireBallBook);
         StartCoroutine(TaggingDelay());
     }
     void Update()

@@ -8,6 +8,7 @@ public static class Extensions : object
     {
         return obj.GetComponent<T>() != null;
     }
+    //call by typecasting to DamageableObject
     public static Component GetScript(this GameObject obj)
     {
         if(obj.HasComponent<Player>())

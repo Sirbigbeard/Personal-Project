@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class XPReward : MonoBehaviour
 {
-    public GameObject player;
     private Player playerScript;
     public int xP;
+    //soft randomizes gold gained and gives it to the player and relevant text meshes
     void Start()
     {
-        player = GameObject.Find("Character");
-        playerScript = player.GetComponent<Player>();
         int xPDivisor = Random.Range(2, 7);
         xP += xP / xPDivisor;
     }
@@ -18,6 +16,7 @@ public class XPReward : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            playerScript = other.gameObject.GetComponent<Player>();
             Destroy(gameObject);
             playerScript.GainXP(xP);
             playerScript.gameManagerScript.itemDropText.color = new Color(.0706f, .3176f, .898f, 1);

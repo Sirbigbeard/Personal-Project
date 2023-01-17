@@ -7,10 +7,24 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //comment what things do if unclear, or where things lead if unclear (or what script handles the other parts of something like building targeting being handled by range finder
-    //figure out a way for the prospective people to test spell functions (maybe have a second option on start screen for testing mode, which brings up a similar scene but with character high level and with all spellbooks there
-    //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good. toggle spellbook good, Building Awake(), building relation to melle enemy/ally, move function placement, spikes other.yadayada, canvas spellButtons unity function event listeners) show where i would add animations into code if i had them. the only assets I imported were the ms paint spell drawings I did lol.
+    //playtest game a couple times, do minor balancing
+    //resume!!!!
+    //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good. toggle spellbook good, Building Awake(), building relation to melle enemy/ally, move function placement, spikes other.yadayada, canvas spellButtons unity function event listeners) show where i would add animations into code if i had them. the only assets I imported were the ms paint spell drawings I did lol. 
+    //make a video of you showing how easy it is to make a new kind of enemy with my code
+    //exception handling in projectile
+    //show diff between old and new FireProjectile to demonstrate I know how to make things max efficiency vs max ease, mention that i could have stored the projectile variable in a temp one and only used the conditional to set, thereby making it easier to program and expand upon but less efficcient
 
+
+    //make item drops that enable new building and ally recruitment
+    //Same for enemies spawned, make a method that is called when they would die that effectively resets them to the pool, and just instatiate a number of enemies that is equal to the most that are ever spawned during a round,
+    //allies and buildings as well (how to: make a Reset() in Building that calls FullHeal(), resets their position, and (prob dont need cause coll exit) resets their target and empties target list
+    //test deleting colliders from all child objects that do not need them for code
+    //check for not needed method references
+    //test if I even need used of if lower conditional alone works in spellbookscripts
+    //make it so that if player is less than half the distance of target (and target is out of melle/ranged attack range, enemies will switch to player (probably in enemy move)
+    //Increase number of drops to spread out drop chances and fill out drop tables
+    //make defend key for ally that makes their move target the base until they see an enemy similar to enemy move if target = null
+    //look into making a cursor art for repairing
     //make a max number of recruits you can have that increases based on level
     //try to fix follow
     //variable name brush ups
@@ -20,8 +34,7 @@ public class GameManager : MonoBehaviour
     //make healthbar a red block that shrinks and widens its x scale based upon health percent. (in healthanddamagecanvas gain/lose health)
     //make weapons which modify attack speed and damage.
     //change colors of health bars dependign on type
-    // make defend key for ally that makes their move target the base until
-
+    //make a findChild extension to test if a building has attackhitbox and this is cleaving, 
     //0: try to fuck around with blender basic modeling and animation
     //taunt spell that works like follow for enemys
     //make a building that does aoe damage by cycling through all targets on the list and doing damage to each of them. 
@@ -44,28 +57,33 @@ public class GameManager : MonoBehaviour
     //instead of spellBookButton i should have just made gameManager load up string variables into activeSpells based on name given by button press.
     //give all spells scripts that have all their relevant info such as cost, then use an extension getSpell() to set currentSpell variable, then pull info from currentSpell to cast.
 
-    public bool currentBuildingRangeFinder = false;
-    public bool roundBegun = false;
+    public bool currentBuildingRangeFinder;
+    public bool roundBegun;
     private bool defenseMap = true;
-    private bool spellBookOpen = false;
-    private bool buildingListOpen = false;
-    private bool recruitmentOpen = false;
-    public bool constructing = false;
-    public bool recruiting = false;
-    private bool playerDeath = false;
+    private bool spellBookOpen;
+    private bool buildingListOpen;
+    private bool recruitmentOpen;
+    public bool constructing;
+    public bool recruiting;
+    private bool playerDeath;
+    public bool repairing;
+    private bool dropTextRefresh;
+    private bool dropTextActive;
     public GameObject currentBuilding;
     public GameObject castle;
     public GameObject player;
     public GameObject mainCamera;
-    public Camera creationCamera;
-    public GameObject enemy;
-    public GameObject grunt;
-    public GameObject javleneer;
-    public GameObject chieftan;
+    public GameObject goblinWretch;
+    public GameObject goblinJavleneer;
+    public GameObject goblinChieftan;
+    public GameObject orcWarrior;
+    public GameObject orcFumblefinger;
+    public GameObject orcChieftan;
     public GameObject footman;
     public GameObject archer;
     public GameObject hut;
     public GameObject crenelations;
+    public GameObject crenelationsVertical;
     public GameObject spikes;
     public GameObject offenseMapButtonObject;
     public GameObject defenseMapButtonObject;
@@ -80,11 +98,15 @@ public class GameManager : MonoBehaviour
     public GameObject iceWaveButtonObject;
     public GameObject hutButtonObject;
     public GameObject crenelationsButtonObject;
+    public GameObject crenelationsVerticalButtonObject;
     public GameObject spikesButtonObject;
     public GameObject recruitListButtonObject;
     public GameObject archerButtonObject;
     public GameObject footmanButtonObject;
+    public GameObject repairTooltipObject;
     public GameObject bossGateway;
+    public GameObject repairButtonObject;
+    public GameObject unPauseButtonObject;
     private GameObject currentEnemy;
     private Button offenseMapButton;
     private Button defenseMapButton;
@@ -93,36 +115,40 @@ public class GameManager : MonoBehaviour
     private Button buildingListButton;
     private Button hutButton;
     private Button crenelationsButton;
+    private Button crenelationsVerticalButton;
     private Button spikesButton;
     private Button recruitListButton;
     private Button archerButton;
     private Button footmanButton;
+    private Button repairButton;
+    private Button unPauseButton;
     public TextMeshProUGUI beginRoundButtonText;
     public TextMeshProUGUI goldDisplay;
     public TextMeshProUGUI roundDisplay;
     public TextMeshProUGUI itemDropText;
     public TextMeshProUGUI buildingTooltip;
+    public TextMeshProUGUI repairTooltip;
     private float mapZoomInput;
     private float mouseXInput;
     private float mouseYInput;
     public int maxActiveSpells = 1;
     private int cameraZoomSpeed = 5000;
     private int cameraPanSpeed = 250;
-    private int cameraPanLowerBound = -45;
-    private int cameraPanUpperBound = -5;
-    private int cameraPanLeftBound = -20;
-    private int cameraPanRightBound = 20;
+    private int cameraPanLowerBound = -60;
+    private int cameraPanUpperBound = 35;
+    private int cameraPanLeftBound = -75;
+    private int cameraPanRightBound = 75;
     private int spellXLocation;
     private int spellYLocation;
-    private int laneBalance1 = 0;
-    private int laneBalance2 = 0;
-    private int laneBalance3 = 0;
+    private int laneBalance1;
+    private int laneBalance2;
+    private int laneBalance3;
     private int currentRound = 1;
-    public int enemyCount = 0;
+    public int enemyCount;
     public int gold;
     public int currentBuildingCost;
-    private int bossNumber = 0;
-    private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -14f);
+    private int bossNumber;
+    private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -22f);
     private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -14f);
     private Vector3 offensePlayerPosition = new Vector3(500f, 3.54f, 0f);
     private Vector3 defensePlayerPosition;
@@ -137,11 +163,11 @@ public class GameManager : MonoBehaviour
     private Vector3 bossSpawnLocation3;
     private Vector3 bossSpawnLocation4;
     private Vector3 currentBossSpawnLocation;
-    private Vector3 humanoidOffset = new Vector3(0, 2f, 0);
     private Quaternion cameraRotation;
     private Quaternion lane1Rotation;
     private Quaternion lane2Rotation;
     private Quaternion lane3Rotation;
+    public Image pauseImage;
     public List<GameObject> gatheredSpells;
     public List<GameObject> activeSpells;
     public List<GameObject> buildingsAvailable;
@@ -149,14 +175,10 @@ public class GameManager : MonoBehaviour
     public Player playerScript;
     public Building currentBuildingScript;
     private Color goldColor;
-    public Canvas mainCanvas;
-    public TextMeshProUGUI repairTooltip;
-    public GameObject repairTooltipObject;
-    public bool repairing = false;
-    public GameObject repairButtonObject;
-    private Button repairButton;
-    private Image repairButtonImage;
     private Color baseButtonColor;
+    public Canvas mainCanvas;
+    public Camera creationCamera;
+    private Image repairButtonImage;
     //public Texture2D repairCursorTexture;
 
     void Start()
@@ -170,21 +192,26 @@ public class GameManager : MonoBehaviour
         recruitListButton = recruitListButtonObject.GetComponent<Button>();
         hutButton = hutButtonObject.GetComponent<Button>();
         crenelationsButton = crenelationsButtonObject.GetComponent<Button>();
+        crenelationsVerticalButton = crenelationsVerticalButtonObject.GetComponent<Button>();
         spikesButton = spikesButtonObject.GetComponent<Button>();
         footmanButton = footmanButtonObject.GetComponent<Button>();
         archerButton = archerButtonObject.GetComponent<Button>();
         repairButton = repairButtonObject.GetComponent<Button>();
+        unPauseButton = unPauseButtonObject.GetComponent<Button>();
         offenseMapButton.onClick.AddListener(SetOffenseMap);
         defenseMapButton.onClick.AddListener(SetDefenseMap);
         beginRoundButton.onClick.AddListener(BeginRound);
         spellBookButton.onClick.AddListener(ToggleSpellBook);
         recruitListButton.onClick.AddListener(ToggleRecruitment);
+        unPauseButton.onClick.AddListener(Pause);
         repairButton.onClick.AddListener(ToggleRepairing);
-        hutButton.onClick.AddListener(delegate { Build(hut, 1.0f, true, 15, new Vector3(0, 2.5f, 0)); });
-        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 0f, false, 5, new Vector3(0, 6, 0)); });
-        spikesButton.onClick.AddListener(delegate { Build(spikes, 3f, true, 10, new Vector3(0, 3, 0)); });
-        footmanButton.onClick.AddListener(delegate { Recruit(footman, false, 7, new Vector3(0, 4, 0)); });
-        archerButton.onClick.AddListener(delegate { Recruit(archer, false, 13, new Vector3(0, 4, 0)); });
+        //Listener for building and recruitment. parameters: (GameObject, goldCost)
+        hutButton.onClick.AddListener(delegate { Build(hut, 15); });
+        crenelationsButton.onClick.AddListener(delegate { Build(crenelations, 5); });
+        crenelationsVerticalButton.onClick.AddListener(delegate { Build(crenelationsVertical, 5); });
+        spikesButton.onClick.AddListener(delegate { Build(spikes, 10); });
+        footmanButton.onClick.AddListener(delegate { Recruit(footman, 7); });
+        archerButton.onClick.AddListener(delegate { Recruit(archer, 13); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
@@ -194,6 +221,7 @@ public class GameManager : MonoBehaviour
         troopsAvailable.Add(archerButtonObject);
         buildingsAvailable.Add(hutButtonObject);
         buildingsAvailable.Add(crenelationsButtonObject);
+        buildingsAvailable.Add(crenelationsVerticalButtonObject);
         buildingsAvailable.Add(spikesButtonObject);
         spellBookButtonObject.SetActive(false);
         repairTooltip = repairTooltipObject.GetComponent<TextMeshProUGUI>();
@@ -217,9 +245,9 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        //Game-State
         if (!roundBegun)
         {
+            //handles pre-round UI and camera movement
             RegisterCameraMovementOverhead();
             if (gatheredSpells.Count != 0 && !spellBookButtonObject.activeSelf)
             {
@@ -267,6 +295,7 @@ public class GameManager : MonoBehaviour
         }
         if (roundBegun)
         {
+            //camera follows player while alive and returns to overhead when dead.
             if (playerScript.currentHP <= 0)
             {
                 if (!playerDeath)
@@ -283,11 +312,11 @@ public class GameManager : MonoBehaviour
                 RegisterCameraMovementInRound();
             }
 
-            if (Input.GetKeyDown("escape"))
+            if (Input.GetKeyDown("escape") && Time.timeScale != 0)
             {
                 Pause();
             }
-            if (enemyCount == 0)//handled in building under healthcheck()
+            if (enemyCount == 0)//enemycount reduction handled in building under healthcheck()
             {
                 beginRoundButtonObject.SetActive(true);
             }
@@ -298,7 +327,9 @@ public class GameManager : MonoBehaviour
     {
         int maxCameraDistance = 47;
         int minCameraDistance = 15;
+        //Vector3 camPos;
         mapZoomInput = Input.GetAxis("Mouse ScrollWheel");
+        //scroll to zoom camera 
         if (minCameraDistance <= mainCamera.transform.position.y && mainCamera.transform.position.y <= maxCameraDistance)
         {
             mainCamera.transform.Translate(Vector3.down * Time.deltaTime * cameraZoomSpeed * mapZoomInput, Space.World);
@@ -311,6 +342,15 @@ public class GameManager : MonoBehaviour
         {
             mainCamera.transform.Translate(Vector3.down * Time.deltaTime * cameraZoomSpeed * mapZoomInput, Space.World);
         }
+        if (mainCamera.transform.position.y < minCameraDistance)
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, minCameraDistance, mainCamera.transform.position.z);
+        }
+        if (mainCamera.transform.position.y > maxCameraDistance)
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, maxCameraDistance, mainCamera.transform.position.z);
+        }
+        //right click to drag camera
         if (Input.GetMouseButton(1))
         {
             mouseXInput = Input.GetAxis("Mouse X");
@@ -331,7 +371,24 @@ public class GameManager : MonoBehaviour
             {
                 mainCamera.transform.position += new Vector3(0f, 0f, -Input.GetAxisRaw("Mouse Y") * Time.deltaTime * cameraPanSpeed);
             }
+            if (mainCamera.transform.position.x < cameraPanLeftBound)
+            {
+                mainCamera.transform.position = new Vector3(cameraPanLeftBound, mainCamera.transform.position.y, mainCamera.transform.position.z);
+            }
+            if (mainCamera.transform.position.x > cameraPanRightBound)
+            {
+                mainCamera.transform.position = new Vector3(cameraPanRightBound, mainCamera.transform.position.y, mainCamera.transform.position.z);
+            }
+            if (mainCamera.transform.position.z < cameraPanLowerBound)
+            {
+                mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, cameraPanLowerBound);
+            }
+            if (mainCamera.transform.position.z > cameraPanUpperBound)
+            {
+                mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, cameraPanUpperBound);
+            }
         }
+        //space to center camera
         if (Input.GetKeyDown("space"))
         {
             mainCamera.transform.position = new Vector3(player.transform.position.x, mainCamera.transform.position.y, player.transform.position.z - 20);
@@ -347,6 +404,7 @@ public class GameManager : MonoBehaviour
     }
     void RegisterCameraMovementInRound()
     {
+        //pull camera to 3rd person view of player and makes it a child object of player to follow. Scroll wheel still zooms in/out
         int maxCameraDistance = 26;
         int minCameraDistance = 6;
         float zoomDistance = Vector3.Distance(player.transform.position, mainCamera.transform.position);
@@ -363,6 +421,7 @@ public class GameManager : MonoBehaviour
         {
             mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * cameraZoomSpeed * mapZoomInput);
         }
+        //right click and hold to turn wow-style
         if (Input.GetMouseButton(1) && !Input.GetKey("tab"))
         {
             mouseXInput = Input.GetAxis("Mouse X");
@@ -372,6 +431,7 @@ public class GameManager : MonoBehaviour
                 player.transform.Rotate(Vector3.up, mouseXInput * Time.deltaTime * 1000);
             }
         }
+        //tab pulls camera to overhead view (camera movement returns to overhead rules as well)
         if (Input.GetKeyDown("tab"))
         {
             cameraPosition = mainCamera.transform.position;
@@ -389,6 +449,17 @@ public class GameManager : MonoBehaviour
             RegisterCameraMovementOverhead();
         }
     }
+    void ZoomIn()
+    {
+        mainCamera.transform.position = player.transform.position;
+        mainCamera.transform.rotation = Quaternion.Euler(25, player.transform.eulerAngles.y, player.transform.eulerAngles.z);
+        while (Vector3.Distance(mainCamera.transform.position, player.transform.position) < 12)
+        {
+            mainCamera.transform.Translate(-Vector3.forward);
+        }
+        mainCamera.transform.position += new Vector3(0, 1, 0);
+    }
+    //not yet in use, needs expansion
     void SetOffenseMap()
     {
         offenseMapButtonObject.SetActive(false);
@@ -411,18 +482,8 @@ public class GameManager : MonoBehaviour
         player.transform.position = defensePlayerPosition;
         defenseMap = true;
     }
-    void ZoomIn()
-    {
-        mainCamera.transform.position = player.transform.position;
-        mainCamera.transform.rotation = Quaternion.Euler(25, player.transform.eulerAngles.y, player.transform.eulerAngles.z);
-        while (Vector3.Distance(mainCamera.transform.position, player.transform.position) < 12)
-        {
-            mainCamera.transform.Translate(-Vector3.forward);
-        }
-        mainCamera.transform.position += new Vector3(0, 1, 0);
-    }
 
-    //Round Rotation Functionality
+    //BeginRound() is called by button listener, same button used for EndRound() hence initial conditional
     void BeginRound()
     {
         if (roundBegun)
@@ -452,10 +513,12 @@ public class GameManager : MonoBehaviour
             buildingListButtonObject.SetActive(false);
             recruitListButtonObject.SetActive(false);
             repairButtonObject.SetActive(false);
+            goldDisplay.gameObject.SetActive(false);
             repairButtonImage.color = baseButtonColor;
             mainCamera.transform.parent = player.transform;
             ZoomIn();
             activeSpells.ShuffleList();
+            //handles player functions for round begin.
             playerScript.RoundBegin();
             beginRoundButtonText.text = "End Round";
             StartCoroutine(RoundTextReset());
@@ -471,9 +534,11 @@ public class GameManager : MonoBehaviour
         buildingListButtonObject.SetActive(true);
         recruitListButtonObject.SetActive(true);
         repairButtonObject.SetActive(true);
+        goldDisplay.gameObject.SetActive(true);
         mainCamera.transform.parent = null;
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
+        //handles player functions for round begin.
         playerScript.RoundEnd();
         roundDisplay.text = "Round " + currentRound + " Completed";
         roundDisplay.color = new Color(.1607f, .2157f, .7765f, 1);
@@ -481,7 +546,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RoundTextReset());
         currentRound++;
     }
-    //Spell and Building UI
+    //UI list toggles. All work the same way.
     void ToggleSpellBook()
     {
         if (recruitmentOpen)
@@ -497,7 +562,7 @@ public class GameManager : MonoBehaviour
             spellBookOpen = true;
             foreach (GameObject spell in gatheredSpells)
             {
-                ListSpells(spell);
+                DisplayButtonList(spell);
             }
             ResetSpellLocation();
             buildingTooltip.text = "Select spells for the next round. Cycling spells refreshes their cooldown.";
@@ -527,7 +592,7 @@ public class GameManager : MonoBehaviour
             buildingListOpen = true;
             foreach (GameObject building in buildingsAvailable)
             {
-                ListSpells(building);
+                DisplayButtonList(building);
             }
             ResetSpellLocation();
             buildingTooltip.text = "Buildings are unmoving and stronger than recruits for their cost.";
@@ -568,7 +633,7 @@ public class GameManager : MonoBehaviour
             {
                 foreach (GameObject recruit in troopsAvailable)
                 {
-                    ListSpells(recruit);
+                    DisplayButtonList(recruit);
                 }
                 ResetSpellLocation();
             }
@@ -587,7 +652,8 @@ public class GameManager : MonoBehaviour
             buildingTooltip.text = "";
         }
     }
-    void ListSpells(GameObject spell)
+    //Lists relevant UI
+    void DisplayButtonList(GameObject spell)
     {
         if (!spell.gameObject.activeSelf)
         {
@@ -604,8 +670,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    //Building Creation Methods
-    void Build(GameObject building, float height, bool rangeFinder, int cost, Vector3 offset)
+    //Building Creation Methods (all are similar but specific to what and how the object is being instantiated.)
+    void Build(GameObject building, int cost)
     {
         if (gold >= cost)
         {
@@ -616,17 +682,16 @@ public class GameManager : MonoBehaviour
             constructing = true;
             recruiting = false;
             creationCamera.enabled = true;
-            currentBuilding = Instantiate(building, new Vector3(0f, height, 447.0f), building.transform.rotation);
-            currentBuildingRangeFinder = rangeFinder;
+            currentBuilding = Instantiate(building, new Vector3(0f, building.transform.position.y, 447.0f), building.transform.rotation);
             currentBuildingCost = cost;
-            GeneralizedSpawn(offset);
+            GeneralizedSpawn();
         }
         else
         {
             roundDisplay.text = "Not Enough Gold ";
         }
     }
-    void Recruit(GameObject recruit, bool rangeFinder, int cost, Vector3 offset)
+    void Recruit(GameObject recruit, int cost)
     {
         if (gold >= cost)
         {
@@ -638,16 +703,15 @@ public class GameManager : MonoBehaviour
             recruiting = true;
             creationCamera.enabled = true;
             currentBuilding = Instantiate(recruit, new Vector3(0f, recruit.transform.position.y, 447.0f), recruit.transform.rotation);
-            currentBuildingRangeFinder = rangeFinder;
             currentBuildingCost = cost;
-            GeneralizedSpawn(offset);
+            GeneralizedSpawn();
         }
         else
         {
             roundDisplay.text = "Not Enough Gold ";
         }
     }
-    public void SpawnEnemy(GameObject enemy, Vector3 offset)
+    public void SpawnEnemy(GameObject enemy)
     {
         int coinFlip = Random.Range(1, 5);
         float xPos;
@@ -678,22 +742,22 @@ public class GameManager : MonoBehaviour
             rotation = Quaternion.Euler(0, 270, 0);
         }
         currentBuilding = Instantiate(enemy, new Vector3(xPos, enemy.transform.position.y, zPos), rotation);
-        GeneralizedSpawn(offset);
+        GeneralizedSpawn();
         enemyCount++;
     }
-    void SpawnEnemyDistributed(GameObject enemy, Vector3 offset)
+    void SpawnEnemyDistributed(GameObject enemy)
     {
         if (Mathf.Abs(laneBalance1 - laneBalance2) > 2)
         {
             if (laneBalance1 < laneBalance2)
             {
                 currentBuilding = Instantiate(enemy, lane1Position, lane1Rotation);
-                GeneralizedSpawn(offset);
+                GeneralizedSpawn();
             }
             else
             {
                 currentBuilding = Instantiate(enemy, lane1Position, lane1Rotation);
-                GeneralizedSpawn(offset);
+                GeneralizedSpawn();
             }
         }
         else if (Mathf.Abs(laneBalance1 - laneBalance3) > 2)
@@ -701,12 +765,12 @@ public class GameManager : MonoBehaviour
             if (laneBalance1 < laneBalance2)
             {
                 currentBuilding = Instantiate(enemy, lane1Position, lane1Rotation);
-                GeneralizedSpawn(offset);
+                GeneralizedSpawn();
             }
             else
             {
                 currentBuilding = Instantiate(enemy, lane3Position, lane3Rotation);
-                GeneralizedSpawn(offset);
+                GeneralizedSpawn();
             }
         }
         else if (Mathf.Abs(laneBalance2 - laneBalance3) > 2)
@@ -714,17 +778,17 @@ public class GameManager : MonoBehaviour
             if (laneBalance2 < laneBalance3)
             {
                 currentBuilding = Instantiate(enemy, lane2Position, lane2Rotation);
-                GeneralizedSpawn(offset);
+                GeneralizedSpawn();
             }
             else
             {
                 currentBuilding = Instantiate(enemy, lane3Position, lane3Rotation);
-                GeneralizedSpawn(offset);
+                GeneralizedSpawn();
             }
         }
         enemyCount++;
     }
-    private void SpawnBoss(GameObject enemy, Vector3 offset)
+    private void SpawnBoss(GameObject enemy)
     {
         while (bossNumber < 4)
         {
@@ -745,48 +809,75 @@ public class GameManager : MonoBehaviour
                 currentBossSpawnLocation = bossSpawnLocation4;
             }
             currentBuilding = Instantiate(enemy, new Vector3(currentBossSpawnLocation.x, enemy.transform.position.y, currentBossSpawnLocation.z), enemy.transform.rotation);
-            GeneralizedSpawn(offset);
+            GeneralizedSpawn();
             bossNumber++;
             enemyCount++;
         }
     }
+    //called after spawning any of the above GameObjects
+    void GeneralizedSpawn()
+    {
+        currentBuildingScript = currentBuilding.GetScript() as Building;
+        currentBuildingScript.castle = castle;
+        currentBuildingScript.cost = currentBuildingCost;
+        currentBuildingScript.mainCanvas = mainCanvas;
+        currentBuildingScript.repairTooltip = repairTooltip;
+        currentBuildingScript.gameManagerScript = gameObject.GetComponent<GameManager>();
+    }
+    //Handles the round waves
     private void SpawnRoundWave()
     {
         bool bossRound = false;
         if (currentRound == 1)
         {
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinJavleneer);
         }
         if (currentRound == 2)
         {
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(goblinJavleneer);
         }
         if (currentRound == 3)
         {
-            SpawnBoss(chieftan, humanoidOffset);
+            SpawnBoss(goblinChieftan);
             bossRound = true;
         }
         if (currentRound == 4)
         {
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(grunt, humanoidOffset);
-            SpawnEnemy(javleneer, humanoidOffset);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(orcWarrior);
+            SpawnEnemy(orcWarrior);
+            SpawnEnemy(orcFumblefinger);
+        }
+        if (currentRound == 5)
+        {
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinWretch);
+            SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(orcWarrior);
+            SpawnEnemy(orcWarrior);
+            SpawnEnemy(orcWarrior);
+            SpawnEnemy(orcWarrior);
+            SpawnEnemy(orcFumblefinger);
+            SpawnEnemy(orcFumblefinger);
+        }
+        if (currentRound == 6)
+        {
+            SpawnBoss(orcChieftan);
+            bossRound = true;
         }
         if (bossRound)
         {
@@ -806,19 +897,20 @@ public class GameManager : MonoBehaviour
         roundDisplay.color = new Color(0, 0, 0, 0);
         roundDisplay.text = "";
     }
+    //repairing does not pull up a list so the rest of the toggle functions outcast it. Get rekt noob.
     public void ToggleRepairing()
     {
         if (repairing)
         {
             repairing = false;
+            repairButtonImage.color = baseButtonColor;
         }
         else
         {
             repairing = true;
+            repairButtonImage.color = new Color(1, 0, 0, 1);
         }
-        repairing = true;
-        repairButtonImage.color = new Color(1, 0, 0, 1);
-        //Cursor.SetCursor(repairCursorTexture, Vector2.zero, CursorMode.Auto);
+        //Cursor.SetCursor(repairCursorTexture, Vector2.zero, CursorMode.Auto); (use if ever import cursor art)
     }
     public void DropTextResetShell(float duration)
     {
@@ -826,9 +918,19 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator DropTextReset(float duration)
     {
+        if (dropTextActive)
+        {
+            dropTextRefresh = true;
+        }
+        dropTextActive = true;
         yield return new WaitForSeconds(duration);
-        itemDropText.color = new Color(0, 0, 0, 0);
-        itemDropText.text = "";
+        if (!dropTextRefresh)
+        {
+            itemDropText.color = new Color(0, 0, 0, 0);
+            itemDropText.text = "";
+            dropTextActive = false;
+        }
+        dropTextRefresh = false;
     }
     //Misc Methods
     void Pause()
@@ -836,10 +938,12 @@ public class GameManager : MonoBehaviour
         if (Time.timeScale == 1)
         {
             Time.timeScale = 0;
+            pauseImage.gameObject.SetActive(true);
         }
         else
         {
             Time.timeScale = 1;
+            pauseImage.gameObject.SetActive(false);
         }
     }
     public void GainGold(int goldGained)
@@ -856,16 +960,6 @@ public class GameManager : MonoBehaviour
         }
         goldDisplay.text = "Gold: " + gold;
         StartCoroutine(DropTextReset(1.9f));
-    }
-    void GeneralizedSpawn(Vector3 offset)
-    {
-        currentBuildingScript = currentBuilding.GetScript() as Building;
-        currentBuildingScript.castle = castle;
-        currentBuildingScript.cost = currentBuildingCost;
-        currentBuildingScript.mainCanvas = mainCanvas;
-        currentBuildingScript.repairTooltip = repairTooltip;
-        currentBuildingScript.gameManagerScript = gameObject.GetComponent<GameManager>();
-        currentBuildingScript.healthAndDamageCanvasScript.maxHP = (int)currentBuildingScript.maxHP;
     }
     void ResetSpellLocation()
     {

@@ -7,38 +7,49 @@ using TMPro;
 public class Player : DamageableObject
 {
     private Rigidbody playerRb;
-    private Vector3 moveInput;
     private float rotationRate = 15f;
     private float horizontalInput;
     private float verticalInput;
     private float manaRegenRate = 1;
     public float currentMana;
     public float maxMana;
-    private int level = 1;
-    private int maxEnergy = 100;
-    private int currentEnergy = 100;
-    private int spellUINumber = 0;
+    public float basicAttackDamage = 3;
     private float attackWindup = .01f;
+    private int level = 1;
+    private int maxEnergy = 20;
+    private int currentEnergy = 20;
+    private int spellUINumber = 0;
     public int castableSpells = 1;
     public int touchingBuilding = 0;
     private int potentialXP = 0;
     public int currentXP;
+    private int fireBallCDDuration;
+    private int slamCDDuration;
+    private int iceWaveCDDuration;
+    private int blinkCDDuration;
+    private int bulwarkCDDuration;
+    private int summonImpCDDuration;
     private int attackDamageLevelTracker;
-    private float basicAttackDamage = 3;
-    private bool attackCooldownActive = false;
-    private bool spellCasted = false;
-    private bool energyTickCooldownBool = false;
-    public bool attackDurationActive = false;
-    private bool energyDowntickCooldown = false;
-    private bool bulwarkRefresh = false;
-    private bool bulwarkActive = false;
-    private bool manaTickActive = false;
-    private bool died = false;
+    private bool attackCooldownActive;
+    private bool spellCasted;
+    private bool energyTickCooldownBool;
+    //use this variable to reduce defensive stats during attacks
+    //private bool attackDurationActive;
+    private bool energyDowntickCooldown;
+    private bool bulwarkRefresh;
+    private bool manaTickActive;
+    private bool died;
+    private bool fireBallCD;
+    private bool summonImpCD;
+    private bool slamCD;
+    private bool iceWaveCD;
+    private bool blinkCD;
+    private bool bulwarkCD;
+    private bool maxSpellsIncreaseQueue;
+    public GameObject mace;
     public GameObject GameManager;
-    public GameManager gameManagerScript;
-    public DamageableObject closestTargetScript;
     public GameObject mainCamera;
-    public GameObject weapon;
+    //public GameObject weapon;
     public GameObject head;
     public GameObject leftArm;
     public GameObject rightArm;
@@ -49,6 +60,11 @@ public class Player : DamageableObject
     public GameObject fireball;
     public GameObject imp;
     private GameObject closestTarget;
+    public GameObject spell1Image;
+    public GameObject spell2Image;
+    public GameObject spell3Image;
+    public GameObject spell4Image;
+    private GameObject summonedCreature;
     public TextMeshProUGUI spell1Name;
     public TextMeshProUGUI spell2Name;
     public TextMeshProUGUI spell3Name;
@@ -67,7 +83,8 @@ public class Player : DamageableObject
     private Renderer torsoRenderer;
     private Color playerColor;
     private Color bulwarkColor;
-    private Vector3 startingPosition = new Vector3(0, 3f, 5);
+    private Vector3 moveInput;
+    private Vector3 startingPosition = new Vector3(0.12f, 3.1f, -15);
     public ParticleSystem iceWaveParticle;
     public Sprite fireBallSprite;
     public Sprite slamSprite;
@@ -81,32 +98,21 @@ public class Player : DamageableObject
     public Sprite blinkCDSprite;
     public Sprite bulwarkCDSprite;
     public Sprite summonImpCDSprite;
-    public GameObject spell1Image;
-    public GameObject spell2Image;
-    public GameObject spell3Image;
-    public GameObject spell4Image;
-    private GameObject summonedCreature;
-    private Building currentSummonedCreatureScript;
-    private bool fireBallCD = false;
-    private bool summonImpCD;
-    private bool slamCD;
-    private bool iceWaveCD;
-    private bool blinkCD;
-    private bool bulwarkCD;
-    //private bool fireBallCDIncrement = false;
-    private int fireBallCDDuration;
-    private int slamCDDuration;
-    private int iceWaveCDDuration;
-    private int blinkCDDuration;
-    private int bulwarkCDDuration;
-    private int summonImpCDDuration;
     private List<TextMeshProUGUI> spellNameList;
     private List<GameObject> spellImageList;
-    private bool maxSpellsIncreaseQueue;
-
+    public GameManager gameManagerScript;
+    public DamageableObject closestTargetScript;
+    private Building currentSummonedCreatureScript;
 
     void Start()
     {
+        currentHP = 10;
+        maxHP = 10;
+        currentMana = 10;
+        maxMana = 10;
+        speed = 15f;
+        attackCooldownFloat = 1.8f;
+        bulwarkDefense = 1;
         spellList = new List<GameObject>();
         playerRb = gameObject.GetComponent<Rigidbody>();
         gameManagerScript = GameManager.GetComponent<GameManager>();
@@ -126,13 +132,7 @@ public class Player : DamageableObject
         rightArmRenderer.material.SetColor("_Color", playerColor);
         headRenderer.material.SetColor("_Color", playerColor);
         torsoRenderer.material.SetColor("_Color", playerColor);
-        attackHitboxScript.validTargetTags.Add("Enemy");
-        currentHP = 10;
-        maxHP = 10;
-        currentMana = 10;
-        maxMana = 10;
-        speed = 15f;
-        attackCooldownFloat = 1.8f;
+        //attackHitboxScript.validTargetTags.Add("Enemy");
         transform.position = startingPosition;
         levelDisplay.text = "Level: " + level;
         xPDisplay.text = "XP: " + currentXP + "/" + (5 + 5 * level);
@@ -159,86 +159,21 @@ public class Player : DamageableObject
     {
         if(currentHP > 0)
         {
+            //test
+            RegisterMovement();
             if (gameManagerScript.roundBegun)
             {
-                if (!attackCooldownActive && currentEnergy > 10)
-                {
-                    if (Input.GetMouseButtonDown(0) && attackHitboxScript.targets.Count != 0)
-                    {
-                        Attack();
-                        currentEnergy -= 10;
-                    }
-                }
-                if (Input.GetKeyDown("1") && spellList.Count > 0)
-                {
-                    CastSpell(spellList[0], 0);
-                    if (spellList.Count > castableSpells && spellCasted)
-                    {
-                        spellList.Add(spellList[0]);
-                        spellList[0] = spellList[castableSpells];
-                        spell1Image.GetComponent<Image>().sprite = FindImage(spellList[0]);
-                        spell1Name.text = spellList[castableSpells].name;
-                        spellList.RemoveAt(castableSpells);
-                    }
-                    spellCasted = false;
-                }
-                if (Input.GetKeyDown("2") && spellList.Count > 1 && castableSpells > 1)
-                {
-                    CastSpell(spellList[1], 1);
-                    if (spellList.Count > castableSpells && spellCasted)
-                    {
-                        spellList.Add(spellList[1]);
-                        spellList[1] = spellList[castableSpells];
-                        spell2Image.GetComponent<Image>().sprite = FindImage(spellList[1]);
-                        spell2Name.text = spellList[castableSpells].name;
-                        spellList.RemoveAt(castableSpells);
-                    }
-                    spellCasted = false;
-                }
-                if (Input.GetKeyDown("3") && spellList.Count > 2 && castableSpells > 2)
-                {
-                    CastSpell(spellList[2], 2);
-                    if (spellList.Count > castableSpells && spellCasted)
-                    {
-                        spellList.Add(spellList[2]);
-                        spellList[2] = spellList[castableSpells];
-                        spell3Image.GetComponent<Image>().sprite = FindImage(spellList[2]);
-                        spell3Name.text = spellList[castableSpells].name;
-                        spellList.RemoveAt(castableSpells);
-                    }
-                    spellCasted = false;
-                }
-                if (Input.GetKeyDown("4") && spellList.Count > 3 && castableSpells > 3)
-                {
-                    CastSpell(spellList[3], 3);
-                    if (spellList.Count > castableSpells && spellCasted)
-                    {
-                        spellList.Add(spellList[3]);
-                        spellList[3] = spellList[castableSpells];
-                        spell4Image.GetComponent<Image>().sprite = FindImage(spellList[3]);
-                        spell4Name.text = spellList[castableSpells].name;
-                        spellList.RemoveAt(castableSpells);
-                    }
-                    spellCasted = false;
-                }
+                RegisterAttacks();
+                RegisterSpellcast();
             }
-            if (currentMana < maxMana && !manaTickActive)
-            {
-                StartCoroutine(ManaTick());
-                manaTickActive = true;
-            }
-            if (!energyTickCooldownBool && currentEnergy < maxEnergy)
-            {
-                StartCoroutine(EnergyTick());
-                energyTickCooldownBool = true;
-            }
+            ReplenishManaAndEnergy();
+        }
+        else
+        {
+            Die();
         }
     }
-    void FixedUpdate()
-    {
-        RegisterMovement();
-    }
-    //registers wasd and moves character correspondingly
+    //registers wasd (or arrow keys) and moves character correspondingly
     private void RegisterMovement()
     {
         if (currentHP > 0)
@@ -248,17 +183,18 @@ public class Player : DamageableObject
             if (!gameManagerScript.roundBegun)
             {
                 moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                playerRb.position += moveInput * speed / 100;
+                playerRb.position += moveInput * speed / 650;
                 if (moveInput.sqrMagnitude > 0)
                 {
                     Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
                     playerRb.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
+                    playerRb.velocity = new Vector3(0, 0, 0);
                 }
             }
             else if (Input.GetKey("left shift") && currentEnergy > 0)
             {
-                playerRb.AddForce(transform.forward * speed * 60 * verticalInput);
-                playerRb.AddForce(transform.right * speed * 60 * horizontalInput);
+                playerRb.AddForce(transform.forward * speed * 7 * verticalInput);
+                playerRb.AddForce(transform.right * speed * 7 * horizontalInput);
                 playerRb.velocity = new Vector3(0, 0, 0);
                 if (!energyDowntickCooldown && (verticalInput > .05f || horizontalInput > .05f))
                 {
@@ -270,19 +206,99 @@ public class Player : DamageableObject
             }
             else
             {
-                playerRb.AddForce(transform.forward * speed * 35 * verticalInput);
-                playerRb.AddForce(transform.right * speed * 35 * horizontalInput);
+                playerRb.AddForce(transform.forward * speed * 4f * verticalInput);
+                playerRb.AddForce(transform.right * speed * 4f * horizontalInput);
                 playerRb.velocity = new Vector3(0, 0, 0);
             }
-                
+        } 
+    }
+    //register attack on left click
+    private void RegisterAttacks()
+    {
+        if (!attackCooldownActive && currentEnergy > 10 && Input.GetMouseButtonDown(0) && attackHitboxScript.targets.Count != 0)
+        {
+            Attack();
+            currentEnergy -= 10;
         }
-        if (currentHP <= 0 && !died)
+    }
+    //Register spellcast on 1-4 and cycles spells if needed
+    private void RegisterSpellcast()
+    {
+        if (Input.GetKeyDown("1") && spellList.Count > 0)
+        {
+            CastSpell(spellList[0], 0);
+            if (spellList.Count > castableSpells && spellCasted)
+            {
+                spellList.Add(spellList[0]);
+                spellList[0] = spellList[castableSpells];
+                spell1Image.GetComponent<Image>().sprite = FindImage(spellList[0]);
+                spell1Name.text = spellList[castableSpells].name;
+                spellList.RemoveAt(castableSpells);
+            }
+            spellCasted = false;
+        }
+        if (Input.GetKeyDown("2") && spellList.Count > 1 && castableSpells > 1)
+        {
+            CastSpell(spellList[1], 1);
+            if (spellList.Count > castableSpells && spellCasted)
+            {
+                spellList.Add(spellList[1]);
+                spellList[1] = spellList[castableSpells];
+                spell2Image.GetComponent<Image>().sprite = FindImage(spellList[1]);
+                spell2Name.text = spellList[castableSpells].name;
+                spellList.RemoveAt(castableSpells);
+            }
+            spellCasted = false;
+        }
+        if (Input.GetKeyDown("3") && spellList.Count > 2 && castableSpells > 2)
+        {
+            CastSpell(spellList[2], 2);
+            if (spellList.Count > castableSpells && spellCasted)
+            {
+                spellList.Add(spellList[2]);
+                spellList[2] = spellList[castableSpells];
+                spell3Image.GetComponent<Image>().sprite = FindImage(spellList[2]);
+                spell3Name.text = spellList[castableSpells].name;
+                spellList.RemoveAt(castableSpells);
+            }
+            spellCasted = false;
+        }
+        if (Input.GetKeyDown("4") && spellList.Count > 3 && castableSpells > 3)
+        {
+            CastSpell(spellList[3], 3);
+            if (spellList.Count > castableSpells && spellCasted)
+            {
+                spellList.Add(spellList[3]);
+                spellList[3] = spellList[castableSpells];
+                spell4Image.GetComponent<Image>().sprite = FindImage(spellList[3]);
+                spell4Name.text = spellList[castableSpells].name;
+                spellList.RemoveAt(castableSpells);
+            }
+            spellCasted = false;
+        }
+    }
+    private void Die()
+    {
+        if (!died)
         {
             died = true;
-            transform.Translate(1000, 1000, 1000);
+            transform.position = new Vector3(1000, transform.position.y, 1000);
             roundDisplay.text = "Knocked Out ";
             roundDisplay.color = new Color(205, 0, 0, 255);
             StartCoroutine(RoundTextReset());
+        }
+    }
+    private void ReplenishManaAndEnergy()
+    {
+        if (currentMana < maxMana && !manaTickActive)
+        {
+            StartCoroutine(ManaTick());
+            manaTickActive = true;
+        }
+        if (!energyTickCooldownBool && currentEnergy < maxEnergy)
+        {
+            StartCoroutine(EnergyTick());
+            energyTickCooldownBool = true;
         }
     }
     private IEnumerator RoundTextReset()
@@ -291,10 +307,11 @@ public class Player : DamageableObject
         roundDisplay.color = new Color(0, 0, 0, 0);
         roundDisplay.text = "";
     }
+    //starts necessary timers for attack
     private void Attack()
     {
         attackCooldownActive = true;
-        attackDurationActive = true;
+        //attackDurationActive = true;
         StartCoroutine(AttackCooldown());
         StartCoroutine(AttackDuration());
     }
@@ -307,8 +324,9 @@ public class Player : DamageableObject
     {
         yield return new WaitForSeconds(attackWindup);
         BasicAttack();
-        attackDurationActive = false;
-    } 
+        //attackDurationActive = false;
+    }
+    //perform the basic attack
     void BasicAttack()
     {
         closestTarget = gameObject.GetClosest(attackHitboxScript.targets);
@@ -318,6 +336,7 @@ public class Player : DamageableObject
             DealDamage(basicAttackDamage);
         }
     }
+    //parses the spells name into its own casting method, sets cooldown if not cycled, and displays cooldown on image and text 
     public void CastSpell(GameObject spell, int keyHit)
     {
         if (spell.name == "Fire Ball" && currentMana >= 3)
@@ -347,7 +366,7 @@ public class Player : DamageableObject
             }
             else if (slamCD == false)
             {
-                slamCDDuration = 5;
+                slamCDDuration = 7;
                 spellNameList[keyHit].text += " (" + slamCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = slamCDSprite;
                 CastSlam();
@@ -365,7 +384,7 @@ public class Player : DamageableObject
             }
             else if (iceWaveCD == false)
             {
-                iceWaveCDDuration = 5;
+                iceWaveCDDuration = 8;
                 spellNameList[keyHit].text += " (" + iceWaveCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = iceWaveCDSprite;
                 CastIceWave();
@@ -383,7 +402,7 @@ public class Player : DamageableObject
             }
             else if (summonImpCD == false)
             {
-                summonImpCDDuration = 5;
+                summonImpCDDuration = 10;
                 spellNameList[keyHit].text += " (" + summonImpCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = summonImpCDSprite;
                 CastSummonImp();
@@ -401,7 +420,7 @@ public class Player : DamageableObject
             }
             else if (bulwarkCD == false)
             {
-                bulwarkCDDuration = 5;
+                bulwarkCDDuration = 8;
                 spellNameList[keyHit].text += " (" + bulwarkCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = bulwarkCDSprite;
                 CastBulwark();
@@ -419,7 +438,7 @@ public class Player : DamageableObject
             }
             else if (blinkCD == false)
             {
-                blinkCDDuration = 5;
+                blinkCDDuration = 3;
                 spellNameList[keyHit].text += " (" + blinkCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = blinkCDSprite;
                 CastBlink();
@@ -557,7 +576,7 @@ public class Player : DamageableObject
     {
         currentMana -= 5;
         manaDisplay.text = "Mana: " + currentMana + "/" + maxMana;
-        if (bulwarkActive == true)
+        if (bulwarkActive)
         {
             bulwarkRefresh = true;
         }
@@ -608,6 +627,49 @@ public class Player : DamageableObject
             blinkCD = false;
         }
     }
+    private void SpellIncreaseCheck()
+    {
+        int castable = castableSpells;
+        int maxSpells = gameManagerScript.maxActiveSpells;
+        if (level < 3)
+        {
+            castableSpells = 1;
+            gameManagerScript.maxActiveSpells = 1;
+        }
+        else if (level < 6)
+        {
+            castableSpells = 2;
+            gameManagerScript.maxActiveSpells = 4;
+        }
+        else if (level < 10)
+        {
+            castableSpells = 3;
+            gameManagerScript.maxActiveSpells = 6;
+        }
+        else
+        {
+            castableSpells = 4;
+            gameManagerScript.maxActiveSpells = 8;
+        }
+        if (gameManagerScript.maxActiveSpells > maxSpells)
+        {
+            gameManagerScript.itemDropText.text = "Maximum selectable spells increased to " + gameManagerScript.maxActiveSpells;
+            StartCoroutine(SpellTextNoQueue());
+            maxSpellsIncreaseQueue = true;
+        }
+        if (castableSpells > castable)
+        {
+            if (maxSpellsIncreaseQueue)
+            {
+                StartCoroutine(SpellTextQueue());
+            }
+            else
+            {
+                gameManagerScript.itemDropText.text = "Spell slots improved to " + castableSpells;
+                StartCoroutine(SpellTextNoQueue());
+            }
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Building" || other.tag == "Wall")
@@ -623,19 +685,6 @@ public class Player : DamageableObject
             playerRb.velocity = new Vector3(0, 0, 0);
         }
     }
-    /*IEnumerator CDCount(bool coolDownBool, ref int coolDownInt)
-    {
-        yield return new WaitForSeconds(1);
-        coolDownInt--;
-        if (coolDownInt > 0)
-        {
-            CDCount(coolDownBool, ref coolDownInt);
-        }
-        else
-        {
-            coolDownBool = false;
-        }
-    }*/
     IEnumerator BulwarkTimer()
     {
         yield return new WaitForSeconds(5);
@@ -650,6 +699,11 @@ public class Player : DamageableObject
             bulwarkActive = false;
         }
         bulwarkRefresh = false;
+    }
+    public void GainMace()
+    {
+        basicAttackDamage += 2;
+        mace.SetActive(true);
     }
     public void RoundBegin()
     {
@@ -722,52 +776,9 @@ public class Player : DamageableObject
     }
     public void RoundEnd()
     {
-        int castable = castableSpells;
-        int maxSpells = gameManagerScript.maxActiveSpells;
         died = false;
         transform.position = startingPosition;
         FullHeal();
-        if (gameManagerScript.gatheredSpells.Count != 0)
-        {
-            if (level < 3)
-            {
-                castableSpells = 1;
-                gameManagerScript.maxActiveSpells = 1;
-            }
-            else if (level < 6)
-            {
-                castableSpells = 2;
-                gameManagerScript.maxActiveSpells = 4;
-            }
-            else if (level < 10)
-            {
-                castableSpells = 3;
-                gameManagerScript.maxActiveSpells = 6;
-            }
-            else
-            {
-                castableSpells = 4;
-                gameManagerScript.maxActiveSpells = 8;
-            }
-        }
-        if (gameManagerScript.maxActiveSpells > maxSpells)
-        {
-            gameManagerScript.itemDropText.text = "Maximum selectable spells increased to " + gameManagerScript.maxActiveSpells;
-            StartCoroutine(SpellTextNoQueue());
-            maxSpellsIncreaseQueue = true;
-        }
-        if (castableSpells > castable)
-        {
-            if (maxSpellsIncreaseQueue)
-            {
-                StartCoroutine(SpellTextQueue());
-            }
-            else
-            {
-                gameManagerScript.itemDropText.text = "Spell slots improved to " + castableSpells;
-                StartCoroutine(SpellTextNoQueue());
-            }
-        }
         spell1Name.text = "";
         spell2Name.text = "";
         spell3Name.text = "";
@@ -799,26 +810,35 @@ public class Player : DamageableObject
             GainXP(potentialXP);
         }
     }
+    //handles leveling up as well as xp gain
     public void GainXP(int xp)
     {
         currentXP += xp;
         xPDisplay.text = "XP: " + currentXP + "/" + (5 + 5 * level);
         if (currentXP >= 5 + 5 * level)
         {
-            currentXP -= 5 + 5 * level;
-            xPDisplay.text = "XP: " + currentXP + "/" + (5 + 5 * level);
-            level++;
-            attackDamageLevelTracker++;
-            maxHP += 2;
-            healthAndDamageCanvasScript.maxHP = (int)maxHP;
-            healthDisplay.text = "Health: " + currentHP + "/" + maxHP;
-            healthAndDamageCanvasScript.GainHealth(2);
-            levelDisplay.text = "Level:" + level;
-            if(attackDamageLevelTracker > 3)
-            {
-                attackDamageLevelTracker = 0;
-                basicAttackDamage++;
-            }
+            LevelUp();
+            SpellIncreaseCheck();
+        }
+    }
+    public void LevelUp()
+    {
+        currentXP -= 5 + 5 * level;
+        xPDisplay.text = "XP: " + currentXP + "/" + (5 + 5 * level);
+        level++;
+        attackDamageLevelTracker++;
+        maxHP += 2;
+        healthAndDamageCanvasScript.maxHP = (int)maxHP;
+        Heal(2);
+        levelDisplay.text = "Level:" + level;
+        if (attackDamageLevelTracker > 3)
+        {
+            attackDamageLevelTracker = 0;
+            basicAttackDamage++;
+        }
+        if (currentXP >= 5 + 5 * level)
+        {
+            LevelUp();
         }
     }
     IEnumerator ManaTick()
@@ -837,7 +857,7 @@ public class Player : DamageableObject
     }
     IEnumerator EnergyTick()
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         if (!energyDowntickCooldown)
         {
             currentEnergy++;
@@ -857,6 +877,7 @@ public class Player : DamageableObject
         yield return new WaitForSeconds(.12f);
         energyDowntickCooldown = false;
     }
+    //how long the ice wave hitbox is active.
     IEnumerator IceWaveHitDuration()
     {
         yield return new WaitForSeconds(.05f);

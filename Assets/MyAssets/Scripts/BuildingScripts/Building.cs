@@ -9,49 +9,53 @@ public class Building : DamageableObject
 {
     //This class is parent to Ally and Enemy.
 
-    public float rangedAttackRange = 0f;
-    public float range = 8;
-    public float attackCooldownRanged = 3f;
-    public float attackDamage = 5;
-    private int level = 0;
-    protected float attackDurationFloat = 1.5f;
-    public bool endRoundCheck = false;
+    public float rangedAttackRange;
+    public float sightRange;
+    public float attackCooldownRanged;
+    public float attackDamage;
+    public float attackRange;
+    public float attackDurationFloat;
+    public List<GameObject> itemDrops;
+    public bool cleavingAttackBool;
+    public bool hitsFlying;
+    public int cost;
+    public int spikeSelfDamage;
+    private int level;
+    protected float distanceToTarget;
+    protected int potentialXP;
+    protected int currentXP;
+    public bool endRoundCheck;
+    protected bool isRanged;
+    private bool lootPositionChecked;
+    private bool canvasTimer;
+    private bool checkedSpawn;
+    private bool projectile1Fired;
+    protected bool attackCooldownActive;
+    protected bool attackDurationActive;
+    protected bool cleavingAttackCooldownActive;
+    protected bool cleavingAttackDurationActive;
+    protected bool attackReadyRanged;
+    protected bool following;
+    private string trueName;
     public Vector3 startPosition;
     private Vector3 lootPosition;
+    public Vector3 startingPosition;
+    protected Vector3 targetPosition;
+    private Vector3 spawnPoint;
     public GameObject projectile;
-    protected GameObject player;
-    protected bool isRanged = false;
-    private bool lootPositionChecked = false;
+    private GameObject projectile1;
+    private GameObject projectile2;
     public GameObject target;
     public GameObject rangeFinder;
     public GameObject castle;
     public GameObject gameManager;
     public GameManager gameManagerScript;
-    public float attackRange;
-    public GameObject buildPositionObject;
-    public BuildPosition buildPositionScript;
-    protected Projectile projectileScript;
-    public RangeFinder rangeFinderScript;
-    protected bool attackReadyRanged = true;
-    protected List<GameObject> targets;
-    protected Vector3 targetPosition;
-    public bool hitsFlying = false;
-    protected bool attackCooldownActive = false;
-    protected bool attackDurationActive = false;
-    protected float distanceToTarget;
-    public DamageableObject targetScript;
-    protected bool cleavingAttackBool = false;
-    protected bool cleavingAttackCooldownActive = true;
-    protected bool cleavingAttackDurationActive = true;
-    public GameObject parentObject;
-    protected int potentialXP;
-    protected int currentXP;
-    public Player playerScript;
     public GameObject rank2Marker;
     public GameObject rank3Marker;
-    private bool canvasTimer;
-    private bool checkedSpawn = false;
-    protected List<GameObject> itemDrops;
+    //public GameObject parentObject;
+    public GameObject repairTooltipObject;
+    protected GameObject player;
+    public GameObject buildPositionObject;
     public static GameObject fireBallBook;
     public static GameObject blinkBook;
     public static GameObject bulwarkBook;
@@ -64,14 +68,18 @@ public class Building : DamageableObject
     public static GameObject mountainousGoldReward;
     public static GameObject smallXPReward;
     public static GameObject largeXPReward;
-    public Vector3 startingPosition;
     public Canvas mainCanvas;
-    public GameObject repairTooltipObject;
     public TextMeshProUGUI repairTooltip;
-    public int cost;
-    public int spikeSelfDamage = 1;
-    private string trueName;
+    protected List<GameObject> targets;
+    public RangeFinder rangeFinderScript;
+    public DamageableObject targetScript;
+    public BuildPosition buildPositionScript;
+    //protected Projectile projectileScript;
+    protected Projectile projectileScript1;
+    protected Projectile projectileScript2;
+    public Player playerScript;
 
+    //this is for Castle which runs buildingScript directly
     void Update()
     {
         StatusCheck();
@@ -80,20 +88,21 @@ public class Building : DamageableObject
     protected void BuildingUpdate()
     {
         //Ranged Attack
-        if (attackReadyRanged && target != null && distanceToTarget <= rangedAttackRange + .4f && checkedSpawn)
+        if (attackReadyRanged && target != null && distanceToTarget <= rangedAttackRange + .4f && checkedSpawn && isRanged && !following)
         {
             FireProjectile();
         }
         StatusCheck();
-        //Retargeting
-        //if(target != null)
-        //{
-        //    if (targetScript.currentHP <= 0)
-        //    {
-        //        RemoveTarget(target);
-        //    }
-        //}
-        //Sets elements of the building to inactive so that UI buttons do not get accidentally covered when building or recruiting between rounds, then reactivates when round begins.
+        UICheck();
+        //Checks for the end of the round
+        if(gameManagerScript.roundBegun && endRoundCheck)
+        {
+            endRoundCheck = false;
+        }
+    }
+    //Activates and deactivates ui elements so that nearby buttons are not blocked.
+    private void UICheck()
+    {
         if (!gameManagerScript.roundBegun && canvasTimer)
         {
             if (rangeFinder.activeSelf)
@@ -116,14 +125,10 @@ public class Building : DamageableObject
                 healthAndDamageCanvas.SetActive(true);
             }
         }
-        if(gameManagerScript.roundBegun && endRoundCheck)
-        {
-            endRoundCheck = false;
-        }
     }
     void Awake()
     {
-        //storing the static enemy drops in castle to be accessed later so that gameobject.find is only called once
+        //Initializes castle (castle directly uses building script)
         if (name == "Castle")
         {
             repairTooltip = repairTooltipObject.GetComponent<TextMeshProUGUI>();
@@ -146,15 +151,14 @@ public class Building : DamageableObject
             smallXPReward = GameObject.Find("SmallXPReward");
             largeXPReward = GameObject.Find("LargeXPReward");
         }
-        else
-        {
-            //Call Begin(); at the end of all building child objects' Start or Awake functions.
-            Begin();
-        }
     }
     //All standardized building initializations.
     protected void Begin()
     {
+        if(transform.Find("AttackHitbox") != null)
+        {
+            attackHitboxScript = attackHitbox.GetComponent<AttackHitbox>();
+        }
         StartCoroutine(TaggingDelay());
         StartCoroutine(SpawnChecker());
         gameManager = GameObject.Find("GameManager");
@@ -169,23 +173,58 @@ public class Building : DamageableObject
         rangeFinderScript = rangeFinder.GetComponent<RangeFinder>();
         StartCoroutine(CanvasTimer());
         trueName = FindTrueName();
+        //changes Y range of their sight hitbox to include flying units
         if (!hitsFlying)
         {
-            rangeFinder.transform.localScale = new Vector3(range, .25f, range);
+            rangeFinder.transform.localScale = new Vector3(sightRange, .25f, sightRange);
         }
         else
         {
-            rangeFinder.transform.localScale = new Vector3(range, 2, range);
+            rangeFinder.transform.localScale = new Vector3(sightRange, 2, sightRange);
         }
-        if(tag == "Enemy")
+        if (isRanged)
         {
-            itemDrops = new List<GameObject>();
+            spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+            projectile1 = Instantiate(projectile, new Vector3(spawnPoint.x + 1000, spawnPoint.y + 1000, spawnPoint.z + 1000), projectile.transform.rotation);
+            projectileScript1 = projectile1.GetScript() as Projectile;
+            projectileScript1.building = gameObject;
+            projectile2 = Instantiate(projectile, new Vector3(spawnPoint.x + 1001, spawnPoint.y + 1001, spawnPoint.z + 1001), projectile.transform.rotation);
+            projectileScript2 = projectile2.GetScript() as Projectile;
+            projectileScript2.building = gameObject;
         }
     }
-    //Creates an object assigned as the projectile and initializes it properly. Projectile code will determine things like speed and projectile damage, but could modify it here if I want to add buffs to buildings.
     protected void FireProjectile()
     {
-        Vector3 spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+        spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+        if (!projectile1Fired)
+        {
+            projectileScript1.startPosition = projectile1.transform.position;
+            projectile1.transform.position = spawnPoint;
+            projectileScript1.target = target;
+            projectileScript1.targetScript = targetScript;
+            projectileScript1.active = true;
+            projectile1Fired = true;
+        }
+        else
+        {
+            projectileScript2.startPosition = projectile2.transform.position;
+            projectile2.transform.position = spawnPoint;
+            projectileScript2.target = target;
+            projectileScript2.targetScript = targetScript;
+            projectileScript2.active = true;
+            projectile1Fired = false;
+        }
+        attackReadyRanged = false;
+        StartCoroutine(RangedAttackCooldown());
+    }
+
+
+
+
+    //Creates an object assigned as the projectile and initializes it. Projectile code will determine things like speed and projectile damage
+    /*protected void FireProjectile()
+    {
+        spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
         GameObject projectileFired = Instantiate(projectile, spawnPoint, projectile.transform.rotation) as GameObject;
         projectileScript = projectileFired.GetScript() as Projectile;
         projectileScript.target = target;
@@ -193,7 +232,7 @@ public class Building : DamageableObject
         projectileScript.building = gameObject;
         attackReadyRanged = false;
         StartCoroutine(RangedAttackCooldown());
-    }
+    }*/
     protected void StatusCheck()
     {
         //checks for death
@@ -201,7 +240,7 @@ public class Building : DamageableObject
         {
             if (!lootPositionChecked)
             {
-                lootPosition = transform.position;
+                lootPosition = new Vector3(transform.position.x, .7f, transform.position.z);
                 lootPositionChecked = true;
                 StartCoroutine(DestroyDelay());
             }
@@ -211,7 +250,7 @@ public class Building : DamageableObject
             }
         }
         //checks for round end
-        if (!gameManagerScript.roundBegun && !endRoundCheck && !gameManagerScript.constructing && (tag == "Ally" || name == "Castle"))
+        if (!gameManagerScript.roundBegun && !endRoundCheck && !gameManagerScript.constructing && (tag == "Ally"))
         {
             endRoundCheck = true;
             FullHeal();
@@ -219,35 +258,39 @@ public class Building : DamageableObject
             transform.rotation = new Quaternion(0, 0, 0, 0);
         }
     }
-    //Must be moved before destruction or retargeting of other gameObjects fails. 
+    //Must be moved before destruction to trigger onTriggerExit of other rangeFinders
     protected IEnumerator DestroyDelay()
     {
         transform.Translate(100000, 100000, 100000);
         yield return new WaitForSeconds(.1f);
-        //if ally or building, will make place built available for building/recruiting once more. 
+        //if ally or building, ResetPositionScript will make place built available for building/recruiting once more. 
         ResetPositionScript();
         if (tag == "Enemy")
         {
             gameManagerScript.enemyCount--;
-            float dropRoll = Random.Range(0, 100);
-            if (dropRoll > .9)
-            {
-                Instantiate(itemDrops[0], lootPosition, itemDrops[0].transform.rotation);
-            }
-            else if (dropRoll > .75)
-            {
-                Instantiate(itemDrops[1], lootPosition, itemDrops[0].transform.rotation);
-            }
-            else if (dropRoll > .5)
-            {
-                Instantiate(itemDrops[2], lootPosition, itemDrops[0].transform.rotation);
-            }
-            else
-            {
-                Instantiate(itemDrops[3], lootPosition, itemDrops[0].transform.rotation);
-            }
+            SpawnEnemyDrop();
         }
         Destroy(gameObject);
+    }
+    private void SpawnEnemyDrop()
+    {
+        float dropRoll = Random.Range(0, 100);
+        if (dropRoll > .9)
+        {
+            Instantiate(itemDrops[0], lootPosition, itemDrops[0].transform.rotation);
+        }
+        else if (dropRoll > .75)
+        {
+            Instantiate(itemDrops[1], lootPosition, itemDrops[0].transform.rotation);
+        }
+        else if (dropRoll > .5)
+        {
+            Instantiate(itemDrops[2], lootPosition, itemDrops[0].transform.rotation);
+        }
+        else
+        {
+            Instantiate(itemDrops[3], lootPosition, itemDrops[0].transform.rotation);
+        }
     }
     protected IEnumerator RangedAttackCooldown()
     {
@@ -285,20 +328,15 @@ public class Building : DamageableObject
     //CleavingAttack is called if is a cleaving unit
     protected void CleavingAttack()
     {
-        cleavingAttackCooldownActive = true;
+        attackCooldownActive = true;
         cleavingAttackDurationActive = true;
-        StartCoroutine(cleavingAttackCooldown());
-        StartCoroutine(cleavingAttackDuration());
-    }
-    protected IEnumerator cleavingAttackCooldown()
-    {
-        yield return new WaitForSeconds(attackCooldownFloat);
-        cleavingAttackCooldownActive = false;
+        StartCoroutine(MelleAttackCooldown());
+        StartCoroutine(CleavingAttackDuration());
     }
     //Damages all objects within the attackHitbox
-    protected IEnumerator cleavingAttackDuration()
+    protected IEnumerator CleavingAttackDuration()
     {
-        yield return new WaitForSeconds(.01f);
+        yield return new WaitForSeconds(attackDurationFloat);
         foreach (GameObject target in attackHitboxScript.targets)
         {
             DamageableObject currentTargetScript = target.GetScript() as DamageableObject;
@@ -314,7 +352,7 @@ public class Building : DamageableObject
         {
             target = targets[0];
             targetScript = target.GetScript() as DamageableObject;
-            Debug.Log(targetScript);
+            following = false;
         }
     }
     //Removes the target and sets the next available target in targets[] to the target gameObject.
@@ -328,7 +366,6 @@ public class Building : DamageableObject
         }
         else
         {
-            //Back to back extension usage here, feeling pretty fly :)
             target = gameObject.GetClosest(targets);
             if(target != null)
             {
@@ -336,16 +373,13 @@ public class Building : DamageableObject
             }
         }
     }
+    //deals damage (potentialXP only returns a value other than 0 if the unit is killed by the attack.)
     private void DealDamage(float damage)
     {
-        //Debug.Log(targetScript);
         potentialXP = targetScript.TakeDamage(damage);
-        if (level < 3)
+        if (level < 3 && potentialXP > 0)
         {
-            if (potentialXP > 0)
-            {
-                GainXP(potentialXP);
-            }
+            GainXP(potentialXP);
         } 
     }
     public void GainXP(int xp)
@@ -375,6 +409,7 @@ public class Building : DamageableObject
     //{
     //    range = newRange;
     //}
+    //loop called when target enters spike damage range, and recurs until unit is dead
     public void SpikeDamageLoop(DamageableObject spikeTargetScript)
     {
         if (targets.Contains(spikeTargetScript.gameObject))
@@ -386,12 +421,15 @@ public class Building : DamageableObject
     }
     private IEnumerator SpikeDamageReset(DamageableObject spikeTargetScript)
     {
-        yield return new WaitForSeconds(2);
-        SpikeDamageLoop(spikeTargetScript);
+        yield return new WaitForSeconds(2.2f);
+        if(spikeTargetScript.gameObject != null)
+        {
+            SpikeDamageLoop(spikeTargetScript);
+        }
     }
+    //removes (clone) from name for ui purposes
     private string FindTrueName()
     {
-        Debug.Log(name);
         int charIndex = 0;
         for(int i = 0; i < name.Length; i++)
         {
@@ -406,6 +444,7 @@ public class Building : DamageableObject
         }
         return name.Substring(0, charIndex);
     }
+    //Shows repair tooltip if repairing and repairable
     void OnMouseEnter()
     {
         if(tag == "Building" && currentHP < maxHP && gameManagerScript.repairing)
@@ -423,16 +462,22 @@ public class Building : DamageableObject
             repairTooltip.text = "";
         }
     }
+    //Attempts to repair the building
     void OnMouseDown()
     {
-        if (gameManagerScript.repairing && currentHP < maxHP)
+        if (tag == "Building")
         {
-            gameManagerScript.GainGold((int)(-(cost * (1 - currentHP / maxHP))));
-            FullHeal();
+            int repairCost = (int)(cost * (1 - currentHP / maxHP));
+            if (gameManagerScript.repairing && currentHP < maxHP && gameManagerScript.gold > repairCost)
+            {
+                gameManagerScript.GainGold((-repairCost));
+                FullHeal();
+                repairTooltip.text = "";
+            }
         }
     }
 
-    //Handles re-enabling the relevant build position after building or recruit is destroyed
+    //Handles re-enabling the relevant build position after building or recruit is destroyed. Leave in the wastleland.
     public bool position1 = false;
     public bool position2 = false;
     public bool position3 = false;

@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class RangedBuilding : Ally
 {
+    //Base script for ranged buildings, ranged attacks handled in FireProjectile of building script
     void Awake()
     {
-        range = 10;
-        attackRange = 10;
-        currentHP = 18;
-        maxHP = 18;
-        attackCooldownRanged = 3.3f;
+        isRanged = true;
+        attackReadyRanged = true;
         Begin();
         StartCoroutine(TaggingDelay());
     }

@@ -115,15 +115,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6db86b07e87b94f950c1c16603f6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHealth: 0
+  incomingDamageCount: 0
   healthUI: {fileID: 2893016140850920420}
   damageUI: {fileID: 2893016140887199440}
-  offset: {x: 0, y: 0, z: 0}
-  health: 0
   healthScript: {fileID: 0}
   damageScript: {fileID: 0}
-  host: {fileID: 0}
-  incomingDamageCount: 0
-  currentHealth: 0
 --- !u!1001 &5567509106930100297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,7 +233,8 @@ PrefabInstance:
       propertyPath: host
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7306468977103983535, guid: 67f6dd1cc7a8a6e48975f8837df34283, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 67f6dd1cc7a8a6e48975f8837df34283, type: 3}
 --- !u!1 &2893016140850920420 stripped
 GameObject:

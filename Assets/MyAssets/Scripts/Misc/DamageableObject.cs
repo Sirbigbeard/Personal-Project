@@ -6,32 +6,40 @@ using TMPro;
 
 public class DamageableObject : MonoBehaviour
 {
+    //this class is the King Daddy of all damageable objects (splits into building and player)
+    public int experienceReward;
+    protected int bulwarkDefense;
     public float maxHP;
     public float currentHP;
-    protected float speed;
+    public float speed;
+    public float attackCooldownFloat;
+    protected bool bulwarkActive = false;
     public GameObject healthAndDamageCanvas;
-    protected float attackCooldownFloat;
-    public HealthAndDamageCanvas healthAndDamageCanvasScript;
-    public List<string> validTargetTags;
     public GameObject attackHitbox;
-    public AttackHitbox attackHitboxScript;
     public TextMeshProUGUI healthDisplay;
-    public int experienceReward;
+    //public List<string> validTargetTags;
+    public HealthAndDamageCanvas healthAndDamageCanvasScript;
+    public AttackHitbox attackHitboxScript;
 
     public int TakeDamage(float damageDealt)
     {
+        if (tag == "Player" && bulwarkActive)
+        {
+            damageDealt -= bulwarkDefense;
+            if(damageDealt < 0)
+            {
+                damageDealt = 0;
+            }
+        }
         currentHP -= damageDealt;
         if(tag == "Player")
         {
             healthDisplay.text = "Health: " + currentHP + "/" + maxHP;
         }
         healthAndDamageCanvasScript.DamageIncoming(damageDealt);
-        if (currentHP < 1)
+        if (currentHP <= 0 && experienceReward > 0)
         {
-            if(experienceReward > 0)
-            {
-                return experienceReward;
-            }
+            return experienceReward;
         }
         return 0;
     }

@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public class HealthAndDamageCanvas : MonoBehaviour
 {
+    public float maxHP;
+    public float currentHealth;
+    public int incomingDamageCount = 0;
     public GameObject healthUI;
     public GameObject damageUI;
-    public float maxHP;
     public HealthUI2 healthScript;
     public DamageUI2 damageScript;
-    public int incomingDamageCount = 0;
-    public float currentHealth;
+    private StringBuilder healthBuilder;
 
     void Awake()
     {
@@ -23,6 +25,7 @@ public class HealthAndDamageCanvas : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         GainHealth(maxHP);
     }
+    //damage ui
     public void DamageIncoming(float damage)
     {
         damageScript.textMesh.text = "-" + damage;
@@ -39,18 +42,22 @@ public class HealthAndDamageCanvas : MonoBehaviour
             damageScript.textMesh.text = "";
         }
     }
+    //health ui
     public void GainHealth(float healthGained)
     {
-        healthScript.textMesh.text = "";
+        healthBuilder = new StringBuilder((int)maxHP);
         currentHealth += healthGained;
         for (int i = 0; i < currentHealth; i++)
         {
-            healthScript.textMesh.text += "_";
+            healthBuilder.Append("_");
+            //healthScript.textMesh.text += "_";
         }
         for (float i = currentHealth; i < maxHP; i++)
         {
-            healthScript.textMesh.text += "*";
+            healthBuilder.Append("*");
+            //healthScript.textMesh.text += "*";
         }
+        healthScript.textMesh.text = healthBuilder.ToString();
     }
     public void LoseHealth(float damage)
     {

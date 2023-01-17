@@ -6,6 +6,7 @@ using TMPro;
 
 public class HealthUI2 : MonoBehaviour
 {
+    //Handles the health bar text mesh, check HealthAndDamageCanvas script for more
     public GameObject gameManager;
     private GameManager gameManagerScript;
     public static Camera mainCam;

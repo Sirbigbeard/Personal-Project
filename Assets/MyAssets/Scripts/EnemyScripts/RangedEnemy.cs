@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy
 {
+    //Template for any ranged under Enemy class, ranged attacks handled in FireProjectile of building script
     void Awake()
     {
         isRanged = true;
-        range = 60;
-        rangedAttackRange = 18f;
-        attackRange = 3;
-        speed = 3;
-        attackCooldownRanged = 2f;
-        currentHP = 25;
-        maxHP = 25;
+        attackReadyRanged = true;
         Begin();
         StartCoroutine(TaggingDelay());
     }

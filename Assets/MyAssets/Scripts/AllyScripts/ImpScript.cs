@@ -6,7 +6,7 @@ public class ImpScript : MelleAlly
 {
     void Awake()
     {
-        range = 30;
+        sightRange = 30;
         attackRange = 3;
         rangedAttackRange = -1;
         speed = 5;
@@ -21,6 +21,10 @@ public class ImpScript : MelleAlly
     {
         Move();
         BuildingUpdate();
+        if (!gameManagerScript.roundBegun)
+        {
+            StartCoroutine(DestroyDelay());
+        }
     }
     new IEnumerator TaggingDelay()
     {

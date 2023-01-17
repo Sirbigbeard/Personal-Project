@@ -5,20 +5,21 @@ using UnityEngine;
 public class Ally : Building
 {
     //this class is parent to RangedAlly and MelleAlly
-    //private bool following = false;
     protected void Move()
     {
-        //if (following)
-        //{
-        //   targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-        //   transform.position = Vector3.MoveTowards(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z), targetPosition, speed * Time.deltaTime);
-        //}//else
         if (target != null)
         {
             distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
+            //Moves the gameObject towards its target if outside of attack range, otherwise attacks the target
             if (isRanged)
             {
-                if (distanceToTarget > rangedAttackRange)
+                //ranged attacks handled in BuildingUpdate>FireProjectile in Building
+                if (following && distanceToTarget > 2)
+                {
+                    targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                }
+                else if (distanceToTarget > rangedAttackRange)
                 {
                     targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
@@ -31,35 +32,29 @@ public class Ally : Building
                     targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                 }
-                else if (!attackCooldownActive && !cleavingAttackBool)
+                else if (!attackCooldownActive && !cleavingAttackBool && !following)
                 {
                     MelleAttack();
                 }
-                else if (!attackCooldownActive && cleavingAttackBool)
+                else if (!attackCooldownActive && cleavingAttackBool && !following)
                 {
-                    //CleavingAttack();
+                    //CleavingAttack()
                 }
             }
             transform.LookAt(targetPosition);
         }
-        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(parentObject.transform.position.x, 0, parentObject.transform.position.z)) > 0.1)
+        if (Input.GetKeyDown("g"))
         {
-            transform.position = parentObject.transform.position;
+            if (!following && target == null)
+            {
+                following = true;
+                target = player;
+            }
+            else if(targets.Count == 0 && following)
+            {
+                target = null;
+                following = false;
+            }   
         }
-        //if (Input.GetKeyDown("g"))
-        //{
-        //    if (!following)
-         //   {
-        //        following = true;
-        //        target = player;
-         //       targets.Add(targets[0]);
-        //        targets[0] = player;
-         //   }
-         //   else
-        //    {
-         //       following = false;
-         //       RemoveTarget(player);
-         //   }   
-        //}
     }
 }

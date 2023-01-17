@@ -1478,7 +1478,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4644171620217192947}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.43, y: 3.329793, z: -54.54}
+  m_LocalPosition: {x: -29.43, y: 3, z: -54.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1510,41 +1510,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323ad7cfc51f44540b6ca3511c52e51e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
-  healthAndDamageCanvas: {fileID: 7577464570099305461}
-  healthAndDamageCanvasScript: {fileID: 0}
-  validTargetTags: []
-  attackHitbox: {fileID: 0}
-  attackHitboxScript: {fileID: 0}
-  healthDisplay: {fileID: 0}
   experienceReward: 0
+  maxHP: 20
+  currentHP: 20
+  speed: 0
+  attackCooldownFloat: 0
+  healthAndDamageCanvas: {fileID: 7577464570099305461}
+  attackHitbox: {fileID: 0}
+  healthDisplay: {fileID: 0}
+  validTargetTags: []
+  healthAndDamageCanvasScript: {fileID: 0}
+  attackHitboxScript: {fileID: 0}
+  rangedAttackRange: 0
+  sightRange: 9.5
+  attackCooldownRanged: 3
+  attackDamage: 3
+  attackRange: 0
+  attackDurationFloat: 0
+  itemDrops: []
+  hitsFlying: 0
+  cost: 0
+  spikeSelfDamage: 1
   endRoundCheck: 0
   startPosition: {x: 0, y: 0, z: 0}
+  startingPosition: {x: 0, y: 0, z: 0}
   projectile: {fileID: 0}
   target: {fileID: 0}
   rangeFinder: {fileID: 731551111608601897}
   castle: {fileID: 0}
   gameManager: {fileID: 0}
   gameManagerScript: {fileID: 0}
-  attackRange: 0
-  rangedAttackRange: 0
-  buildPositionObject: {fileID: 0}
-  buildPositionScript: {fileID: 0}
-  rangeFinderScript: {fileID: 0}
-  attackCooldownRanged: 3
-  hitsFlying: 0
-  attackDamage: 5
-  targetScript: {fileID: 0}
-  parentObject: {fileID: 0}
-  playerScript: {fileID: 0}
   rank2Marker: {fileID: 0}
   rank3Marker: {fileID: 0}
-  startingPosition: {x: 0, y: 0, z: 0}
-  mainCanvas: {fileID: 0}
   repairTooltipObject: {fileID: 0}
+  buildPositionObject: {fileID: 0}
+  mainCanvas: {fileID: 0}
   repairTooltip: {fileID: 0}
-  cost: 0
+  rangeFinderScript: {fileID: 0}
+  targetScript: {fileID: 0}
+  buildPositionScript: {fileID: 0}
+  playerScript: {fileID: 0}
   position1: 0
   position2: 0
   position3: 0
@@ -3067,13 +3072,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6db86b07e87b94f950c1c16603f6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHealth: 0
+  incomingDamageCount: 0
   healthUI: {fileID: 3793049570646996147}
   damageUI: {fileID: 7995482265608405315}
-  maxHP: 0
   healthScript: {fileID: 0}
   damageScript: {fileID: 0}
-  incomingDamageCount: 0
-  currentHealth: 0
 --- !u!1 &7586822626561085650
 GameObject:
   m_ObjectHideFlags: 0

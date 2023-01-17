@@ -13,7 +13,6 @@ public class SpellBookButton : MonoBehaviour
     private Image image;
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(AddSpell);
@@ -69,5 +68,6 @@ public class SpellBookButton : MonoBehaviour
     public void HideTooltip()
     {
         spellTooltip.text = "";
+        spellTooltip.transform.position = new Vector2(0, 0);
     }
 }

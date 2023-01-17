@@ -22,7 +22,10 @@ public class RangeFinder : MonoBehaviour
                 if (other.gameObject.tag == validTarget)
                 {
                     buildingScript.AddTarget(other.gameObject);
-                    StartCoroutine(SpikeDamageDelay());
+                    if (building.HasComponent<Spikes>())//building.name == "Spikes(Clone)"
+                    {
+                        buildingScript.SpikeDamageLoop(other.gameObject.GetScript() as Building);
+                    }
                 }
             }
         }
@@ -38,14 +41,6 @@ public class RangeFinder : MonoBehaviour
                     buildingScript.RemoveTarget(other.gameObject);
                 }
             }
-        }
-    }
-    public IEnumerator SpikeDamageDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        if (building.name == "Spikes(Clone)")
-        {
-            buildingScript.SpikeDamageLoop(buildingScript.targetScript);
         }
     }
 }

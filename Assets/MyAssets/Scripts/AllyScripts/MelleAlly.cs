@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class MelleAlly : Ally
 {
-    //Template for any Melle under Ally class
+    //Template for any melle under Ally class
     void Awake()
     {
-        range = 40;
-        attackRange = 3;
-        rangedAttackRange = -1;
-        speed = 5;
-        attackDamage = 1;
-        attackCooldownFloat = 2.3f;
-        currentHP = 16;
-        maxHP = 16;
         Begin();
         StartCoroutine(TaggingDelay());
     }

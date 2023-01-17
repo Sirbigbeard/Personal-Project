@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class RangedAlly : Ally
 {
+    //Template for any ranged under Ally class, ranged attacks handled in FireProjectile of building script
     void Awake()
     {
         isRanged = true;
-        range = 50;
-        rangedAttackRange = 18f;
-        attackRange = -3;
-        speed = 4;
-        attackCooldownRanged = 2f;
-        currentHP = 11;
-        maxHP = 11;
+        attackReadyRanged = true;
         Begin();
         StartCoroutine(TaggingDelay());
     }

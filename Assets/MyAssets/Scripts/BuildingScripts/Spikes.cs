@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Spikes : Ally
 {
+    //Base script for Spike buildings, spike damage handled in building under spikedamageloop
     void Awake()
     {
-        attackReadyRanged = false;
-        currentHP = 20;
-        maxHP = 20;
-        range = 9.5f;
-        attackDamage = 4;
         Begin();
         StartCoroutine(TaggingDelay());
     }

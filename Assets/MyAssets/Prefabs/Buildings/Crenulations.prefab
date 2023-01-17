@@ -231,13 +231,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6db86b07e87b94f950c1c16603f6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHealth: 0
+  incomingDamageCount: 0
   healthUI: {fileID: 5078287850295386176}
   damageUI: {fileID: 11391237364069229}
-  maxHP: 0
   healthScript: {fileID: 0}
   damageScript: {fileID: 0}
-  incomingDamageCount: 0
-  currentHealth: 0
 --- !u!1 &3468124907730095753
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,41 +694,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d21cf3d14ddbc448ac24a048a9dcd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
-  healthAndDamageCanvas: {fileID: 1801288047438759967}
-  healthAndDamageCanvasScript: {fileID: 0}
-  validTargetTags: []
-  attackHitbox: {fileID: 0}
-  attackHitboxScript: {fileID: 0}
-  healthDisplay: {fileID: 0}
   experienceReward: 0
+  maxHP: 25
+  currentHP: 25
+  speed: 0
+  attackCooldownFloat: 0
+  healthAndDamageCanvas: {fileID: 1801288047438759967}
+  attackHitbox: {fileID: 0}
+  healthDisplay: {fileID: 0}
+  validTargetTags: []
+  healthAndDamageCanvasScript: {fileID: 0}
+  attackHitboxScript: {fileID: 0}
+  rangedAttackRange: 0
+  sightRange: 0
+  attackCooldownRanged: 3
+  attackDamage: 5
+  attackRange: 0
+  attackDurationFloat: 0
+  itemDrops: []
+  hitsFlying: 0
+  cost: 0
+  spikeSelfDamage: 0
   endRoundCheck: 0
   startPosition: {x: 0, y: 0, z: 0}
+  startingPosition: {x: 0, y: 0, z: 0}
   projectile: {fileID: 0}
   target: {fileID: 0}
   rangeFinder: {fileID: 5142180071482233997}
   castle: {fileID: 5142180071482233997}
   gameManager: {fileID: 0}
   gameManagerScript: {fileID: 0}
-  attackRange: 0
-  rangedAttackRange: 0
-  buildPositionObject: {fileID: 0}
-  buildPositionScript: {fileID: 0}
-  rangeFinderScript: {fileID: 0}
-  attackCooldownRanged: 3
-  hitsFlying: 0
-  attackDamage: 5
-  targetScript: {fileID: 0}
-  parentObject: {fileID: 0}
-  playerScript: {fileID: 0}
   rank2Marker: {fileID: 0}
   rank3Marker: {fileID: 0}
-  startingPosition: {x: 0, y: 0, z: 0}
-  mainCanvas: {fileID: 0}
   repairTooltipObject: {fileID: 0}
+  buildPositionObject: {fileID: 0}
+  mainCanvas: {fileID: 0}
   repairTooltip: {fileID: 0}
-  cost: 0
+  rangeFinderScript: {fileID: 0}
+  targetScript: {fileID: 0}
+  buildPositionScript: {fileID: 0}
+  playerScript: {fileID: 0}
   position1: 0
   position2: 0
   position3: 0

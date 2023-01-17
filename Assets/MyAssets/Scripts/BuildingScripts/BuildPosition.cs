@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuildPosition : MonoBehaviour
 {
+    //Dont touch this script. It is the depths of hell.
     private GameManager gameManagerScript;
     public GameObject gameManager;
     public Building currentBuildingScript;

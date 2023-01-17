@@ -5,35 +5,8 @@ using UnityEditor;
 
 public class Enemy : Building
 {
-    //this class is parent to RangedAlly and MelleAlly
     private bool iceWaveInternalBool = false;
-
-    void Awake()
-    {
-        experienceReward = 13;
-        range = 30;
-        attackDamage = 2;
-        rangedAttackRange = -1;
-        attackRange = 3;
-        speed = 5;
-        currentHP = 25;
-        maxHP = 25;
-        attackCooldownFloat = 3.1f;
-        Begin();
-        StartCoroutine(TaggingDelay());
-    }
-    void Update()
-    {
-        BuildingUpdate();
-        Move();
-    }
-    new IEnumerator TaggingDelay()
-    {
-        yield return new WaitForSeconds(.1f);
-        rangeFinderScript.validTargetTags.Add("Building");
-        rangeFinderScript.validTargetTags.Add("Player");
-        rangeFinderScript.validTargetTags.Add("Ally");
-    }
+    //handles Ice Wave spell damage and effect.
     void OnTriggerEnter(Collider other)
     {
         if(other.name == "IceWaveHitbox" && iceWaveInternalBool == false)
@@ -64,6 +37,8 @@ public class Enemy : Building
         if (target != null)
         {
             distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
+            Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            //if in range to hit castle, hits castle until victory or death.
             if (target == castle && (distanceToTarget < 8 || distanceToTarget < attackRange))
             {
                 if (attackRange < 7.5f)
@@ -72,13 +47,12 @@ public class Enemy : Building
                 }
                 rangeFinder.SetActive(false);
                 targetScript = castle.GetScript() as DamageableObject;
-                //targets.Clear();
             }
+            //Moves the gameObject towards its target if outside of attack range, otherwise attacks the target
             if (isRanged)
             {
                 if (distanceToTarget > rangedAttackRange)
                 {
-                    targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                 }
             }
@@ -86,8 +60,6 @@ public class Enemy : Building
             {
                 if (distanceToTarget > attackRange)
                 {
-                    
-                    targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
                 }
                 else if (!attackCooldownActive && !cleavingAttackBool)
@@ -96,7 +68,7 @@ public class Enemy : Building
                 }
                 else if (!attackCooldownActive && cleavingAttackBool)
                 {
-                    //CleavingAttack();
+                    CleavingAttack();
                 }
             }
             transform.LookAt(targetPosition);

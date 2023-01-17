@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Crenulations : Building
 {
+    //Base Script for buildings that only absorb damage
     void Awake()
     {
-        currentHP = 25;
-        maxHP = 25;
         Begin();
     }
     void Update()

@@ -1468,13 +1468,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6db86b07e87b94f950c1c16603f6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 0
+  currentHealth: 0
+  incomingDamageCount: 0
   healthUI: {fileID: 659025108010825941}
   damageUI: {fileID: 5264017073755174621}
-  maxHP: 0
   healthScript: {fileID: 0}
   damageScript: {fileID: 0}
-  incomingDamageCount: 0
-  currentHealth: 0
 --- !u!1 &7235175788551146948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7235175788551146948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1543,43 +1543,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df275c5e30873124696681c1714abedd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
-  healthAndDamageCanvas: {fileID: 7138202789447035163}
-  healthAndDamageCanvasScript: {fileID: 0}
-  validTargetTags: []
-  attackHitbox: {fileID: 0}
-  attackHitboxScript: {fileID: 0}
-  healthDisplay: {fileID: 0}
   experienceReward: 0
-  rangedAttackRange: 0
-  range: 8
-  attackCooldownRanged: 3
-  attackDamage: 5
+  maxHP: 9
+  currentHP: 9
+  speed: 4.1
+  attackCooldownFloat: 0
+  healthAndDamageCanvas: {fileID: 7138202789447035163}
+  attackHitbox: {fileID: 0}
+  healthDisplay: {fileID: 0}
+  validTargetTags: []
+  healthAndDamageCanvasScript: {fileID: 0}
+  attackHitboxScript: {fileID: 0}
+  rangedAttackRange: 18
+  sightRange: 43
+  attackCooldownRanged: 2
+  attackDamage: 0
+  attackRange: 0
+  attackDurationFloat: 0
+  itemDrops: []
+  hitsFlying: 0
+  cost: 0
+  spikeSelfDamage: 0
   endRoundCheck: 0
   startPosition: {x: 0, y: 0, z: 0}
+  startingPosition: {x: 0, y: 0, z: 0}
   projectile: {fileID: 7479529224012168457, guid: 11efbde57b0f18c47a82b47917ed7f39, type: 3}
   target: {fileID: 0}
   rangeFinder: {fileID: 2879516895485139370}
   castle: {fileID: 0}
   gameManager: {fileID: 0}
   gameManagerScript: {fileID: 0}
-  attackRange: 0
-  buildPositionObject: {fileID: 0}
-  buildPositionScript: {fileID: 0}
-  rangeFinderScript: {fileID: 0}
-  hitsFlying: 0
-  targetScript: {fileID: 0}
-  parentObject: {fileID: 6874613325727367445}
-  playerScript: {fileID: 0}
   rank2Marker: {fileID: 6023666112812383218}
   rank3Marker: {fileID: 0}
-  startingPosition: {x: 0, y: 0, z: 0}
-  mainCanvas: {fileID: 0}
   repairTooltipObject: {fileID: 0}
+  buildPositionObject: {fileID: 0}
+  mainCanvas: {fileID: 0}
   repairTooltip: {fileID: 0}
-  cost: 0
-  spikeSelfDamage: 1
+  rangeFinderScript: {fileID: 0}
+  targetScript: {fileID: 0}
+  buildPositionScript: {fileID: 0}
+  playerScript: {fileID: 0}
   position1: 0
   position2: 0
   position3: 0
@@ -2040,10 +2043,5 @@ PrefabInstance:
 --- !u!4 &2912369597077727399 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1388549780386150723, guid: 2ac9235bfe3febe4e9a35d97591adcb2, type: 3}
-  m_PrefabInstance: {fileID: 4264853995097149924}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6874613325727367445 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7226103088771125489, guid: 2ac9235bfe3febe4e9a35d97591adcb2, type: 3}
   m_PrefabInstance: {fileID: 4264853995097149924}
   m_PrefabAsset: {fileID: 0}
