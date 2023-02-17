@@ -132,10 +132,10 @@ MonoBehaviour:
   healthAndDamageCanvas: {fileID: 2585273330980371159}
   attackHitbox: {fileID: 0}
   healthDisplay: {fileID: 0}
-  validTargetTags: []
   healthAndDamageCanvasScript: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   rangedAttackRange: 18
+  rangedAttackDamage: 3
   sightRange: 40
   attackCooldownRanged: 4.2
   attackDamage: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   - {fileID: 7143388495314346321, guid: 11890e93659d6954b8c25c06ddb0d553, type: 3}
   - {fileID: 2951112194034835045, guid: 15578d68be660484a90b3c0f34106ee3, type: 3}
   - {fileID: 6001271527318749679, guid: 55a000698efc92544bb46fec027db7c4, type: 3}
+  cleavingAttackBool: 0
   hitsFlying: 0
   cost: 0
   spikeSelfDamage: 0

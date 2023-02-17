@@ -846,6 +846,7 @@ MonoBehaviour:
   healthAndDamageCanvasScript: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   rangedAttackRange: 0
+  rangedAttackDamage: 0
   sightRange: 40
   attackCooldownRanged: 3
   attackDamage: 2
@@ -865,9 +866,10 @@ MonoBehaviour:
   castle: {fileID: 0}
   gameManager: {fileID: 0}
   gameManagerScript: {fileID: 0}
-  rank2Marker: {fileID: 0}
+  rank2Marker: {fileID: 4237478734772253627}
   rank3Marker: {fileID: 0}
   repairTooltipObject: {fileID: 0}
+  nameTextObject: {fileID: 2201616941646117913}
   buildPositionObject: {fileID: 0}
   mainCanvas: {fileID: 0}
   repairTooltip: {fileID: 0}

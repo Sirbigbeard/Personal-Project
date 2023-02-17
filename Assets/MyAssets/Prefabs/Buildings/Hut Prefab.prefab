@@ -515,23 +515,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   experienceReward: 0
-  maxHP: 18
-  currentHP: 18
+  maxHP: 22
+  currentHP: 22
   speed: 0
   attackCooldownFloat: 0
   healthAndDamageCanvas: {fileID: 8351181935525706245}
   attackHitbox: {fileID: 0}
   healthDisplay: {fileID: 0}
-  validTargetTags: []
   healthAndDamageCanvasScript: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   rangedAttackRange: 10
+  rangedAttackDamage: 4
   sightRange: 10
   attackCooldownRanged: 3.3
   attackDamage: 0
   attackRange: 0
   attackDurationFloat: 0
   itemDrops: []
+  cleavingAttackBool: 0
   hitsFlying: 0
   cost: 0
   spikeSelfDamage: 1
@@ -547,6 +548,7 @@ MonoBehaviour:
   rank2Marker: {fileID: 8734579006291467708}
   rank3Marker: {fileID: 562865497316769294}
   repairTooltipObject: {fileID: 0}
+  nameTextObject: {fileID: 6575293446310528760}
   buildPositionObject: {fileID: 0}
   mainCanvas: {fileID: 0}
   repairTooltip: {fileID: 0}

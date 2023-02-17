@@ -56,5 +56,31 @@ public class Ally : Building
                 following = false;
             }   
         }
+        if (Input.GetKeyDown("h"))
+        {
+            if (!following && target == null)
+            {
+                following = true;
+                target = castle;
+            }
+            else if (targets.Count == 0 && following)
+            {
+                target = null;
+                following = false;
+            }
+        }
+        if (playerScript.died && target == null)
+        {
+            if (!following && target == null)
+            {
+                following = true;
+                target = castle;
+            }
+            else if (targets.Count == 0 && following)
+            {
+                target = null;
+                following = false;
+            }
+        }
     }
 }

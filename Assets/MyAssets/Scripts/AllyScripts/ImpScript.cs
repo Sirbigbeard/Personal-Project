@@ -12,8 +12,8 @@ public class ImpScript : MelleAlly
         speed = 5;
         attackDamage = 2;
         attackCooldownFloat = 2.6f;
-        currentHP = 8;
-        maxHP = 8;
+        currentHP = 6;
+        maxHP = 6;
         Begin();
         StartCoroutine(TaggingDelay());
     }

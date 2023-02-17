@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -14,7 +15,7 @@ public class Player : DamageableObject
     public float currentMana;
     public float maxMana;
     public float basicAttackDamage = 3;
-    private float attackWindup = .01f;
+    private float attackWindup = 1f;
     private int level = 1;
     private int maxEnergy = 20;
     private int currentEnergy = 20;
@@ -33,12 +34,11 @@ public class Player : DamageableObject
     private bool attackCooldownActive;
     private bool spellCasted;
     private bool energyTickCooldownBool;
-    //use this variable to reduce defensive stats during attacks
-    //private bool attackDurationActive;
+    private bool attackDurationActive;
     private bool energyDowntickCooldown;
     private bool bulwarkRefresh;
     private bool manaTickActive;
-    private bool died;
+    public bool died;
     private bool fireBallCD;
     private bool summonImpCD;
     private bool slamCD;
@@ -50,12 +50,6 @@ public class Player : DamageableObject
     public GameObject GameManager;
     public GameObject mainCamera;
     //public GameObject weapon;
-    public GameObject head;
-    public GameObject leftArm;
-    public GameObject rightArm;
-    public GameObject leftLeg;
-    public GameObject rightLeg;
-    public GameObject torso;
     public GameObject iceWaveHitbox;
     public GameObject fireball;
     public GameObject imp;
@@ -65,6 +59,7 @@ public class Player : DamageableObject
     public GameObject spell3Image;
     public GameObject spell4Image;
     private GameObject summonedCreature;
+    public GameObject model;
     public TextMeshProUGUI spell1Name;
     public TextMeshProUGUI spell2Name;
     public TextMeshProUGUI spell3Name;
@@ -75,12 +70,6 @@ public class Player : DamageableObject
     public TextMeshProUGUI xPDisplay;
     public TextMeshProUGUI roundDisplay;
     public List<GameObject> spellList;
-    private Renderer leftLegRenderer;
-    private Renderer leftArmRenderer;
-    private Renderer rightLegRenderer;
-    private Renderer rightArmRenderer;
-    private Renderer headRenderer;
-    private Renderer torsoRenderer;
     private Color playerColor;
     private Color bulwarkColor;
     private Vector3 moveInput;
@@ -98,11 +87,13 @@ public class Player : DamageableObject
     public Sprite blinkCDSprite;
     public Sprite bulwarkCDSprite;
     public Sprite summonImpCDSprite;
+    private Animator characterAnimation;
     private List<TextMeshProUGUI> spellNameList;
     private List<GameObject> spellImageList;
     public GameManager gameManagerScript;
     public DamageableObject closestTargetScript;
     private Building currentSummonedCreatureScript;
+    public MovementSM playerState;
 
     void Start()
     {
@@ -110,7 +101,7 @@ public class Player : DamageableObject
         maxHP = 10;
         currentMana = 10;
         maxMana = 10;
-        speed = 15f;
+        speed = 87f;
         attackCooldownFloat = 1.8f;
         bulwarkDefense = 1;
         spellList = new List<GameObject>();
@@ -120,18 +111,7 @@ public class Player : DamageableObject
         healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
         bulwarkColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
         playerColor = new Color(.82f, .79f, .19f, 1f);
-        leftLegRenderer = leftLeg.GetComponent<Renderer>();
-        rightLegRenderer = rightLeg.GetComponent<Renderer>();
-        leftArmRenderer = leftArm.GetComponent<Renderer>();
-        rightArmRenderer = rightArm.GetComponent<Renderer>();
-        headRenderer = head.GetComponent<Renderer>();
-        torsoRenderer = torso.GetComponent<Renderer>();
-        leftLegRenderer.material.SetColor("_Color", playerColor);
-        rightLegRenderer.material.SetColor("_Color", playerColor);
-        leftArmRenderer.material.SetColor("_Color", playerColor);
-        rightArmRenderer.material.SetColor("_Color", playerColor);
-        headRenderer.material.SetColor("_Color", playerColor);
-        torsoRenderer.material.SetColor("_Color", playerColor);
+        //leftLegRenderer = leftLeg.GetComponent<Renderer>();
         //attackHitboxScript.validTargetTags.Add("Enemy");
         transform.position = startingPosition;
         levelDisplay.text = "Level: " + level;
@@ -154,23 +134,30 @@ public class Player : DamageableObject
         spellImageList.Add(spell3Image);
         spellImageList.Add(spell4Image);
         healthAndDamageCanvasScript.maxHP = (int)maxHP;
+        characterAnimation = model.GetComponent<Animator>();
     }
     void Update()
     {
         if(currentHP > 0)
         {
-            //test
-            RegisterMovement();
             if (gameManagerScript.roundBegun)
             {
                 RegisterAttacks();
                 RegisterSpellcast();
             }
             ReplenishManaAndEnergy();
+            playerRb.velocity = new Vector3(0, 0, 0);
         }
         else
         {
             Die();
+        }
+    }
+    void FixedUpdate()
+    {
+        if(!attackDurationActive)
+        {
+            RegisterMovement();
         }
     }
     //registers wasd (or arrow keys) and moves character correspondingly
@@ -180,10 +167,29 @@ public class Player : DamageableObject
         {
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
+            if (verticalInput > .9 && horizontalInput > .9)
+            {
+                verticalInput = .5f;
+                horizontalInput = .5f;
+            }
+            if (verticalInput < -.9 && horizontalInput < -.9)
+            {
+                verticalInput = -.5f;
+                horizontalInput = -.5f;
+            }
             if (!gameManagerScript.roundBegun)
             {
-                moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                playerRb.position += moveInput * speed / 650;
+                moveInput = new Vector3(horizontalInput, 0, verticalInput);
+                if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
+                {
+                    StartCoroutine(GoingIdle());
+                    //characterAnimation.Play("Idle.001");
+                }
+                else
+                {
+                    characterAnimation.Play("Walk");
+                    playerRb.position += moveInput * speed / 650;
+                }
                 if (moveInput.sqrMagnitude > 0)
                 {
                     Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
@@ -191,7 +197,7 @@ public class Player : DamageableObject
                     playerRb.velocity = new Vector3(0, 0, 0);
                 }
             }
-            else if (Input.GetKey("left shift") && currentEnergy > 0)
+            else if (Input.GetKey("left shift") && currentEnergy > 0 && verticalInput > 0)
             {
                 playerRb.AddForce(transform.forward * speed * 7 * verticalInput);
                 playerRb.AddForce(transform.right * speed * 7 * horizontalInput);
@@ -204,11 +210,17 @@ public class Player : DamageableObject
                     StartCoroutine(EnergyDowntickCooldown());
                 }
             }
+            else if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
+            {
+                characterAnimation.Play("Idle.001");
+            }
             else
             {
                 playerRb.AddForce(transform.forward * speed * 4f * verticalInput);
                 playerRb.AddForce(transform.right * speed * 4f * horizontalInput);
                 playerRb.velocity = new Vector3(0, 0, 0);
+                characterAnimation.Play("Walk");
+                //playerState.ChangeState(playerState.walkingState);
             }
         } 
     }
@@ -286,6 +298,10 @@ public class Player : DamageableObject
             roundDisplay.text = "Knocked Out ";
             roundDisplay.color = new Color(205, 0, 0, 255);
             StartCoroutine(RoundTextReset());
+            if (gameManagerScript.alliesRemaining == 0)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
     }
     private void ReplenishManaAndEnergy()
@@ -311,9 +327,10 @@ public class Player : DamageableObject
     private void Attack()
     {
         attackCooldownActive = true;
-        //attackDurationActive = true;
+        attackDurationActive = true;
         StartCoroutine(AttackCooldown());
         StartCoroutine(AttackDuration());
+        BasicAttack();
     }
     IEnumerator AttackCooldown()
     {
@@ -323,8 +340,15 @@ public class Player : DamageableObject
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(attackWindup);
-        BasicAttack();
-        //attackDurationActive = false;
+        attackDurationActive = false;
+    }
+    IEnumerator GoingIdle()
+    {
+        yield return new WaitForSeconds(3);
+        //if(characterAnimation.GetCurrentAnimatorStateInfo(0).length > characterAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime)
+        //{
+
+        //}
     }
     //perform the basic attack
     void BasicAttack()
@@ -554,6 +578,8 @@ public class Player : DamageableObject
         summonedCreature.transform.Translate(Vector3.forward * 1);
         currentSummonedCreatureScript = summonedCreature.GetScript() as Building;
         currentSummonedCreatureScript.castle = gameManagerScript.castle;
+        currentSummonedCreatureScript.mainCanvas = gameManagerScript.mainCanvas;
+        currentSummonedCreatureScript.gameManagerScript = gameManagerScript.gameObject.GetComponent<GameManager>();
         currentSummonedCreatureScript.healthAndDamageCanvasScript.maxHP = (int)currentSummonedCreatureScript.maxHP;
     }
     private IEnumerator SummonImpCDTimer(int keyHit)
@@ -581,12 +607,6 @@ public class Player : DamageableObject
             bulwarkRefresh = true;
         }
         bulwarkActive = true;
-        leftLegRenderer.material.SetColor("_Color", bulwarkColor);
-        rightLegRenderer.material.SetColor("_Color", bulwarkColor);
-        leftArmRenderer.material.SetColor("_Color", bulwarkColor);
-        rightArmRenderer.material.SetColor("_Color", bulwarkColor);
-        headRenderer.material.SetColor("_Color", bulwarkColor);
-        torsoRenderer.material.SetColor("_Color", bulwarkColor);
         StartCoroutine(BulwarkTimer());
     }
     private IEnumerator BulwarkCDTimer(int keyHit)
@@ -690,12 +710,7 @@ public class Player : DamageableObject
         yield return new WaitForSeconds(5);
         if (!bulwarkRefresh)
         {
-            leftLegRenderer.material.SetColor("_Color", playerColor);
-            rightLegRenderer.material.SetColor("_Color", playerColor);
-            leftArmRenderer.material.SetColor("_Color", playerColor);
-            rightArmRenderer.material.SetColor("_Color", playerColor);
-            headRenderer.material.SetColor("_Color", playerColor);
-            torsoRenderer.material.SetColor("_Color", playerColor);
+            //leftLegRenderer.material.SetColor("_Color", playerColor);
             bulwarkActive = false;
         }
         bulwarkRefresh = false;

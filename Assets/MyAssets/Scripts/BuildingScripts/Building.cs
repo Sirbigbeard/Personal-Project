@@ -10,6 +10,7 @@ public class Building : DamageableObject
     //This class is parent to Ally and Enemy.
 
     public float rangedAttackRange;
+    public float rangedAttackDamage;
     public float sightRange;
     public float attackCooldownRanged;
     public float attackDamage;
@@ -20,10 +21,11 @@ public class Building : DamageableObject
     public bool hitsFlying;
     public int cost;
     public int spikeSelfDamage;
-    private int level;
+    public int level;
     protected float distanceToTarget;
     protected int potentialXP;
-    protected int currentXP;
+    public int currentXP;
+    private int repairCost;
     public bool endRoundCheck;
     protected bool isRanged;
     private bool lootPositionChecked;
@@ -52,8 +54,8 @@ public class Building : DamageableObject
     public GameManager gameManagerScript;
     public GameObject rank2Marker;
     public GameObject rank3Marker;
-    //public GameObject parentObject;
     public GameObject repairTooltipObject;
+    public GameObject nameTextObject;
     protected GameObject player;
     public GameObject buildPositionObject;
     public static GameObject fireBallBook;
@@ -70,6 +72,7 @@ public class Building : DamageableObject
     public static GameObject largeXPReward;
     public Canvas mainCanvas;
     public TextMeshProUGUI repairTooltip;
+    public TextMeshPro nameText;
     protected List<GameObject> targets;
     public RangeFinder rangeFinderScript;
     public DamageableObject targetScript;
@@ -159,6 +162,10 @@ public class Building : DamageableObject
         {
             attackHitboxScript = attackHitbox.GetComponent<AttackHitbox>();
         }
+        if(nameTextObject != null)
+        {
+            nameText = nameTextObject.GetComponent<TextMeshPro>();
+        }
         StartCoroutine(TaggingDelay());
         StartCoroutine(SpawnChecker());
         gameManager = GameObject.Find("GameManager");
@@ -188,11 +195,20 @@ public class Building : DamageableObject
             projectile1 = Instantiate(projectile, new Vector3(spawnPoint.x + 1000, spawnPoint.y + 1000, spawnPoint.z + 1000), projectile.transform.rotation);
             projectileScript1 = projectile1.GetScript() as Projectile;
             projectileScript1.building = gameObject;
+            if (rangedAttackDamage != 0)
+            {
+                projectileScript1.damage = rangedAttackDamage;
+            }
             projectile2 = Instantiate(projectile, new Vector3(spawnPoint.x + 1001, spawnPoint.y + 1001, spawnPoint.z + 1001), projectile.transform.rotation);
             projectileScript2 = projectile2.GetScript() as Projectile;
+            if(rangedAttackDamage != 0)
+            {
+                projectileScript2.damage = rangedAttackDamage;
+            }
             projectileScript2.building = gameObject;
         }
     }
+    //Creates an object assigned as the projectile and initializes it. Projectile code will determine things like speed and projectile damage
     protected void FireProjectile()
     {
         spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
@@ -217,11 +233,6 @@ public class Building : DamageableObject
         attackReadyRanged = false;
         StartCoroutine(RangedAttackCooldown());
     }
-
-
-
-
-    //Creates an object assigned as the projectile and initializes it. Projectile code will determine things like speed and projectile damage
     /*protected void FireProjectile()
     {
         spawnPoint = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
@@ -374,7 +385,7 @@ public class Building : DamageableObject
         }
     }
     //deals damage (potentialXP only returns a value other than 0 if the unit is killed by the attack.)
-    private void DealDamage(float damage)
+    public void DealDamage(float damage)
     {
         potentialXP = targetScript.TakeDamage(damage);
         if (level < 3 && potentialXP > 0)
@@ -387,29 +398,33 @@ public class Building : DamageableObject
         currentXP += xp;
         if (currentXP >= 10 + 10 * level)
         {
-            currentXP -= 10 + 10 * level;
-            level++;
-            if (level == 1)
+            LevelUp();
+        }
+    }
+    //override this in childest children for diff effects for leveling
+    public void LevelUp()
+    {
+        currentXP -= 10 + 10 * level;
+        level++;
+        if (level == 1)
+        {
+            if (rank2Marker != null)
             {
                 rank2Marker.SetActive(true);
             }
-            if(level == 2)
+            nameText.text = trueName + " (Rank 2)";
+        }
+        if (level == 2)
+        {
+            if (rank3Marker != null)
             {
                 rank3Marker.SetActive(true);
             }
-            maxHP += 2;
-            Heal(2);
+            nameText.text = trueName + " (Rank 3)";
         }
+        maxHP += 2;
+        Heal(2);
     }
-    //public void ChangeRange(int change)
-    //{
-    //    range += change;
-    //}
-    //public void SetRange(int newRange)
-    //{
-    //    range = newRange;
-    //}
-    //loop called when target enters spike damage range, and recurs until unit is dead
     public void SpikeDamageLoop(DamageableObject spikeTargetScript)
     {
         if (targets.Contains(spikeTargetScript.gameObject))
@@ -450,8 +465,9 @@ public class Building : DamageableObject
         if(tag == "Building" && currentHP < maxHP && gameManagerScript.repairing)
         {
             Vector2 pos;
+            repairCost = (int)(cost * (1 - currentHP / maxHP) / 2);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(mainCanvas.transform as RectTransform, Input.mousePosition, mainCanvas.worldCamera, out pos);
-            repairTooltip.text = "Repair this " + trueName + " for " + (int)(cost * (1 - currentHP / maxHP)) + " gold.";
+            repairTooltip.text = "Repair this " + trueName + " for " + repairCost + " gold.";
             repairTooltip.transform.position = mainCanvas.transform.TransformPoint(pos);
         }
     }
@@ -465,17 +481,26 @@ public class Building : DamageableObject
     //Attempts to repair the building
     void OnMouseDown()
     {
-        if (tag == "Building")
+        if (tag == "Building" && !gameManagerScript.roundBegun)
         {
-            int repairCost = (int)(cost * (1 - currentHP / maxHP));
-            if (gameManagerScript.repairing && currentHP < maxHP && gameManagerScript.gold > repairCost)
+            if (gameManagerScript.repairing && currentHP < maxHP && gameManagerScript.gold >= repairCost)
             {
                 gameManagerScript.GainGold((-repairCost));
                 FullHeal();
                 repairTooltip.text = "";
+                repairTooltip.transform.position = new Vector2(0, 0);
             }
+            /*else if(gameManagerScript.repairing && currentHP < maxHP && gameManagerScript.gold < repairCost)
+            {
+                Heal((maxHP - currentHP) / (repairCost / gameManagerScript.gold));
+                gameManagerScript.GainGold((-gameManagerScript.gold));
+            }*/
         }
     }
+
+
+
+
 
     //Handles re-enabling the relevant build position after building or recruit is destroyed. Leave in the wastleland.
     public bool position1 = false;
@@ -734,6 +759,7 @@ public class Building : DamageableObject
     {
         if(tag == "Building")
         {
+            gameManagerScript.alliesRemaining--;
             if (position1)
             {
                 buildPositionScript.position1Building = false;
@@ -1241,6 +1267,7 @@ public class Building : DamageableObject
         }
         if (tag == "Ally")
         {
+            gameManagerScript.alliesRemaining--;
             if (position1)
             {
                 buildPositionScript.position1Recruit = false;

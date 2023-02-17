@@ -3680,6 +3680,7 @@ public class BuildPosition : MonoBehaviour
         }
         currentBuildingScript.startingPosition = gameManagerScript.currentBuilding.transform.position;
         gameManagerScript.GainGold(-gameManagerScript.currentBuildingCost);
+        gameManagerScript.alliesRemaining++;
         gameManagerScript.creationCamera.enabled = false;
         gameManagerScript.constructing = false;
         gameManagerScript.currentBuilding = null;

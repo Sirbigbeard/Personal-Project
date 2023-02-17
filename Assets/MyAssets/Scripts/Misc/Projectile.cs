@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public bool active;
     private bool targetChecked = false;
-    public int damage = 10;
+    public float damage = 10;
     private float missileSpeed = 20f;
     private Vector3 targetPosition;
     public Vector3 startPosition;
@@ -17,7 +17,6 @@ public class Projectile : MonoBehaviour
 
     void Awake()
     {
-        buildingScript = building.GetComponent<Building>();
         StartCoroutine(TargetCheck());
     }
     //travels towards the given target until the target is destroyed
@@ -35,6 +34,10 @@ public class Projectile : MonoBehaviour
             {
                 Reset();
             }
+        }
+        if(building == null)
+        {
+            StartCoroutine(DestroyDelay());
         }
     }
     //passes building the xp (replace with building.dealDamage?)
@@ -58,9 +61,15 @@ public class Projectile : MonoBehaviour
             //collision detection in unity can lag, this is to prevent exceptions being thrown when it does so.
         }
     }
+    IEnumerator DestroyDelay()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+    }
     IEnumerator TargetCheck()
     {
-        yield return new WaitForSeconds(.001f);
+        yield return new WaitForSeconds(.01f);
+        buildingScript = building.GetComponent<Building>();
         targetChecked = true;
     }
     private void Reset()

@@ -7,37 +7,37 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //playtest game a couple times, do minor balancing
-    //resume!!!!
-    //create powerpoint or something to show off code, show class trees etc, really demonstrate that I did things smaht (Building RemoveTarget is good. toggle spellbook good, Building Awake(), building relation to melle enemy/ally, move function placement, spikes other.yadayada, canvas spellButtons unity function event listeners) show where i would add animations into code if i had them. the only assets I imported were the ms paint spell drawings I did lol. 
-    //make a video of you showing how easy it is to make a new kind of enemy with my code
-    //exception handling in projectile
-    //show diff between old and new FireProjectile to demonstrate I know how to make things max efficiency vs max ease, mention that i could have stored the projectile variable in a temp one and only used the conditional to set, thereby making it easier to program and expand upon but less efficcient
+    //player model needs to face correct direction
+    //learn more about unity animation and look up animation vs animator so that i can add transitions and stuff.
+    //look up what the hoot unities built in state machine does or whatever
+    //make camera movement sensitivity sliders in main menu
 
-
+    //create fsm for player states to incorporate animations, move all other relevant code to states once I understand them and have worked with them.
+    //constructors
+    //when pressing esc with no UI menus up and not repairing, main menu should show, with restart button and shit
+    //make healthbar a red block that shrinks and widens its x scale based upon health percent. (in healthanddamagecanvas gain/lose health)
+    //make it so that if player is less than half the distance of target (and target is out of melle/ranged attack range, enemies will switch to player (probably in enemy move)
     //make item drops that enable new building and ally recruitment
+    //make a max number of recruits you can have that increases based on level
+    //taunt spell that works like follow for enemys
+    //make game saveable
+    //make spellbookbutton show up as a shop at first so the player can buy their first spell
+    //castle needs name
+    //building minor repair not working
     //Same for enemies spawned, make a method that is called when they would die that effectively resets them to the pool, and just instatiate a number of enemies that is equal to the most that are ever spawned during a round,
     //allies and buildings as well (how to: make a Reset() in Building that calls FullHeal(), resets their position, and (prob dont need cause coll exit) resets their target and empties target list
     //test deleting colliders from all child objects that do not need them for code
     //check for not needed method references
     //test if I even need used of if lower conditional alone works in spellbookscripts
-    //make it so that if player is less than half the distance of target (and target is out of melle/ranged attack range, enemies will switch to player (probably in enemy move)
     //Increase number of drops to spread out drop chances and fill out drop tables
-    //make defend key for ally that makes their move target the base until they see an enemy similar to enemy move if target = null
     //look into making a cursor art for repairing
-    //make a max number of recruits you can have that increases based on level
-    //try to fix follow
     //variable name brush ups
     //TUTORIAL: add tutorial that shows off all systems
     //make save/load game function
     //add basic animations
-    //make healthbar a red block that shrinks and widens its x scale based upon health percent. (in healthanddamagecanvas gain/lose health)
-    //make weapons which modify attack speed and damage.
     //change colors of health bars dependign on type
     //make a findChild extension to test if a building has attackhitbox and this is cleaving, 
     //0: try to fuck around with blender basic modeling and animation
-    //taunt spell that works like follow for enemys
-    //make a building that does aoe damage by cycling through all targets on the list and doing damage to each of them. 
     //reduce a defensive stat during the attack window of attack duration
     //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target 
     //spell ideas: Vengeance: rank1: charge for 3 seconds, then attack, dealing bonus damage equal to the damage taken, rank2: 50% damage reduction for dur, rank3: damage immunity for dur.
@@ -132,8 +132,8 @@ public class GameManager : MonoBehaviour
     private float mouseXInput;
     private float mouseYInput;
     public int maxActiveSpells = 1;
-    private int cameraZoomSpeed = 5000;
-    private int cameraPanSpeed = 250;
+    private int cameraZoomSpeed = 1000;//5k
+    private int cameraPanSpeed = 100;//5k
     private int cameraPanLowerBound = -60;
     private int cameraPanUpperBound = 35;
     private int cameraPanLeftBound = -75;
@@ -148,6 +148,11 @@ public class GameManager : MonoBehaviour
     public int gold;
     public int currentBuildingCost;
     private int bossNumber;
+    private int minCameraDistance;
+    private int maxCameraDistance;
+    public int alliesRemaining;
+    private int playerTurnSpeed = 150;
+    private float zoomDistance;
     private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -22f);
     private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -14f);
     private Vector3 offensePlayerPosition = new Vector3(500f, 3.54f, 0f);
@@ -211,7 +216,7 @@ public class GameManager : MonoBehaviour
         crenelationsVerticalButton.onClick.AddListener(delegate { Build(crenelationsVertical, 5); });
         spikesButton.onClick.AddListener(delegate { Build(spikes, 10); });
         footmanButton.onClick.AddListener(delegate { Recruit(footman, 7); });
-        archerButton.onClick.AddListener(delegate { Recruit(archer, 13); });
+        archerButton.onClick.AddListener(delegate { Recruit(archer, 12); });
         buildingListButton.onClick.AddListener(ToggleBuildingList);
         gatheredSpells = new List<GameObject>();
         activeSpells = new List<GameObject>();
@@ -229,6 +234,7 @@ public class GameManager : MonoBehaviour
         baseButtonColor = repairButtonImage.color;
         ResetSpellLocation();
         creationCamera.enabled = false;
+        roundDisplay.gameObject.SetActive(false);
         goldColor = new Color(.9137f, .6666f, .0039f, 1);
         gold = 10;
         goldDisplay.text = "Gold: " + gold;
@@ -253,7 +259,7 @@ public class GameManager : MonoBehaviour
             {
                 spellBookButtonObject.SetActive(true);
             }
-            if (Input.GetKeyDown("g"))
+            if (Input.GetKeyDown("v") && gatheredSpells.Count != 0)
             {
                 ToggleSpellBook();
             }
@@ -264,6 +270,10 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown("r"))
             {
                 ToggleRecruitment();
+            }
+            if (Input.GetKeyDown("f"))
+            {
+                ToggleRepairing();
             }
             if (Input.GetKeyDown("escape"))
             {
@@ -325,8 +335,8 @@ public class GameManager : MonoBehaviour
     //Camera Movement Functionality
     void RegisterCameraMovementOverhead()
     {
-        int maxCameraDistance = 47;
-        int minCameraDistance = 15;
+        maxCameraDistance = 85;
+        minCameraDistance = 15;
         //Vector3 camPos;
         mapZoomInput = Input.GetAxis("Mouse ScrollWheel");
         //scroll to zoom camera 
@@ -405,9 +415,9 @@ public class GameManager : MonoBehaviour
     void RegisterCameraMovementInRound()
     {
         //pull camera to 3rd person view of player and makes it a child object of player to follow. Scroll wheel still zooms in/out
-        int maxCameraDistance = 26;
-        int minCameraDistance = 6;
-        float zoomDistance = Vector3.Distance(player.transform.position, mainCamera.transform.position);
+        maxCameraDistance = 26;
+        minCameraDistance = 6;
+        zoomDistance = Vector3.Distance(player.transform.position, mainCamera.transform.position);
         mapZoomInput = Input.GetAxis("Mouse ScrollWheel");
         if (minCameraDistance <= zoomDistance && zoomDistance <= maxCameraDistance)
         {
@@ -428,7 +438,7 @@ public class GameManager : MonoBehaviour
             mouseYInput = Input.GetAxis("Mouse Y");
             if (mouseXInput != 0)
             {
-                player.transform.Rotate(Vector3.up, mouseXInput * Time.deltaTime * 1000);
+                player.transform.Rotate(Vector3.up, mouseXInput * Time.deltaTime * playerTurnSpeed);
             }
         }
         //tab pulls camera to overhead view (camera movement returns to overhead rules as well)
@@ -504,7 +514,6 @@ public class GameManager : MonoBehaviour
             {
                 ToggleRecruitment();
             }
-            repairing = false;
             roundBegun = true;
             offenseMapButtonObject.SetActive(false);
             defenseMapButtonObject.SetActive(false);
@@ -514,6 +523,8 @@ public class GameManager : MonoBehaviour
             recruitListButtonObject.SetActive(false);
             repairButtonObject.SetActive(false);
             goldDisplay.gameObject.SetActive(false);
+            roundDisplay.gameObject.SetActive(true);
+            repairing = false;
             repairButtonImage.color = baseButtonColor;
             mainCamera.transform.parent = player.transform;
             ZoomIn();
@@ -525,7 +536,6 @@ public class GameManager : MonoBehaviour
             SpawnRoundWave();
         }
     }
-
     void EndRound()
     {
         roundBegun = false;
@@ -540,6 +550,7 @@ public class GameManager : MonoBehaviour
         mainCamera.transform.position = defenseCameraPosition;
         //handles player functions for round begin.
         playerScript.RoundEnd();
+        roundDisplay.gameObject.SetActive(true);
         roundDisplay.text = "Round " + currentRound + " Completed";
         roundDisplay.color = new Color(.1607f, .2157f, .7765f, 1);
         beginRoundButtonText.text = "Begin Round";
@@ -666,7 +677,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 spellXLocation = -250;
-                spellYLocation -= 60;
+                spellYLocation -= 105;
             }
         }
     }
@@ -683,12 +694,16 @@ public class GameManager : MonoBehaviour
             recruiting = false;
             creationCamera.enabled = true;
             currentBuilding = Instantiate(building, new Vector3(0f, building.transform.position.y, 447.0f), building.transform.rotation);
+            currentBuilding.transform.Rotate(new Vector3(0, 180, 0));
             currentBuildingCost = cost;
             GeneralizedSpawn();
         }
         else
         {
+
+            roundDisplay.gameObject.SetActive(true);
             roundDisplay.text = "Not Enough Gold ";
+            StartCoroutine(RoundTextReset());
         }
     }
     void Recruit(GameObject recruit, int cost)
@@ -703,12 +718,16 @@ public class GameManager : MonoBehaviour
             recruiting = true;
             creationCamera.enabled = true;
             currentBuilding = Instantiate(recruit, new Vector3(0f, recruit.transform.position.y, 447.0f), recruit.transform.rotation);
+            currentBuilding.transform.Rotate(new Vector3(0, 180, 0));
             currentBuildingCost = cost;
             GeneralizedSpawn();
         }
         else
         {
+
+            roundDisplay.gameObject.SetActive(true);
             roundDisplay.text = "Not Enough Gold ";
+            StartCoroutine(RoundTextReset());
         }
     }
     public void SpawnEnemy(GameObject enemy)
@@ -828,16 +847,15 @@ public class GameManager : MonoBehaviour
     private void SpawnRoundWave()
     {
         bool bossRound = false;
+        roundDisplay.gameObject.SetActive(true);
         if (currentRound == 1)
         {
-            SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinJavleneer);
         }
         if (currentRound == 2)
         {
-            SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
@@ -853,8 +871,6 @@ public class GameManager : MonoBehaviour
         {
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
-            SpawnEnemy(goblinWretch);
-            SpawnEnemy(goblinJavleneer);
             SpawnEnemy(goblinJavleneer);
             SpawnEnemy(orcWarrior);
             SpawnEnemy(orcWarrior);
@@ -889,6 +905,7 @@ public class GameManager : MonoBehaviour
             roundDisplay.text = "Round " + currentRound;
             roundDisplay.color = new Color(.3882f, .8314f, .1897f, 1);
         }
+        StartCoroutine(RoundTextReset());
         bossNumber = 0;
     }
     private IEnumerator RoundTextReset()
@@ -896,6 +913,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         roundDisplay.color = new Color(0, 0, 0, 0);
         roundDisplay.text = "";
+        roundDisplay.gameObject.SetActive(false);
     }
     //repairing does not pull up a list so the rest of the toggle functions outcast it. Get rekt noob.
     public void ToggleRepairing()
