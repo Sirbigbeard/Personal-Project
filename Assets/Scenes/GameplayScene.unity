@@ -4698,7 +4698,7 @@ Animator:
   m_GameObject: {fileID: 202105949}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c9b169892b52f504db1651a5981cc9aa, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -43026,7 +43026,7 @@ MonoBehaviour:
   summonImpCDSprite: {fileID: 21300000, guid: 2ec62ad5bbc023344b46316f47a19c65, type: 3}
   gameManagerScript: {fileID: 0}
   closestTargetScript: {fileID: 0}
-  playerState: {fileID: 0}
+  playerState: {fileID: 1867860280}
 --- !u!4 &1867860277
 Transform:
   m_ObjectHideFlags: 0
@@ -44532,6 +44532,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927566862}
   m_CullTransparentMesh: 1
+--- !u!1001 &1934620570
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5200348099737416474, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_Name
+      value: FireBallBook
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.420001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6600037
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.579999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532196755790969571, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7b935670b37b994e901fd6f1753e65b, type: 3}
 --- !u!1 &1946405255
 GameObject:
   m_ObjectHideFlags: 0

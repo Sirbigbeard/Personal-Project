@@ -9,8 +9,13 @@ public class Walking : BaseState
     {
         _sm = stateMachine;
     }
-    public override void UpdateLogic()
+    public override void Enter()
     {
         _sm.characterAnimation.Play("Walk");
+        Debug.Log("walking");
+    }
+    public override void UpdateLogic()
+    {
+        
     }
 }

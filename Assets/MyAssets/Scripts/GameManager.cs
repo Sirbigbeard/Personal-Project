@@ -7,12 +7,11 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //player model needs to face correct direction
-    //learn more about unity animation and look up animation vs animator so that i can add transitions and stuff.
-    //look up what the hoot unities built in state machine does or whatever
-    //make camera movement sensitivity sliders in main menu
+    //make delay on spell casts
+    //rotate player model not character for animation
+    //work on animation transitions and try to figure out why loops are broken
 
-    //create fsm for player states to incorporate animations, move all other relevant code to states once I understand them and have worked with them.
+    //make camera movement sensitivity sliders in main menu
     //constructors
     //when pressing esc with no UI menus up and not repairing, main menu should show, with restart button and shit
     //make healthbar a red block that shrinks and widens its x scale based upon health percent. (in healthanddamagecanvas gain/lose health)

@@ -8,7 +8,7 @@ public class MovementSM : StateMachine
     public Idle idleState;
     [HideInInspector]
     public Walking walkingState;
-    public Animation characterAnimation;
+    public Animator characterAnimation;
 
     private void Awake()
     {

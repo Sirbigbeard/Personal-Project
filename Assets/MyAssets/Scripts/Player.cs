@@ -15,7 +15,7 @@ public class Player : DamageableObject
     public float currentMana;
     public float maxMana;
     public float basicAttackDamage = 3;
-    private float attackWindup = 1f;
+    private float attackWindup = .87f;
     private int level = 1;
     private int maxEnergy = 20;
     private int currentEnergy = 20;
@@ -38,6 +38,8 @@ public class Player : DamageableObject
     private bool energyDowntickCooldown;
     private bool bulwarkRefresh;
     private bool manaTickActive;
+    private bool casting;
+    private bool dying;
     public bool died;
     private bool fireBallCD;
     private bool summonImpCD;
@@ -111,8 +113,6 @@ public class Player : DamageableObject
         healthAndDamageCanvasScript = healthAndDamageCanvas.GetComponent<HealthAndDamageCanvas>();
         bulwarkColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
         playerColor = new Color(.82f, .79f, .19f, 1f);
-        //leftLegRenderer = leftLeg.GetComponent<Renderer>();
-        //attackHitboxScript.validTargetTags.Add("Enemy");
         transform.position = startingPosition;
         levelDisplay.text = "Level: " + level;
         xPDisplay.text = "XP: " + currentXP + "/" + (5 + 5 * level);
@@ -135,6 +135,8 @@ public class Player : DamageableObject
         spellImageList.Add(spell4Image);
         healthAndDamageCanvasScript.maxHP = (int)maxHP;
         characterAnimation = model.GetComponent<Animator>();
+        playerState.characterAnimation = characterAnimation; 
+        characterAnimation.Play("Walk");
     }
     void Update()
     {
@@ -142,20 +144,28 @@ public class Player : DamageableObject
         {
             if (gameManagerScript.roundBegun)
             {
-                RegisterAttacks();
-                RegisterSpellcast();
+                if (!casting)
+                {
+                    RegisterAttacks();
+                }
+                if (!attackDurationActive)
+                {
+                    RegisterSpellcast();
+                }
+                ReplenishManaAndEnergy();
             }
-            ReplenishManaAndEnergy();
-            playerRb.velocity = new Vector3(0, 0, 0);
+            //playerRb.velocity = new Vector3(0, 0, 0);
         }
         else
         {
-            Die();
+            characterAnimation.Play("Die");
+            dying = true;
+            StartCoroutine(DeathAnimation());
         }
     }
     void FixedUpdate()
     {
-        if(!attackDurationActive)
+        if(!attackDurationActive && !casting && !dying)
         {
             RegisterMovement();
         }
@@ -182,12 +192,14 @@ public class Player : DamageableObject
                 moveInput = new Vector3(horizontalInput, 0, verticalInput);
                 if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
                 {
-                    StartCoroutine(GoingIdle());
-                    //characterAnimation.Play("Idle.001");
+                    characterAnimation.Play("Idle");
                 }
                 else
                 {
-                    characterAnimation.Play("Walk");
+                    if (!characterAnimation.GetCurrentAnimatorStateInfo(0).IsName("Walk") && !characterAnimation.IsInTransition(0))
+                    {
+                        characterAnimation.Play("Walk");
+                    }
                     playerRb.position += moveInput * speed / 650;
                 }
                 if (moveInput.sqrMagnitude > 0)
@@ -207,20 +219,26 @@ public class Player : DamageableObject
                     currentEnergy--;
                     energyDisplay.text = "Energy " + currentEnergy + "/" + maxEnergy;
                     energyDowntickCooldown = true;
+                    if (!characterAnimation.GetCurrentAnimatorStateInfo(0).IsName("Run") && !characterAnimation.IsInTransition(0))
+                    {
+                        characterAnimation.Play("Run");
+                    }
                     StartCoroutine(EnergyDowntickCooldown());
                 }
             }
             else if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
             {
-                characterAnimation.Play("Idle.001");
+                characterAnimation.Play("Idle");
             }
             else
             {
                 playerRb.AddForce(transform.forward * speed * 4f * verticalInput);
                 playerRb.AddForce(transform.right * speed * 4f * horizontalInput);
                 playerRb.velocity = new Vector3(0, 0, 0);
-                characterAnimation.Play("Walk");
-                //playerState.ChangeState(playerState.walkingState);
+                if (!characterAnimation.GetCurrentAnimatorStateInfo(0).IsName("Walk") && !characterAnimation.IsInTransition(0))
+                {
+                    characterAnimation.Play("Walk");
+                }
             }
         } 
     }
@@ -252,6 +270,7 @@ public class Player : DamageableObject
         if (Input.GetKeyDown("2") && spellList.Count > 1 && castableSpells > 1)
         {
             CastSpell(spellList[1], 1);
+            //characterAnimation.Play("Cast");
             if (spellList.Count > castableSpells && spellCasted)
             {
                 spellList.Add(spellList[1]);
@@ -265,6 +284,7 @@ public class Player : DamageableObject
         if (Input.GetKeyDown("3") && spellList.Count > 2 && castableSpells > 2)
         {
             CastSpell(spellList[2], 2);
+            //characterAnimation.Play("Cast");
             if (spellList.Count > castableSpells && spellCasted)
             {
                 spellList.Add(spellList[2]);
@@ -278,6 +298,7 @@ public class Player : DamageableObject
         if (Input.GetKeyDown("4") && spellList.Count > 3 && castableSpells > 3)
         {
             CastSpell(spellList[3], 3);
+            //characterAnimation.Play("Cast");
             if (spellList.Count > castableSpells && spellCasted)
             {
                 spellList.Add(spellList[3]);
@@ -289,13 +310,15 @@ public class Player : DamageableObject
             spellCasted = false;
         }
     }
-    private void Die()
+    IEnumerator DeathAnimation()
     {
+        yield return new WaitForSeconds(2);
         if (!died)
         {
+            dying = false;
             died = true;
             transform.position = new Vector3(1000, transform.position.y, 1000);
-            roundDisplay.text = "Knocked Out ";
+            roundDisplay.text = "Knocked Out";
             roundDisplay.color = new Color(205, 0, 0, 255);
             StartCoroutine(RoundTextReset());
             if (gameManagerScript.alliesRemaining == 0)
@@ -326,11 +349,11 @@ public class Player : DamageableObject
     //starts necessary timers for attack
     private void Attack()
     {
+        characterAnimation.Play("Slap");
         attackCooldownActive = true;
         attackDurationActive = true;
         StartCoroutine(AttackCooldown());
         StartCoroutine(AttackDuration());
-        BasicAttack();
     }
     IEnumerator AttackCooldown()
     {
@@ -340,15 +363,8 @@ public class Player : DamageableObject
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(attackWindup);
+        BasicAttack();
         attackDurationActive = false;
-    }
-    IEnumerator GoingIdle()
-    {
-        yield return new WaitForSeconds(3);
-        //if(characterAnimation.GetCurrentAnimatorStateInfo(0).length > characterAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime)
-        //{
-
-        //}
     }
     //perform the basic attack
     void BasicAttack()
@@ -471,6 +487,17 @@ public class Player : DamageableObject
                 StartCoroutine(BlinkCDTimer(keyHit));
             }
         }
+        if (spellCasted)
+        {
+            characterAnimation.Play("Cast");
+            casting = true;
+            StartCoroutine(SpellCastAnimation());
+        }
+    }
+    IEnumerator SpellCastAnimation()
+    {
+        yield return new WaitForSeconds(1.5f);
+        casting = false;
     }
     public Sprite FindImage(GameObject spell)
     {
