@@ -7,8 +7,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //make delay on spell casts
-    //rotate player model not character for animation
+    //player model direction preserving when round begins
     //work on animation transitions and try to figure out why loops are broken
 
     //make camera movement sensitivity sliders in main menu

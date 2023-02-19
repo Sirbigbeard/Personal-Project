@@ -154,7 +154,7 @@ public class Player : DamageableObject
                 }
                 ReplenishManaAndEnergy();
             }
-            //playerRb.velocity = new Vector3(0, 0, 0);
+            playerRb.velocity = new Vector3(0, 0, 0);
         }
         else
         {
@@ -177,6 +177,7 @@ public class Player : DamageableObject
         {
             verticalInput = Input.GetAxis("Vertical");
             horizontalInput = Input.GetAxis("Horizontal");
+            moveInput = new Vector3(horizontalInput, 0, verticalInput);
             if (verticalInput > .9 && horizontalInput > .9)
             {
                 verticalInput = .5f;
@@ -189,7 +190,6 @@ public class Player : DamageableObject
             }
             if (!gameManagerScript.roundBegun)
             {
-                moveInput = new Vector3(horizontalInput, 0, verticalInput);
                 if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
                 {
                     characterAnimation.Play("Idle");
@@ -225,6 +225,11 @@ public class Player : DamageableObject
                     }
                     StartCoroutine(EnergyDowntickCooldown());
                 }
+                if (moveInput.sqrMagnitude > 0)
+                {
+                    Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
+                    model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotation, Time.fixedDeltaTime * rotationRate);
+                }
             }
             else if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
             {
@@ -238,6 +243,11 @@ public class Player : DamageableObject
                 if (!characterAnimation.GetCurrentAnimatorStateInfo(0).IsName("Walk") && !characterAnimation.IsInTransition(0))
                 {
                     characterAnimation.Play("Walk");
+                }
+                if (moveInput.sqrMagnitude > 0)
+                {
+                    Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
+                    model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotation, Time.fixedDeltaTime * rotationRate);
                 }
             }
         } 
@@ -256,7 +266,7 @@ public class Player : DamageableObject
     {
         if (Input.GetKeyDown("1") && spellList.Count > 0)
         {
-            CastSpell(spellList[0], 0);
+            StartCoroutine(CastSpell(spellList[0], 0));
             if (spellList.Count > castableSpells && spellCasted)
             {
                 spellList.Add(spellList[0]);
@@ -265,11 +275,10 @@ public class Player : DamageableObject
                 spell1Name.text = spellList[castableSpells].name;
                 spellList.RemoveAt(castableSpells);
             }
-            spellCasted = false;
         }
         if (Input.GetKeyDown("2") && spellList.Count > 1 && castableSpells > 1)
         {
-            CastSpell(spellList[1], 1);
+            StartCoroutine(CastSpell(spellList[1], 1));
             //characterAnimation.Play("Cast");
             if (spellList.Count > castableSpells && spellCasted)
             {
@@ -279,11 +288,10 @@ public class Player : DamageableObject
                 spell2Name.text = spellList[castableSpells].name;
                 spellList.RemoveAt(castableSpells);
             }
-            spellCasted = false;
         }
         if (Input.GetKeyDown("3") && spellList.Count > 2 && castableSpells > 2)
         {
-            CastSpell(spellList[2], 2);
+            StartCoroutine(CastSpell(spellList[2], 2));
             //characterAnimation.Play("Cast");
             if (spellList.Count > castableSpells && spellCasted)
             {
@@ -293,11 +301,10 @@ public class Player : DamageableObject
                 spell3Name.text = spellList[castableSpells].name;
                 spellList.RemoveAt(castableSpells);
             }
-            spellCasted = false;
         }
         if (Input.GetKeyDown("4") && spellList.Count > 3 && castableSpells > 3)
         {
-            CastSpell(spellList[3], 3);
+            StartCoroutine(CastSpell(spellList[3], 3));
             //characterAnimation.Play("Cast");
             if (spellList.Count > castableSpells && spellCasted)
             {
@@ -307,6 +314,11 @@ public class Player : DamageableObject
                 spell4Name.text = spellList[castableSpells].name;
                 spellList.RemoveAt(castableSpells);
             }
+        }
+        if (spellCasted)
+        {
+            characterAnimation.Play("Cast");
+            casting = true;
             spellCasted = false;
         }
     }
@@ -377,22 +389,24 @@ public class Player : DamageableObject
         }
     }
     //parses the spells name into its own casting method, sets cooldown if not cycled, and displays cooldown on image and text 
-    public void CastSpell(GameObject spell, int keyHit)
+    public IEnumerator CastSpell(GameObject spell, int keyHit)
     {
         if (spell.name == "Fire Ball" && currentMana >= 3)
         {
             if(spellList.Count > castableSpells)
             {
-                CastFireball();
                 spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
+                CastFireball();
             }
             else if (fireBallCD == false)
             {
+                spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
                 fireBallCDDuration = 5;
                 spellNameList[keyHit].text += " (" + fireBallCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = fireBallCDSprite; 
                 CastFireball();
-                spellCasted = true;
                 fireBallCD = true;
                 StartCoroutine(FireBallCDTimer(keyHit));
             }
@@ -401,16 +415,18 @@ public class Player : DamageableObject
         {
             if (spellList.Count > castableSpells)
             {
-                CastSlam();
                 spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
+                CastSlam();
             }
             else if (slamCD == false)
             {
+                spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
                 slamCDDuration = 7;
                 spellNameList[keyHit].text += " (" + slamCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = slamCDSprite;
                 CastSlam();
-                spellCasted = true;
                 slamCD = true;
                 StartCoroutine(SlamCDTimer(keyHit));
             }
@@ -419,16 +435,18 @@ public class Player : DamageableObject
         {
             if (spellList.Count > castableSpells)
             {
-                CastIceWave();
                 spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
+                CastIceWave();
             }
             else if (iceWaveCD == false)
             {
+                spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
                 iceWaveCDDuration = 8;
                 spellNameList[keyHit].text += " (" + iceWaveCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = iceWaveCDSprite;
                 CastIceWave();
-                spellCasted = true;
                 iceWaveCD = true;
                 StartCoroutine(IceWaveCDTimer(keyHit));
             }
@@ -437,16 +455,18 @@ public class Player : DamageableObject
         {
             if (spellList.Count > castableSpells)
             {
-                CastSummonImp();
                 spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
+                CastSummonImp();
             }
             else if (summonImpCD == false)
             {
+                spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
                 summonImpCDDuration = 10;
                 spellNameList[keyHit].text += " (" + summonImpCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = summonImpCDSprite;
                 CastSummonImp();
-                spellCasted = true;
                 summonImpCD = true;
                 StartCoroutine(SummonImpCDTimer(keyHit));
             }
@@ -455,16 +475,18 @@ public class Player : DamageableObject
         {
             if (spellList.Count > castableSpells)
             {
-                CastBulwark();
                 spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
+                CastBulwark();
             }
             else if (bulwarkCD == false)
             {
+                spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
                 bulwarkCDDuration = 8;
                 spellNameList[keyHit].text += " (" + bulwarkCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = bulwarkCDSprite;
                 CastBulwark();
-                spellCasted = true;
                 bulwarkCD = true;
                 StartCoroutine(BulwarkCDTimer(keyHit));
             }
@@ -473,30 +495,27 @@ public class Player : DamageableObject
         {
             if (spellList.Count > castableSpells)
             {
-                CastBlink();
                 spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
+                CastBlink();
             }
             else if (blinkCD == false)
             {
+                spellCasted = true;
+                yield return new WaitForSeconds(1.1f);
                 blinkCDDuration = 3;
                 spellNameList[keyHit].text += " (" + blinkCDDuration + ")";
                 spellImageList[keyHit].GetComponent<Image>().sprite = blinkCDSprite;
                 CastBlink();
-                spellCasted = true;
                 blinkCD = true;
                 StartCoroutine(BlinkCDTimer(keyHit));
             }
         }
-        if (spellCasted)
-        {
-            characterAnimation.Play("Cast");
-            casting = true;
-            StartCoroutine(SpellCastAnimation());
-        }
+        StartCoroutine(FinishCastAnimation());
     }
-    IEnumerator SpellCastAnimation()
+    IEnumerator FinishCastAnimation()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(.6f);
         casting = false;
     }
     public Sprite FindImage(GameObject spell)
