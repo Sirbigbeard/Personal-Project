@@ -188,6 +188,16 @@ public class Player : DamageableObject
                 verticalInput = -.5f;
                 horizontalInput = -.5f;
             }
+            if (verticalInput > .9 && horizontalInput < -.9)
+            {
+                verticalInput = .5f;
+                horizontalInput = -.5f;
+            }
+            if (verticalInput < -.9 && horizontalInput > .9)
+            {
+                verticalInput = -.5f;
+                horizontalInput = .5f;
+            }
             if (!gameManagerScript.roundBegun)
             {
                 if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
@@ -205,7 +215,7 @@ public class Player : DamageableObject
                 if (moveInput.sqrMagnitude > 0)
                 {
                     Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
-                    playerRb.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
+                    model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotation, Time.fixedDeltaTime * rotationRate);
                     playerRb.velocity = new Vector3(0, 0, 0);
                 }
             }
@@ -228,7 +238,7 @@ public class Player : DamageableObject
                 if (moveInput.sqrMagnitude > 0)
                 {
                     Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
-                    model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotation, Time.fixedDeltaTime * rotationRate);
+                    model.transform.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
                 }
             }
             else if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)
@@ -246,7 +256,7 @@ public class Player : DamageableObject
                 }
                 if (moveInput.sqrMagnitude > 0)
                 {
-                    Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
+                    Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up) * playerRb.rotation;
                     model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotation, Time.fixedDeltaTime * rotationRate);
                 }
             }

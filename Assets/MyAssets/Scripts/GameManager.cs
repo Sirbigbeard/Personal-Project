@@ -7,8 +7,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //player model direction preserving when round begins
-    //work on animation transitions and try to figure out why loops are broken
+    //make super long walk and run animations until I can figure out why looping is broken
 
     //make camera movement sensitivity sliders in main menu
     //constructors
