@@ -39,7 +39,7 @@ public class Player : DamageableObject
     private bool bulwarkRefresh;
     private bool manaTickActive;
     private bool casting;
-    private bool dying;
+    public bool dying;
     public bool died;
     private bool fireBallCD;
     private bool summonImpCD;
@@ -219,7 +219,7 @@ public class Player : DamageableObject
                     playerRb.velocity = new Vector3(0, 0, 0);
                 }
             }
-            else if (Input.GetKey("left shift") && currentEnergy > 0 && verticalInput > 0)
+            else if (Input.GetKey("left shift") && currentEnergy > 5)
             {
                 playerRb.AddForce(transform.forward * speed * 7 * verticalInput);
                 playerRb.AddForce(transform.right * speed * 7 * horizontalInput);
@@ -237,8 +237,8 @@ public class Player : DamageableObject
                 }
                 if (moveInput.sqrMagnitude > 0)
                 {
-                    Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up);
-                    model.transform.rotation = Quaternion.Lerp(playerRb.rotation, rotation, Time.fixedDeltaTime * rotationRate);
+                    Quaternion rotation = Quaternion.LookRotation(moveInput, Vector3.up) * playerRb.rotation;
+                    model.transform.rotation = Quaternion.Lerp(model.transform.rotation, rotation, Time.fixedDeltaTime * rotationRate);
                 }
             }
             else if (Mathf.Abs(horizontalInput) < Mathf.Epsilon && Mathf.Abs(verticalInput) < Mathf.Epsilon)

@@ -31,10 +31,8 @@ public class GameManager : MonoBehaviour
     //variable name brush ups
     //TUTORIAL: add tutorial that shows off all systems
     //make save/load game function
-    //add basic animations
     //change colors of health bars dependign on type
-    //make a findChild extension to test if a building has attackhitbox and this is cleaving, 
-    //0: try to fuck around with blender basic modeling and animation
+    //make a findChild extension to test if a building has attackhitbox and this is cleaving,
     //reduce a defensive stat during the attack window of attack duration
     //5: SPELLS: 16 total skills at least, 3 spell ranks maybe +25% effectiveness per, icewave fully freezes motion/rotation on uprank, cleave spell that deals half damage to all but the closest target 
     //spell ideas: Vengeance: rank1: charge for 3 seconds, then attack, dealing bonus damage equal to the damage taken, rank2: 50% damage reduction for dur, rank3: damage immunity for dur.
@@ -305,14 +303,17 @@ public class GameManager : MonoBehaviour
             //camera follows player while alive and returns to overhead when dead.
             if (playerScript.currentHP <= 0)
             {
-                if (!playerDeath)
+                if (playerScript.died)
                 {
-                    mainCamera.transform.parent = null;
-                    mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
-                    mainCamera.transform.position = defenseCameraPosition;
-                    playerDeath = true;
+                    RegisterCameraMovementOverhead();
+                    if (!playerDeath)
+                    {
+                        mainCamera.transform.parent = null;
+                        mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
+                        mainCamera.transform.position = defenseCameraPosition;
+                        playerDeath = true;
+                    }
                 }
-                RegisterCameraMovementOverhead();
             }
             else
             {

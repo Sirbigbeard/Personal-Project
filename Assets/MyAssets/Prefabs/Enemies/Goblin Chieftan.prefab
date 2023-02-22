@@ -435,6 +435,7 @@ MonoBehaviour:
   healthAndDamageCanvasScript: {fileID: 0}
   attackHitboxScript: {fileID: 0}
   rangedAttackRange: 0
+  rangedAttackDamage: 0
   sightRange: 30
   attackCooldownRanged: 0
   attackDamage: 2
@@ -449,6 +450,8 @@ MonoBehaviour:
   hitsFlying: 0
   cost: 0
   spikeSelfDamage: 0
+  level: 0
+  currentXP: 0
   endRoundCheck: 0
   startPosition: {x: 0, y: 0, z: 0}
   startingPosition: {x: 0, y: 0, z: 0}
@@ -461,9 +464,11 @@ MonoBehaviour:
   rank2Marker: {fileID: 0}
   rank3Marker: {fileID: 0}
   repairTooltipObject: {fileID: 0}
+  nameTextObject: {fileID: 0}
   buildPositionObject: {fileID: 0}
   mainCanvas: {fileID: 0}
   repairTooltip: {fileID: 0}
+  nameText: {fileID: 0}
   rangeFinderScript: {fileID: 0}
   targetScript: {fileID: 0}
   buildPositionScript: {fileID: 0}
@@ -767,9 +772,8 @@ MonoBehaviour:
   maxHP: 0
   currentHealth: 0
   incomingDamageCount: 0
-  healthUI: {fileID: 6756230645063208200}
+  healthBar: {fileID: 6756230645063208200}
   damageUI: {fileID: 8872190047502144038}
-  healthScript: {fileID: 0}
   damageScript: {fileID: 0}
 --- !u!1 &6756230645063208200
 GameObject:
