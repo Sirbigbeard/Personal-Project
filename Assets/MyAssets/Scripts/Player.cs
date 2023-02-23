@@ -12,6 +12,7 @@ public class Player : DamageableObject
     private float horizontalInput;
     private float verticalInput;
     private float manaRegenRate = 1;
+    [HideInInspector]
     public float currentMana;
     public float maxMana;
     public float basicAttackDamage = 3;
@@ -21,7 +22,6 @@ public class Player : DamageableObject
     private int currentEnergy = 20;
     private int spellUINumber = 0;
     public int castableSpells = 1;
-    public int touchingBuilding = 0;
     private int potentialXP = 0;
     public int currentXP;
     private int fireBallCDDuration;
@@ -39,7 +39,9 @@ public class Player : DamageableObject
     private bool bulwarkRefresh;
     private bool manaTickActive;
     private bool casting;
+    [HideInInspector]
     public bool dying;
+    [HideInInspector]
     public bool died;
     private bool fireBallCD;
     private bool summonImpCD;
@@ -560,7 +562,8 @@ public class Player : DamageableObject
     {
         currentMana -= 3;
         GameObject currentFireball = Instantiate(fireball, new Vector3(transform.position.x, 2f, transform.position.z), transform.rotation);
-        currentFireball.transform.Translate(Vector3.forward * 1);
+        currentFireball.transform.Translate(model.transform.forward * 1);
+        currentFireball.transform.rotation = model.transform.rotation;
     }
     private IEnumerator FireBallCDTimer(int keyHit)
     {
@@ -744,21 +747,6 @@ public class Player : DamageableObject
                 gameManagerScript.itemDropText.text = "Spell slots improved to " + castableSpells;
                 StartCoroutine(SpellTextNoQueue());
             }
-        }
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Building" || other.tag == "Wall")
-        {
-            touchingBuilding += 1;
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Building" || other.tag == "Wall")
-        {
-            touchingBuilding -= 1;
-            playerRb.velocity = new Vector3(0, 0, 0);
         }
     }
     IEnumerator BulwarkTimer()

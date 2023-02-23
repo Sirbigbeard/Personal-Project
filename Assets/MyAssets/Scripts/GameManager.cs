@@ -7,8 +7,12 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //make super long walk and run animations until I can figure out why looping is broken
-
+    //fix up castle with collider and proper health bar
+    //finish icon tooltips
+    //import hut, integrate models as references.
+    //sculpt/texture model (save backup beforehand)
+    //make ally models, make enemy models
+    //
     //make camera movement sensitivity sliders in main menu
     //constructors
     //when pressing esc with no UI menus up and not repairing, main menu should show, with restart button and shit
@@ -175,10 +179,16 @@ public class GameManager : MonoBehaviour
     public Player playerScript;
     public Building currentBuildingScript;
     private Color goldColor;
-    private Color baseButtonColor;
+    private Color repairBaseButtonColor;
+    private Color buildBaseButtonColor;
+    private Color recruitBaseButtonColor;
+    private Color spellBaseButtonColor;
     public Canvas mainCanvas;
     public Camera creationCamera;
     private Image repairButtonImage;
+    private Image buildButtonImage;
+    private Image spellButtonImage;
+    private Image recruitButtonImage;
     //public Texture2D repairCursorTexture;
 
     void Start()
@@ -226,7 +236,13 @@ public class GameManager : MonoBehaviour
         spellBookButtonObject.SetActive(false);
         repairTooltip = repairTooltipObject.GetComponent<TextMeshProUGUI>();
         repairButtonImage = repairButtonObject.GetComponent<Image>();
-        baseButtonColor = repairButtonImage.color;
+        buildButtonImage = buildingListButtonObject.GetComponent<Image>();
+        spellButtonImage = spellBookButtonObject.GetComponent<Image>();
+        recruitButtonImage = recruitListButtonObject.GetComponent<Image>();
+        repairBaseButtonColor = repairButtonImage.color;
+        recruitBaseButtonColor = recruitButtonImage.color;
+        buildBaseButtonColor = buildButtonImage.color;
+        spellBaseButtonColor = spellButtonImage.color;
         ResetSpellLocation();
         creationCamera.enabled = false;
         roundDisplay.gameObject.SetActive(false);
@@ -292,9 +308,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (repairing)
                 {
-                    repairing = false;
-                    repairButtonImage.color = baseButtonColor;
-                    //Cursor.SetCursor(repairCursorTexture, Vector2.zero, CursorMode.Auto);
+                    ToggleRepairing();
                 }
             }
         }
@@ -335,7 +349,6 @@ public class GameManager : MonoBehaviour
     {
         maxCameraDistance = 85;
         minCameraDistance = 15;
-        //Vector3 camPos;
         mapZoomInput = Input.GetAxis("Mouse ScrollWheel");
         //scroll to zoom camera 
         if (minCameraDistance <= mainCamera.transform.position.y && mainCamera.transform.position.y <= maxCameraDistance)
@@ -512,6 +525,10 @@ public class GameManager : MonoBehaviour
             {
                 ToggleRecruitment();
             }
+            if (repairing)
+            {
+                ToggleRepairing();
+            }
             roundBegun = true;
             offenseMapButtonObject.SetActive(false);
             defenseMapButtonObject.SetActive(false);
@@ -522,8 +539,6 @@ public class GameManager : MonoBehaviour
             repairButtonObject.SetActive(false);
             goldDisplay.gameObject.SetActive(false);
             roundDisplay.gameObject.SetActive(true);
-            repairing = false;
-            repairButtonImage.color = baseButtonColor;
             mainCamera.transform.parent = player.transform;
             ZoomIn();
             activeSpells.ShuffleList();
@@ -569,6 +584,7 @@ public class GameManager : MonoBehaviour
         if (!spellBookOpen)
         {
             spellBookOpen = true;
+            spellButtonImage.color = new Color(1, 0, 0, 1);
             foreach (GameObject spell in gatheredSpells)
             {
                 DisplayButtonList(spell);
@@ -579,6 +595,7 @@ public class GameManager : MonoBehaviour
         else
         {
             spellBookOpen = false;
+            spellButtonImage.color = spellBaseButtonColor;
             foreach (GameObject spell in gatheredSpells)
             {
                 spell.SetActive(false);
@@ -599,6 +616,7 @@ public class GameManager : MonoBehaviour
         if (!buildingListOpen)
         {
             buildingListOpen = true;
+            buildButtonImage.color = new Color(1, 0, 0, 1);
             foreach (GameObject building in buildingsAvailable)
             {
                 DisplayButtonList(building);
@@ -609,6 +627,7 @@ public class GameManager : MonoBehaviour
         else
         {
             buildingListOpen = false;
+            buildButtonImage.color = buildBaseButtonColor;
             foreach (GameObject building in buildingsAvailable)
             {
                 building.SetActive(false);
@@ -638,6 +657,7 @@ public class GameManager : MonoBehaviour
         if (!recruitmentOpen)
         {
             recruitmentOpen = true;
+            recruitButtonImage.color = new Color(1, 0, 0, 1);
             if (troopsAvailable.Count != 0)
             {
                 foreach (GameObject recruit in troopsAvailable)
@@ -651,6 +671,7 @@ public class GameManager : MonoBehaviour
         else
         {
             recruitmentOpen = false;
+            recruitButtonImage.color = recruitBaseButtonColor;
             if (troopsAvailable.Count != 0)
             {
                 foreach (GameObject recruit in troopsAvailable)
@@ -919,7 +940,7 @@ public class GameManager : MonoBehaviour
         if (repairing)
         {
             repairing = false;
-            repairButtonImage.color = baseButtonColor;
+            repairButtonImage.color = repairBaseButtonColor;
         }
         else
         {

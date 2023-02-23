@@ -17,7 +17,6 @@ public class DamageableObject : MonoBehaviour
     public GameObject healthAndDamageCanvas;
     public GameObject attackHitbox;
     public TextMeshProUGUI healthDisplay;
-    //public List<string> validTargetTags;
     public HealthAndDamageCanvas healthAndDamageCanvasScript;
     public AttackHitbox attackHitboxScript;
 
