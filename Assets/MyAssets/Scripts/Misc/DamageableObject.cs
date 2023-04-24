@@ -19,6 +19,7 @@ public class DamageableObject : MonoBehaviour
     public TextMeshProUGUI healthDisplay;
     public HealthAndDamageCanvas healthAndDamageCanvasScript;
     public AttackHitbox attackHitboxScript;
+    public bool died;
 
     public int TakeDamage(float damageDealt)
     {

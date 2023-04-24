@@ -20,10 +20,10 @@ public class DamageUI2 : MonoBehaviour
     void Update()
     {
         mainCam = Camera.main;
-        if (gameManagerScript.roundBegun)
-        {
+        //if (gameManagerScript.roundBegun)
+        //{
             transform.rotation = mainCam.transform.rotation;
-        }
+        //}
     }
 }
 

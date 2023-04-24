@@ -11,14 +11,17 @@ public class SpellBookButton : MonoBehaviour
     private GameManager gameManagerScript;
     private Button button;
     private Image image;
+    private Vector3 positionMod;
     void Start()
     {
         gameManagerScript = gameManager.GetComponent<GameManager>();
         button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(AddSpell);
         image = GetComponent<Image>();
+        positionMod = new Vector3(transform.position.x, transform.position.y - 25, transform.position.z);
+        gameObject.SetActive(false);
     }
-    void AddSpell()
+    public void AddSpell()
     {
         if (gameManagerScript.activeSpells.Contains(gameObject))
         {
@@ -38,7 +41,7 @@ public class SpellBookButton : MonoBehaviour
     public void DisplayTooltip()
     {
         Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(gameManagerScript.mainCanvas.transform as RectTransform, transform.position, gameManagerScript.mainCanvas.worldCamera, out pos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(gameManagerScript.mainCanvas.transform as RectTransform, positionMod, gameManagerScript.mainCanvas.worldCamera, out pos);
         spellTooltip.transform.position = new Vector2(gameManagerScript.mainCanvas.transform.TransformPoint(pos).x, gameManagerScript.mainCanvas.transform.TransformPoint(pos).y - 40);
         if (name == "Fire Ball")
         {

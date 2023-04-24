@@ -10,7 +10,7 @@ public class MelleEnemy : Enemy
         Begin();
         StartCoroutine(TaggingDelay());
     }
-    void Update()
+    void FixedUpdate()
     {
         Move();
         BuildingUpdate();

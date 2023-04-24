@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour
     public bool active;
     private bool targetChecked = false;
     public float damage = 10;
-    private float missileSpeed = 20f;
+    public float missileSpeed = 20f;
     private Vector3 targetPosition;
     public Vector3 startPosition;
     public GameObject target;
@@ -26,8 +26,8 @@ public class Projectile : MonoBehaviour
         {
             if (target != null)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, missileSpeed * Time.deltaTime);
-                targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                targetPosition = new Vector3(target.transform.position.x, target.transform.position.y + 3, target.transform.position.z);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, missileSpeed * Time.deltaTime);
                 transform.LookAt(targetPosition);
             }
             if (targetChecked && target == null)

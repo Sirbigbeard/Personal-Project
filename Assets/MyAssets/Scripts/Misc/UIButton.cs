@@ -9,7 +9,7 @@ public class UIButton : MonoBehaviour
     public string tooltip;
     public GameObject tooltipObject;
     public TextMeshProUGUI tooltipText;
-    void Start()
+    void Awake()
     {
         StartCoroutine(Delay());
     }
@@ -23,7 +23,7 @@ public class UIButton : MonoBehaviour
     }
     private IEnumerator Delay()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.01f);
         tooltipText = tooltipObject.GetComponent<TextMeshProUGUI>();
     }
 }

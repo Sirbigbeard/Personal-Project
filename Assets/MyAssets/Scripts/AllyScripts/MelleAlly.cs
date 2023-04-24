@@ -10,10 +10,14 @@ public class MelleAlly : Ally
         Begin();
         StartCoroutine(TaggingDelay());
     }
-    void Update()
+    void FixedUpdate()
     {
         Move();
         BuildingUpdate();
+    }
+    void Update()
+    {
+        FollowFix();
     }
     new IEnumerator TaggingDelay()
     {

@@ -12,7 +12,7 @@ public class RangedEnemy : Enemy
         Begin();
         StartCoroutine(TaggingDelay());
     }
-    void Update()
+    void FixedUpdate()
     {
         Move();
         BuildingUpdate();

@@ -7,16 +7,25 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    //fix up castle with collider and proper health bar
-    //finish icon tooltips
-    //import hut, integrate models as references.
-    //sculpt/texture model (save backup beforehand)
-    //make ally models, make enemy models
-    //
+
+    //spell tooltip should also be integrated for recruit and build
+
+
+    //screen drag overhead should leave mouse stationary
+
+    //expand stats
+
+    //player can attack goblin while its dying
+
+
+
+    //get hit animation for enemies that employs conditionals to not play when attacking or dying
+    //can rotate char while dying
+    //rework healthanddamagecanvas and associated GOs
+
     //make camera movement sensitivity sliders in main menu
     //constructors
     //when pressing esc with no UI menus up and not repairing, main menu should show, with restart button and shit
-    //make healthbar a red block that shrinks and widens its x scale based upon health percent. (in healthanddamagecanvas gain/lose health)
     //make it so that if player is less than half the distance of target (and target is out of melle/ranged attack range, enemies will switch to player (probably in enemy move)
     //make item drops that enable new building and ally recruitment
     //make a max number of recruits you can have that increases based on level
@@ -56,7 +65,7 @@ public class GameManager : MonoBehaviour
     //instead of spellBookButton i should have just made gameManager load up string variables into activeSpells based on name given by button press.
     //give all spells scripts that have all their relevant info such as cost, then use an extension getSpell() to set currentSpell variable, then pull info from currentSpell to cast.
 
-    public bool currentBuildingRangeFinder;
+    //public bool currentBuildingRangeFinder;
     public bool roundBegun;
     private bool defenseMap = true;
     private bool spellBookOpen;
@@ -64,10 +73,10 @@ public class GameManager : MonoBehaviour
     private bool recruitmentOpen;
     public bool constructing;
     public bool recruiting;
-    private bool playerDeath;
     public bool repairing;
     private bool dropTextRefresh;
     private bool dropTextActive;
+    public GameObject energyBackground;
     public GameObject currentBuilding;
     public GameObject castle;
     public GameObject player;
@@ -106,6 +115,8 @@ public class GameManager : MonoBehaviour
     public GameObject bossGateway;
     public GameObject repairButtonObject;
     public GameObject unPauseButtonObject;
+    public GameObject pauseText;
+    public GameObject pauseImage;
     private GameObject currentEnemy;
     private Button offenseMapButton;
     private Button defenseMapButton;
@@ -131,8 +142,9 @@ public class GameManager : MonoBehaviour
     private float mouseXInput;
     private float mouseYInput;
     public int maxActiveSpells = 1;
-    private int cameraZoomSpeed = 1000;//5k
-    private int cameraPanSpeed = 100;//5k
+    private int cameraZoomSpeed = 400;//5k
+    private int cameraPanSpeed = 50;//5k
+    private int playerTurnSpeed = 60;//500
     private int cameraPanLowerBound = -60;
     private int cameraPanUpperBound = 35;
     private int cameraPanLeftBound = -75;
@@ -150,10 +162,9 @@ public class GameManager : MonoBehaviour
     private int minCameraDistance;
     private int maxCameraDistance;
     public int alliesRemaining;
-    private int playerTurnSpeed = 150;
     private float zoomDistance;
     private Vector3 offenseCameraPosition = new Vector3(500f, 47f, -22f);
-    private Vector3 defenseCameraPosition = new Vector3(0f, 47f, -14f);
+    public Vector3 defenseCameraPosition = new Vector3(0f, 47f, -14f);
     private Vector3 offensePlayerPosition = new Vector3(500f, 3.54f, 0f);
     private Vector3 defensePlayerPosition;
     private Vector3 cameraPosition;
@@ -171,7 +182,6 @@ public class GameManager : MonoBehaviour
     private Quaternion lane1Rotation;
     private Quaternion lane2Rotation;
     private Quaternion lane3Rotation;
-    public Image pauseImage;
     public List<GameObject> gatheredSpells;
     public List<GameObject> activeSpells;
     public List<GameObject> buildingsAvailable;
@@ -233,7 +243,7 @@ public class GameManager : MonoBehaviour
         buildingsAvailable.Add(crenelationsButtonObject);
         buildingsAvailable.Add(crenelationsVerticalButtonObject);
         buildingsAvailable.Add(spikesButtonObject);
-        spellBookButtonObject.SetActive(false);
+        //spellBookButtonObject.SetActive(false);
         repairTooltip = repairTooltipObject.GetComponent<TextMeshProUGUI>();
         repairButtonImage = repairButtonObject.GetComponent<Image>();
         buildButtonImage = buildingListButtonObject.GetComponent<Image>();
@@ -243,11 +253,13 @@ public class GameManager : MonoBehaviour
         recruitBaseButtonColor = recruitButtonImage.color;
         buildBaseButtonColor = buildButtonImage.color;
         spellBaseButtonColor = spellButtonImage.color;
+        playerScript.energyDisplay.gameObject.SetActive(false);
+        energyBackground.SetActive(false);
         ResetSpellLocation();
         creationCamera.enabled = false;
         roundDisplay.gameObject.SetActive(false);
         goldColor = new Color(.9137f, .6666f, .0039f, 1);
-        gold = 10;
+        gold = 15;
         goldDisplay.text = "Gold: " + gold;
         bossGateway.transform.rotation = new Quaternion(0, 0, 0, 0);
         bossSpawnLocation1 = new Vector3(Random.Range(-70.5f, 70.5f), 1.25f, -62.35f);
@@ -315,32 +327,25 @@ public class GameManager : MonoBehaviour
         if (roundBegun)
         {
             //camera follows player while alive and returns to overhead when dead.
-            if (playerScript.currentHP <= 0)
+            
+            if (playerScript.died)
             {
-                if (playerScript.died)
-                {
-                    RegisterCameraMovementOverhead();
-                    if (!playerDeath)
-                    {
-                        mainCamera.transform.parent = null;
-                        mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
-                        mainCamera.transform.position = defenseCameraPosition;
-                        playerDeath = true;
-                    }
-                }
+                RegisterCameraMovementOverhead();
             }
             else
             {
                 RegisterCameraMovementInRound();
             }
 
-            if (Input.GetKeyDown("escape") && Time.timeScale != 0)
+            if (Input.GetKeyDown("escape"))
             {
                 Pause();
             }
             if (enemyCount == 0)//enemycount reduction handled in building under healthcheck()
             {
                 beginRoundButtonObject.SetActive(true);
+                playerScript.energyDisplay.gameObject.SetActive(false);
+                energyBackground.SetActive(false);
             }
         }
     }
@@ -478,7 +483,7 @@ public class GameManager : MonoBehaviour
         {
             mainCamera.transform.Translate(-Vector3.forward);
         }
-        mainCamera.transform.position += new Vector3(0, 1, 0);
+        mainCamera.transform.position += new Vector3(0, 3, 0);
     }
     //not yet in use, needs expansion
     void SetOffenseMap()
@@ -537,8 +542,9 @@ public class GameManager : MonoBehaviour
             buildingListButtonObject.SetActive(false);
             recruitListButtonObject.SetActive(false);
             repairButtonObject.SetActive(false);
-            goldDisplay.gameObject.SetActive(false);
             roundDisplay.gameObject.SetActive(true);
+            playerScript.energyDisplay.gameObject.SetActive(true);
+            energyBackground.SetActive(true);
             mainCamera.transform.parent = player.transform;
             ZoomIn();
             activeSpells.ShuffleList();
@@ -552,12 +558,10 @@ public class GameManager : MonoBehaviour
     void EndRound()
     {
         roundBegun = false;
-        playerDeath = false;
-        offenseMapButtonObject.SetActive(true);
+        //offenseMapButtonObject.SetActive(true);
         buildingListButtonObject.SetActive(true);
         recruitListButtonObject.SetActive(true);
         repairButtonObject.SetActive(true);
-        goldDisplay.gameObject.SetActive(true);
         mainCamera.transform.parent = null;
         mainCamera.transform.rotation = Quaternion.Euler(75, 0, 0);
         mainCamera.transform.position = defenseCameraPosition;
@@ -877,7 +881,7 @@ public class GameManager : MonoBehaviour
         {
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
-            SpawnEnemy(goblinWretch);
+            SpawnEnemy(orcWarrior);
             SpawnEnemy(goblinJavleneer);
             SpawnEnemy(goblinJavleneer);
         }
@@ -891,9 +895,10 @@ public class GameManager : MonoBehaviour
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(goblinJavleneer);
             SpawnEnemy(orcWarrior);
             SpawnEnemy(orcWarrior);
-            SpawnEnemy(orcFumblefinger);
+            //SpawnEnemy(orcFumblefinger);
         }
         if (currentRound == 5)
         {
@@ -902,12 +907,14 @@ public class GameManager : MonoBehaviour
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinWretch);
             SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(goblinJavleneer);
+            SpawnEnemy(goblinJavleneer);
             SpawnEnemy(orcWarrior);
             SpawnEnemy(orcWarrior);
             SpawnEnemy(orcWarrior);
             SpawnEnemy(orcWarrior);
-            SpawnEnemy(orcFumblefinger);
-            SpawnEnemy(orcFumblefinger);
+            //SpawnEnemy(orcFumblefinger);
+            //SpawnEnemy(orcFumblefinger);
         }
         if (currentRound == 6)
         {
@@ -976,11 +983,13 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 0;
             pauseImage.gameObject.SetActive(true);
+            pauseText.gameObject.SetActive(true);
         }
         else
         {
             Time.timeScale = 1;
-            pauseImage.gameObject.SetActive(false);
+            pauseImage.SetActive(false);
+            pauseText.SetActive(false);
         }
     }
     public void GainGold(int goldGained)

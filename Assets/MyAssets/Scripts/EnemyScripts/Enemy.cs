@@ -6,6 +6,7 @@ using UnityEditor;
 public class Enemy : Building
 {
     private bool iceWaveInternalBool = false;
+    private bool onCastle = false;
     //handles Ice Wave spell damage and effect.
     void OnTriggerEnter(Collider other)
     {
@@ -34,12 +35,12 @@ public class Enemy : Building
     }
     protected void Move()
     {
-        if (target != null)
+        if (target != null && !lootPositionChecked && !targetScript.died && !died)
         {
             distanceToTarget = Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(target.transform.position.x, 0, target.transform.position.z));
             Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
             //if in range to hit castle, hits castle until victory or death.
-            if (target == castle && (distanceToTarget < 8 || distanceToTarget < attackRange))
+            if (target == castle && (distanceToTarget < 8 || distanceToTarget <= attackRange) && !onCastle)
             {
                 if (attackRange < 7.5f)
                 {
@@ -47,6 +48,7 @@ public class Enemy : Building
                 }
                 rangeFinder.SetActive(false);
                 targetScript = castle.GetScript() as DamageableObject;
+                onCastle = true;
             }
             //Moves the gameObject towards its target if outside of attack range, otherwise attacks the target
             if (isRanged)
@@ -54,6 +56,10 @@ public class Enemy : Building
                 if (distanceToTarget > rangedAttackRange)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                    if (!characterAnimation.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                    {
+                        characterAnimation.Play("Walk");
+                    }
                 }
             }
             else
@@ -61,10 +67,15 @@ public class Enemy : Building
                 if (distanceToTarget > attackRange)
                 {
                     transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                    if (!characterAnimation.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                    {
+                        characterAnimation.Play("Walk");
+                    }
                 }
                 else if (!attackCooldownActive && !cleavingAttackBool)
                 {
-                    MelleAttack();
+                    StartCoroutine(AttackDelay());
+                    characterAnimation.Play("Attack");
                 }
                 else if (!attackCooldownActive && cleavingAttackBool)
                 {

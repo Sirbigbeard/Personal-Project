@@ -17,7 +17,7 @@ public class ImpScript : MelleAlly
         Begin();
         StartCoroutine(TaggingDelay());
     }
-    void Update()
+    void FixedUpdate()
     {
         Move();
         BuildingUpdate();

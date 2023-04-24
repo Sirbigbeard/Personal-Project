@@ -7,10 +7,14 @@ public class FireBallBook : MonoBehaviour
     public GameObject gameManager;
     private GameManager gameManagerScript;
     private static bool used = false;
+    public GameObject fireBallButton;
+    public SpellBookButton fireBallButtonScript;
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
+        fireBallButton = GameObject.Find("Fire Ball");
+        fireBallButtonScript = fireBallButton.GetComponent<SpellBookButton>();
     }
     void OnTriggerEnter(Collider other)
     {
@@ -26,6 +30,10 @@ public class FireBallBook : MonoBehaviour
                     gameManagerScript.itemDropText.text = "Spell Learned: Fireball";
                     gameManagerScript.DropTextResetShell(4);
                     used = true;
+                    if(gameManagerScript.activeSpells.Count < gameManagerScript.maxActiveSpells)
+                    {
+                        fireBallButtonScript.AddSpell();
+                    }
                 }
             }
             else
